@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Poetsen";
+  font-family: "WordsFont";
   src: url("../font/poetsen_one/PoetsenOne-Regular.ttf");
 }
 
@@ -7,7 +7,7 @@
 
 :root {
   --roundness: 0.25rem;
-  --font: Poetsen, sans serif;
+  --font: sans serif;
   --bg-color: #1a2122;
   --text-color: #e4dbcd;
   --accent-color: #ffbf00;
@@ -118,7 +118,6 @@ html {
 }
 
 .bottom-panel .item {
-  font-size: 0.75rem;
   line-height: 1.5rem;
 }
 
@@ -134,11 +133,11 @@ key {
   display: inline-block;
   margin-right: 0.3rem;
   padding: 0.1rem 0.3rem;
-  font-size: 0.7rem;
-  line-height: 0.7rem;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
   color: var(--bg-color);
   background-color: var(--sub-color);
-  border-radius: 0.1rem;
+  border-radius: 2px;
   transition: 0.3s;
 }
 
@@ -279,6 +278,7 @@ button:hover key {
   flex-wrap: wrap;
   width: 100%;
   align-content: flex-start;
+  font-family: WordsFont, serif;
   user-select: none;
   transition: margin-top 0.3s;
 }
@@ -342,7 +342,6 @@ button:hover key {
 /* ------------------------------------------------------------------ BUTTONS */
 
 .bottom-panel button {
-  font-family: Poetsen, sans serif;
   color: var(--sub-color);
   background-color: var(--bg-color);
   border: none;
