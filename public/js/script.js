@@ -27,7 +27,6 @@ const state = {
       from: 'warm up',
       to: 'test running',
       validation: () => {
-        console.log(testActive, $('#wordsInput').is(':focus'))
         return (false === testActive && $('#wordsInput').is(':focus'))
       }
     }
@@ -611,7 +610,6 @@ function showResult(difficultyFailed = false) {
 }
 
 function startTest() {
-  console.log('start the test')
   resetTestData()
   testActive = true
   testStart = Date.now()

@@ -71,15 +71,12 @@ $('#wordsWrapper').on('click', focusWords)
 
 document.addEventListener('keyup', event => {
   if (event.code === 'KeyN' && event.shiftKey && false === testActive) {
-    console.log('reset test')
     resetTest()
   }
   if (event.code === 'KeyR' && event.shiftKey && false === testActive) {
-    console.log('reset test with same word set')
     resetTest(true)
   }
   if (event.code === 'KeyC' && event.ctrlKey && testActive) {
-    console.log('stop and reset the test with the same wordset')
     resetTest(true)
   }
 })
