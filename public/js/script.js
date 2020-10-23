@@ -367,12 +367,8 @@ function compareInput(showError) {
     const charCorrect = (currentLetter === currentInput[i])
     if (charCorrect) {
       ret += `<letter class="correct">${currentLetter}</letter>`
-    } else {
-      if (currentLetter === '') {
-        ret += `<letter class="incorrect extra">${currentInput[i]}</letter>`
-      } else {
-        ret += `<letter class="incorrect">${currentLetter}</letter>`
-      }
+    } else if (currentLetter !== '') {
+      ret += `<letter class="incorrect">${currentLetter}</letter>`
     }
   }
   if (currentInput.length < currentWord.length) {
@@ -380,6 +376,9 @@ function compareInput(showError) {
       ret += `<letter>${currentWord[i]}</letter>`
     }
   }
+  currentInput.length > currentWord.length
+    ? addClass('extra-characters')(currentWordElement)
+    : removeClass('extra-characters')(currentWordElement)
   currentWordElement.innerHTML = ret
 }
 
@@ -692,7 +691,10 @@ function handleTyping(character) {
 
 function eraseCharacter() {
   if (currentInput.length === 0 && inputHistory.length === 0) return
-  if (currentInput.length > 0) {
+  const currentWord = currentWordElement.getAttribute('data-value')
+  if (currentInput.length > currentWord.length) {
+    currentInput = currentInput.slice(0, currentWord.length)
+  } else if (currentInput.length > 0) {
     currentInput = currentInput.slice(0, - 1)
   } else {
     currentInput = inputHistory.pop()
