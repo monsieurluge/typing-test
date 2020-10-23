@@ -54,10 +54,7 @@ $(document.body).on('click', '#reset-test-button-with-same-wordset', () => reset
 $(document).on('click', '#stop-test-button', resetTest)
 
 $(document).mousemove(event => {
-  if (
-    $('#top').hasClass('focus') &&
-    (event.originalEvent.movementX > 0 || event.originalEvent.movementY > 0)
-  ) {
+  if (event.originalEvent.movementX > 0 || event.originalEvent.movementY > 0) {
     disableFocus()
   }
 })

@@ -62,70 +62,29 @@ html {
 
 /* ------------------------------------------------------------------- LAYOUT */
 
-#centerContent {
+#page {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   max-width: 800px;
   min-width: 500px;
   min-height: 100vh;
   margin: 0 auto;
 }
 
-#top {
-  margin-top: 2rem;
-  opacity: 1;
-  transition: opacity 0.25s;
-}
-
-#top.focus {
-  opacity: 0;
-}
-
-.pageTest {
-  position: relative;
-}
-
-#bottom {
-  position: relative;
+#bottom-panels {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  min-width: 500px;
   height: 5rem;
   overflow: hidden;
   opacity: 1;
   transition: opacity 0.25s;
 }
 
-#bottom.focus {
+#bottom-panels.focus {
   opacity: 0;
-}
-
-/* ---------------------------------------------------------------- TOP PANEL */
-
-#top .title {
-  position: relative;
-  white-space: nowrap;
-  user-select: none;
-}
-
-#top h1 {
-  font-size: 2.3rem;
-  color: var(--accent-color);
-}
-
-#top .title-caret {
-  display: inline-block;
-  width: 0.3rem;
-  height: 2.3rem;
-  margin: 0 0.2rem;
-  background-color: var(--text-color);
-  border-radius: var(--roundness);
-}
-
-#top .subtitle {
-  position: absolute;
-  top: -0.4rem;
-  color: var(--sub-color);
-  font-size: 0.65rem;
-  transition: 0.25s;
 }
 
 /* ------------------------------------------------------------ BOTTOM PANELS */
@@ -135,12 +94,12 @@ html {
   top: 5rem;
   width: 100%;
   height: 5rem;
-  transition: top 0.5s;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: var(--sub-color);
+  transition: top 0.5s;
 }
 
 .bottom-panel.active {

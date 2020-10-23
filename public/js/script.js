@@ -152,9 +152,7 @@ const changeMode = target =>  {
 }
 
 const enableFocus = () => {
-  $('#top').addClass('focus')
-  $('#bottom').addClass('focus')
-  $('#middle').addClass('focus')
+  $('#bottom-panels').addClass('focus')
   $('body').css('cursor', 'none')
 }
 
@@ -162,9 +160,7 @@ const disableFocus = () => {
   testActive
     ? stopCaretAnimation()
     : startCaretAnimation()
-  $('#top').removeClass('focus');
-  $('#bottom').removeClass('focus');
-  $('#middle').removeClass('focus');
+  $('#bottom-panels').removeClass('focus');
   $('body').css('cursor', 'default');
 }
 
@@ -188,7 +184,7 @@ const isLongTest = () => {
 }
 
 const hideBottomPanels = () => {
-  $('.bottom-panel').removeClass('active').addClass('hidden')
+  $('.bottom-panel').removeClass('active')
 }
 
 const showBottomPanel = name =>  {

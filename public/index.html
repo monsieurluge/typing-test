@@ -17,70 +17,60 @@
   </head>
 
   <body>
-    <div id="centerContent">
-      <div id="top">
-        <div class="title">
-          <h1>typing t<span class="title-caret"></span>est</h1>
-          <div class="subtitle">distraction free</div>
+    <div id="page">
+      <div id="typingTest">
+        <input id="wordsInput" class="" tabindex="0" autocomplete="off" />
+        <div id="wordsWrapper">
+          <div id="caret" class="hidden"></div>
+          <div id="words"></div>
         </div>
       </div>
-      <div id="middle">
-        <div class="page pageTest active">
-          <div id="typingTest">
-            <input id="wordsInput" class="" tabindex="0" autocomplete="off" />
-            <div id="wordsWrapper">
-              <div id="caret" class="hidden"></div>
-              <div id="words"></div>
-            </div>
-          </div>
-          <div id="result" class="hidden">
-            <div class="main group">
-              <div class="item">wpm <span class="value wpm" aria-label="" data-balloon-pos="up">--</span></div>
-              <div class="item">accuracy <span class="value acc" aria-label="" data-balloon-pos="up">--</span></div>
-            </div>
-            <div class="details group">
-              <div>time <span class="value time" aria-label="" data-balloon-pos="bottom">--s</span></div>
-              <div>char <span class="value char" aria-label="" data-balloon-pos="bottom">--</span></div>
-            </div>
-          </div>
+      <div id="result" class="hidden">
+        <div class="main group">
+          <div class="item">wpm <span class="value wpm" aria-label="" data-balloon-pos="up">--</span></div>
+          <div class="item">accuracy <span class="value acc" aria-label="" data-balloon-pos="up">--</span></div>
+        </div>
+        <div class="details group">
+          <div>time <span class="value time" aria-label="" data-balloon-pos="bottom">--s</span></div>
+          <div>char <span class="value char" aria-label="" data-balloon-pos="bottom">--</span></div>
         </div>
       </div>
-      <div id="bottom">
-        <div id="test-config" class="bottom-panel">
-          <div class="items-wrapper">
-            <div class="group">
-              <button class="item mode active" mode="time">time</button>
-              <div class="item separator">/</div>
-              <button class="item mode" mode="words">words</button>
-              <div class="item separator">:</div>
-              <div class="subgroup time">
-                <button class="item" timeconfig="15">15s</button>
-                <button class="item" timeconfig="30">30s</button>
-                <button class="item" timeconfig="60">60s</button>
-                <button class="item" timeconfig="120">120s</button>
-                <button class="item" timeconfig="custom"><span class="icon-cog"></span></button>
-              </div>
-              <div class="subgroup wordCount hidden">
-                <button class="item" wordCount="10">10</button>
-                <button class="item" wordCount="25">25</button>
-                <button class="item active" wordCount="50">50</button>
-                <button class="item" wordCount="100">100</button>
-                <button class="item" wordCount="custom"><span class="icon-cog"></span></button>
-              </div>
+    </div>
+    <div id="bottom-panels">
+      <div id="test-config" class="bottom-panel">
+        <div class="items-wrapper">
+          <div class="group">
+            <button class="item mode active" mode="time">time</button>
+            <div class="item separator">/</div>
+            <button class="item mode" mode="words">words</button>
+            <div class="item separator">:</div>
+            <div class="subgroup time">
+              <button class="item" timeconfig="15">15s</button>
+              <button class="item" timeconfig="30">30s</button>
+              <button class="item" timeconfig="60">60s</button>
+              <button class="item" timeconfig="120">120s</button>
+              <button class="item" timeconfig="custom"><span class="icon-cog"></span></button>
             </div>
-            <button id="blindMode" class="item">blind</button>
+            <div class="subgroup wordCount hidden">
+              <button class="item" wordCount="10">10</button>
+              <button class="item" wordCount="25">25</button>
+              <button class="item active" wordCount="50">50</button>
+              <button class="item" wordCount="100">100</button>
+              <button class="item" wordCount="custom"><span class="icon-cog"></span></button>
+            </div>
           </div>
+          <button id="blindMode" class="item">blind</button>
         </div>
-        <div id="test-running" class="bottom-panel">
-          <div class="items-wrapper">
-            <button id="stop-test-button" class="item"><key>ctrl</key><key>c</key> stop the test</button>
-          </div>
+      </div>
+      <div id="test-running" class="bottom-panel">
+        <div class="items-wrapper">
+          <button id="stop-test-button" class="item"><key>ctrl</key><key>c</key> stop the test</button>
         </div>
-        <div id="result-buttons" class="bottom-panel">
-          <div class="items-wrapper">
-            <button id="reset-test-button" class="item"><key>shift</key><key>n</key> new test</button>
-            <button id="reset-test-button-with-same-wordset" class="item"><key>shift</key><key>r</key> restart test</button>
-          </div>
+      </div>
+      <div id="result-buttons" class="bottom-panel">
+        <div class="items-wrapper">
+          <button id="reset-test-button" class="item"><key>shift</key><key>n</key> new test</button>
+          <button id="reset-test-button-with-same-wordset" class="item"><key>shift</key><key>r</key> restart test</button>
         </div>
       </div>
     </div>
