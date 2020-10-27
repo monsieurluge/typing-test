@@ -128,6 +128,12 @@ document.getElementById('wordsInput').addEventListener('keydown', event => {
   handleTyping(event.key)
 })
 
+document.getElementById('wordsInput').addEventListener('keydown', event => {
+  if (event.code === 'Tab' && testActive) {
+    disableFocus()
+  }
+})
+
 // ----------------------------------------------------------------- misc events
 
 $('#wordsInput').on('focusout', hideCaret)

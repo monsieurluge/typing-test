@@ -37,7 +37,7 @@
       </div>
     </div>
     <div id="bottom-panels">
-      <div id="test-config" class="bottom-panel">
+      <div id="test-config" class="bottom-panel active opened">
         <div class="items-wrapper">
           <div class="group">
             <button class="item mode active" mode="time">time</button>
@@ -62,15 +62,15 @@
           <button id="blindMode" class="item">blind</button>
         </div>
       </div>
-      <div id="test-running" class="bottom-panel">
-        <div class="items-wrapper">
-          <button id="stop-test-button" class="item"><key>ctrl</key><key>c</key> stop the test</button>
-        </div>
-      </div>
-      <div id="result-buttons" class="bottom-panel">
+      <div id="result-buttons" class="bottom-panel closed">
         <div class="items-wrapper">
           <button id="reset-test-button" class="item"><key>shift</key><key>n</key> new test</button>
           <button id="reset-test-button-with-same-wordset" class="item"><key>shift</key><key>r</key> restart test</button>
+        </div>
+      </div>
+      <div id="test-running" class="bottom-panel closed">
+        <div class="items-wrapper">
+          <button id="stop-test-button" class="item"><key>ctrl</key><key>c</key> stop the test</button>
         </div>
       </div>
     </div>

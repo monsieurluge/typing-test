@@ -80,18 +80,37 @@ html {
   height: 5rem;
   overflow: hidden;
   opacity: 1;
-  transition: opacity 0.25s;
+  transition: opacity 0.4s;
 }
 
 #bottom-panels.focus {
   opacity: 0;
 }
 
+/* --------------------------------------------------------------- ANIMATIONS */
+
+@keyframes testclose {
+  0% {
+    margin-top: 0;
+  }
+  100% {
+    margin-top: 5rem;
+  }
+}
+
+@keyframes testopen {
+  0% {
+    margin-top: 5rem;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+
 /* ------------------------------------------------------------ BOTTOM PANELS */
 
 .bottom-panel {
   position: absolute;
-  top: 5rem;
   width: 100%;
   height: 5rem;
   display: flex;
@@ -99,11 +118,14 @@ html {
   align-items: center;
   justify-content: center;
   color: var(--sub-color);
-  transition: top 0.5s;
 }
 
-.bottom-panel.active {
+.bottom-panel.opened {
   top: 0;
+}
+
+.bottom-panel.closed {
+  top: 5em;
 }
 
 .bottom-panel .group,
@@ -167,6 +189,14 @@ button:hover key {
 
 #result-buttons .text-button:not(:last-child) {
   margin-right: 3rem;
+}
+
+.close {
+  animation: testclose 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.open {
+  animation: testopen 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 /* ------------------------------------------------------------------ RESULTS */

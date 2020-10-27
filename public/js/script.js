@@ -50,6 +50,14 @@ const state = {
 
 // -------------------------------------------------------- ELEMENT MANIPULATION
 
+const addClass = className => element => {
+  element.classList.add(className)
+}
+
+const removeClass = className => element => {
+  element.classList.remove(className)
+}
+
 const hardHide = element => () => {
   element.addClass('hidden')
 }
@@ -74,6 +82,52 @@ const softShow = element => onDone => {
 
 const isHidden = element => element.hasClass('hidden')
 
+const hideBottomPanel = panel => {
+  removeClass('opened')(panel)
+  removeClass('open')(panel)
+  addClass('close')(panel)
+}
+
+const enableBottomPanel = name => {
+  document.querySelectorAll('.bottom-panel').forEach(hideBottomPanel)
+  removeClass('closed')(document.getElementById(name))
+  addClass('open')(document.getElementById(name))
+}
+
+const showTestConfigPanel = () => {
+  enableBottomPanel('test-config')
+}
+
+const showResultButtonsPanel = () => {
+  enableBottomPanel('result-buttons')
+}
+
+const showTestRunningPanel = () => {
+  enableBottomPanel('test-running')
+}
+
+const hideCaret = hardHide($('#caret'))
+
+const showCaret = () => {
+  if (false === isHidden($('#result'))) return
+  updateCaretPosition()
+  startCaretAnimation()
+  hardShow($('#caret'))()
+}
+
+const stopCaretAnimation = () => {
+  if (false === caretAnimating) return
+  $('#caret').css('animation-name', 'none')
+  $('#caret').css('opacity', '1')
+  caretAnimating = false
+}
+
+const startCaretAnimation = () => {
+  if (caretAnimating) return
+  $('#caret').css('animation-name', 'caretFlash')
+  caretAnimating = true
+}
+
 // ----------------------------------------------------------- DATA MANIPULATION
 
 const resetTestData = () => {
@@ -89,14 +143,6 @@ const resetTestData = () => {
 }
 
 // ------------------------------------------------------------------- FUNCTIONS
-
-const addClass = className => element => {
-  element.classList.add(className)
-}
-
-const removeClass = className => element => {
-  element.classList.remove(className)
-}
 
 const loadCookie = fallback => {
   return document.cookie.split('; ')           // split all the cookies
@@ -180,50 +226,6 @@ const newWordsSet = () => {
 const isLongTest = () => {
   return (config.mode === 'words' && config.words > 1000)
     || (config.mode === 'time' && config.time > 3600)
-}
-
-const hideBottomPanels = () => {
-  $('.bottom-panel').removeClass('active')
-}
-
-const showBottomPanel = name =>  {
-  hideBottomPanels()
-  $(name).removeClass('hidden')
-  $(name).addClass('active')
-}
-
-const showTestConfigPanel = () => {
-  showBottomPanel('#test-config')
-}
-
-const showResultButtonsPanel = () => {
-  showBottomPanel('#result-buttons')
-}
-
-const showTestRunningPanel = () => {
-  showBottomPanel('#test-running')
-}
-
-const hideCaret = hardHide($('#caret'))
-
-const showCaret = () => {
-  if (false === isHidden($('#result'))) return
-  updateCaretPosition()
-  startCaretAnimation()
-  hardShow($('#caret'))()
-}
-
-const stopCaretAnimation = () => {
-  if (false === caretAnimating) return
-  $('#caret').css('animation-name', 'none')
-  $('#caret').css('opacity', '1')
-  caretAnimating = false
-}
-
-const startCaretAnimation = () => {
-  if (caretAnimating) return
-  $('#caret').css('animation-name', 'caretFlash')
-  caretAnimating = true
 }
 
 const clearTimeouts = timeouts => {
