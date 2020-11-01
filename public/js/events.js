@@ -47,7 +47,7 @@ $(document).on('click', '#blindMode', () => {
   focusWords()
 })
 
-$(document.body).on('click', '#reset-test-button', resetTest)
+$(document.body).on('click', '#reset-test-button', () => resetTest(false))
 
 $(document.body).on('click', '#reset-test-button-with-same-wordset', () => resetTest(true))
 
