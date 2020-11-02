@@ -201,7 +201,7 @@ function compareInput(showError) {
   for (let i = 0; i < currentInput.length; i++) {
     const currentLetter = currentWord.charAt(i)
     const charCorrect = (currentLetter === currentInput[i])
-    if (charCorrect) {
+    if (charCorrect || false === showError) {
       ret += `<letter class="correct">${currentLetter}</letter>`
     } else if (currentLetter !== '') {
       ret += `<letter class="incorrect">${currentLetter}</letter>`
@@ -545,7 +545,7 @@ function eraseCharacter() {
 
 function jumpToNextWord() {
   removeClass('active')(currentWordElement)
-  if (config.blindMode) addClass('correct')(currentWordElement.querySelectorAll('.letter'))
+  if (config.blindMode) currentWordElement.querySelectorAll('letter').forEach(addClass('correct'))
   if (currentWordElement.getAttribute('data-value') === currentInput) {
     accuracyStats.correct++
   } else {
