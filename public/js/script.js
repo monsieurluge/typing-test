@@ -20,34 +20,6 @@ let wordsList = []
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']
 const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
 
-const state = {
-  current: 'warm up',
-  transitions: [
-    {
-      from: 'warm up',
-      to: 'test running',
-      validation: () => {
-        return (false === testActive && $('#wordsInput').is(':focus'))
-      }
-    }
-  ],
-  to: target => callback => {
-    const candidates = state.transitions.filter(transition => (state.current === transition.from && target === transition.to))
-    if (candidates.length === 0) {
-      throw `cannot update the app state from "${state.current}" to "${target}": no transition found`
-    }
-    if (candidates.length > 1) {
-      throw `cannot update the app state from "${state.current}" to "${target}": too many transitions found`
-    }
-    const valid = candidates.reduce((result, transition) => result && transition.validation(), true)
-    if (valid) {
-      callback()
-    } else {
-      throw `cannot update the app state from "${state.current}" to "${target}": invalid context`
-    }
-  }
-}
-
 // -------------------------------------------------------- ELEMENT MANIPULATION
 
 const addClass = className => element => {
@@ -244,102 +216,8 @@ const modes = new Map([
 
 const startApp = () => {
   applyConfig(loadCookie(defaultConfig))
-  // state.to('test running')(resetTest)
   resetTest()
 }
-
-// function punctuateWord(previousWord, currentWord, index, maxindex) {
-//   let word = currentWord;
-//   if (
-//     index == 0 ||
-//     getLastChar(previousWord) == "." ||
-//     getLastChar(previousWord) == "?" ||
-//     getLastChar(previousWord) == "!"
-//   ) {
-//     //always capitalise the first word or if there was a dot
-//     word = capitalizeFirstLetter(word);
-//   } else if (
-//     //10% chance to end a sentence
-//     (Math.random() < 0.1 &&
-//       getLastChar(previousWord) != "." &&
-//       index != maxindex - 2) ||
-//     index == maxindex - 1
-//   ) {
-//     let rand = Math.random();
-//     if (rand <= 0.8) {
-//       word += ".";
-//     } else if (rand > 0.8 && rand < 0.9) {
-//       word += "?";
-//     } else {
-//       word += "!";
-//     }
-//   } else if (
-//     Math.random() < 0.01 &&
-//     getLastChar(previousWord) != "," &&
-//     getLastChar(previousWord) != "."
-//   ) {
-//     //1% chance to add quotes
-//     word = `"${word}"`;
-//   } else if (Math.random() < 0.01) {
-//     //1% chance to add a colon
-//     word = word + ":";
-//   } else if (
-//     Math.random() < 0.01 &&
-//     getLastChar(previousWord) != "," &&
-//     getLastChar(previousWord) != "." &&
-//     previousWord != "-"
-//   ) {
-//     //1% chance to add a dash
-//     word = "-";
-//   } else if (Math.random() < 0.2 && getLastChar(previousWord) != ",") {
-//     //2% chance to add a comma
-//     word += ",";
-//   }
-//   return word;
-// }
-
-// function addWord() {
-//   let bound = 60;
-//   if (
-//     wordsList.length - inputHistory.length > bound
-//     || (config.mode === "words" && wordsList.length >= config.words)
-//   ) return;
-//   const wordset = words;
-//   let randomWord = wordset[Math.floor(Math.random() * wordset.length)];
-//   previousWord = wordsList[wordsList.length - 1];
-//   previousWordStripped = previousWord.replace(/[.?!":\-,]/g, "").toLowerCase();
-//   previousWord2Stripped = wordsList[wordsList.length - 2]
-//     .replace(/[.?!":\-,]/g, "")
-//     .toLowerCase();
-
-//   while (
-//     previousWordStripped == randomWord
-//     || previousWord2Stripped == randomWord
-//     || randomWord.indexOf(" ") > -1
-//     || (!config.punctuation && randomWord == "I")
-//   ) {
-//     randomWord = wordset[Math.floor(Math.random() * wordset.length)];
-//   }
-
-//   if (config.punctuation) {
-//     randomWord = punctuateWord(previousWord, randomWord, wordsList.length, 0);
-//   }
-//   if (config.numbers) {
-//     if (Math.random() < 0.1) {
-//       randomWord = getNumbers(4);
-//     }
-//   }
-
-//   wordsList.push(randomWord);
-
-//   let w = "<div class='word'>";
-//   for (let c = 0; c < randomWord.length; c++) {
-//     w += "<letter>" + randomWord.charAt(c) + "</letter>";
-//   }
-//   w += "</div>";
-//   $("#words").append(w);
-// }
-
 const generateLettersTags = letters => {
   return letters
     .map(letter => `<letter>${letter}</letter>`)

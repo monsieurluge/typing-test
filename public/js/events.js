@@ -32,16 +32,6 @@ $(document).on('click', '#test-config .wordCount button', event => {
   }
 })
 
-// $(document).on('click', '#punctuationMode', () => {
-//   togglePunctuation()
-//   resetTest()
-// })
-
-// $(document).on('click', '#numbersMode', () => {
-//   toggleNumbers()
-//   resetTest()
-// })
-
 $(document).on('click', '#blindMode', () => {
   toggleBlindMode()
   focusWords()

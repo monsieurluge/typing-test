@@ -24,8 +24,6 @@ function applyConfig(configObj) {
   changeTimeConfig(configObj.time, true)
   changeWordCount(configObj.words, true)
   setBlindMode(configObj.blindMode, true)
-  // setNumbers(configObj.numbers, true)
-  // setPunctuation(configObj.punctuation, true)
   Object.keys(defaultConfig).forEach(configKey => {
     if (config[configKey] == undefined) {
       config[configKey] = defaultConfig[configKey]
@@ -65,33 +63,3 @@ function changeWordCount(wordCountString) {
     : 'custom'
   $("#test-config .wordCount button[wordCount='" + wordCountString + "']").addClass('active')
 }
-
-// function setNumbers(numb) {
-//   config.numbers
-//     ? $("#numbersMode").addClass("active")
-//     : $("#numbersMode").removeClass("active")
-//   config.numbers = numb
-// }
-
-// function toggleNumbers() {
-//   config.numbers
-//     ? $("#numbersMode").removeClass("active")
-//     : $("#numbersMode").addClass("active")
-//   config.numbers = !config.numbers
-//   saveConfigToCookie()
-// }
-
-// function setPunctuation(punc) {
-//   config.punctuation
-//     ? $("#punctuationMode").addClass("active")
-//     : $("#punctuationMode").removeClass("active")
-//   config.punctuation = punc
-// }
-
-// function togglePunctuation() {
-//   config.punctuation
-//     ? $("#punctuationMode").removeClass("active")
-//     : $("#punctuationMode").addClass("active")
-//   config.punctuation = !config.punctuation
-//   saveConfigToCookie()
-// }
