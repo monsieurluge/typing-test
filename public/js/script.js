@@ -9,7 +9,6 @@ let inputHistory = []
 let lineTransition = false
 let resultCalculating = false
 let resultVisible = false
-let sameWordset = false
 let testActive = false
 let testEnd = 0
 let testStart = 0
@@ -83,21 +82,7 @@ const hideCaret = hardHide($('#caret'))
 const showCaret = () => {
   if (false === isHidden($('#result'))) return
   updateCaretPosition()
-  startCaretAnimation()
   hardShow($('#caret'))()
-}
-
-const stopCaretAnimation = () => {
-  if (false === caretAnimating) return
-  $('#caret').css('animation-name', 'none')
-  $('#caret').css('opacity', '1')
-  caretAnimating = false
-}
-
-const startCaretAnimation = () => {
-  if (caretAnimating) return
-  $('#caret').css('animation-name', 'caretFlash')
-  caretAnimating = true
 }
 
 // ----------------------------------------------------------- DATA MANIPULATION
@@ -130,7 +115,6 @@ const resetTest = (withSameWordset = false) => {
   hideCaret()
   disableFocus()
   showTestConfigPanel()
-  sameWordset = withSameWordset
   document.getElementById('words').style.marginTop = 0
 
   softHide($('#result'))(() => {
@@ -174,9 +158,6 @@ const enableFocus = () => {
 }
 
 const disableFocus = () => {
-  testActive
-    ? stopCaretAnimation()
-    : startCaretAnimation()
   $('#bottom-panels').removeClass('focus');
   $('body').css('cursor', 'default');
 }
@@ -562,7 +543,6 @@ function handleTyping(character) {
     ? accuracyStats.correct++
     : accuracyStats.incorrect++
   currentInput += character
-  stopCaretAnimation()
   compareInput(!config.blindMode)
   updateCaretPosition()
 }
