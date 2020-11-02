@@ -166,18 +166,6 @@ const newWordsSet = () => {
   }
 }
 
-const isLongTest = () => {
-  return (config.mode === 'words' && config.words > 1000)
-    || (config.mode === 'time' && config.time > 3600)
-}
-
-const clearTimeouts = timeouts => {
-  timeouts.forEach(timeout => {
-    clearTimeout(timeout)
-    timeout = null
-  })
-}
-
 const modes = new Map([
   ['time', enableTimeMode],
   ['words', enableWordsMode],
@@ -206,8 +194,6 @@ const generateWordTags = (content, word) => {
 const prepareWords = container => {
   container.html(wordsList.reduce(generateWordTags, '<div class="filler"></div>'))
 }
-
-const activeWordTop = () => currentWordElement.offsetTop
 
 function compareInput(showError) {
   const currentWord = currentWordElement.getAttribute('data-value')
