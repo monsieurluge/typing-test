@@ -1,18 +1,12 @@
 let accuracyStats = { correct: 0, incorrect: 0 }
-let caretAnimating = true
 let currentInput = ''
-let currentTestLine = 0
 let currentWordElement = undefined
-let currentWordElementIndex = 0
-let currentWordIndex = 0
 let inputHistory = []
-let lineTransition = false
 let resultCalculating = false
 let resultVisible = false
 let testActive = false
 let testEnd = 0
 let testStart = 0
-let time = 0
 let timer = null
 let wordsList = []
 
@@ -90,13 +84,9 @@ const showCaret = () => {
 const resetTestData = () => {
   accuracyStats = { correct: 0, incorrect: 0 }
   currentInput = ''
-  currentTestLine = 0
   currentWordElement = document.querySelector('#words .word')
-  currentWordIndex = 0
-  currentWordElementIndex = 0
   inputHistory = []
   testActive = false
-  time = 0
 }
 
 // ------------------------------------------------------------------- FUNCTIONS
