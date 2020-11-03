@@ -270,10 +270,13 @@ button:hover key {
   width: 0.2rem;
   background: var(--accent-color);
   border-radius: var(--roundness);
+  transform-origin: top left;
+}
+
+#caret.flashing {
   animation-name: caretFlash;
   animation-iteration-count: infinite;
   animation-duration: 1s;
-  transform-origin: top left;
 }
 
 @keyframes caretFlash {

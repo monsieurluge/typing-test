@@ -77,6 +77,7 @@ const showCaret = () => {
   if (false === isHidden($('#result'))) return
   updateCaretPosition()
   hardShow($('#caret'))()
+  addClass('flashing')(document.getElementById('caret'))
 }
 
 // ----------------------------------------------------------- DATA MANIPULATION
@@ -236,6 +237,9 @@ const updateCaretPosition = () => {
   caret
     .stop(true, true)
     .animate({ left: newLeft }, 100)
+  removeClass('flashing')(document.getElementById('caret'))
+  document.getElementById('caret').offsetHeight
+  addClass('flashing')(document.getElementById('caret'))
 }
 
 function countChars() {
