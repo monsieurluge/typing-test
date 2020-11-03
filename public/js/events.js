@@ -4,8 +4,8 @@ $(document).on('click', '#test-config button.mode', event => {
   if ($(event.currentTarget).hasClass('active')) return
   changeMode($(event.currentTarget).attr('mode'))
   saveConfigToCookie()
-  $('#test-config button.mode').removeClass('active')
-  $(event.currentTarget).addClass('active')
+  removeClass('active')(document.querySelector('#test-config button.mode'))
+  addClass('active')(event.currentTarget)
   resetTest()
 })
 
@@ -16,7 +16,7 @@ $(document).on('click', '#test-config .time button', event => {
   } else {
     changeTimeConfig(value)
     saveConfigToCookie()
-    $('#wordsInput').focus()
+    document.getElementById('wordsInput').focus()
   }
 })
 
@@ -27,7 +27,7 @@ $(document).on('click', '#test-config .wordCount button', event => {
   } else {
     changeWordCount(value)
     saveConfigToCookie()
-    $('#wordsInput').focus()
+    document.getElementById('wordsInput').focus()
     resetTest()
   }
 })
@@ -49,13 +49,13 @@ $(document).mousemove(event => {
   }
 })
 
-$('#customMode2PopupWrapper').click(event => {
-  if ($(event.target).attr('id') === 'customMode2PopupWrapper') hideCustomMode2Popup()
+document.getElementById('customMode2PopupWrapper').addEventListener('click', event => {
+  if (event.target.attr('id') === 'customMode2PopupWrapper') hideCustomMode2Popup()
 })
 
-$('#customMode2Popup .button').click(applyMode2Popup)
+document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
 
-$('#wordsWrapper').on('click', focusWords)
+document.getElementById('wordsWrapper', focusWords)
 
 // --------------------------------------------------------- shortcuts and menus
 
@@ -71,23 +71,23 @@ document.addEventListener('keyup', event => {
   }
 })
 
-$('#reset-test-button').keypress(event => {
+document.getElementById('reset-test-button').addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-$('#stop-test-button').keypress(event => {
+document.getElementById('stop-test-button').addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-$('#reset-test-button-with-same-wordset').keypress(event => {
+document.getElementById('reset-test-button-with-same-wordset').addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest(true)
 })
 
-$("#customMode2Popup input").keypress(event => {
+document.querySelector('#customMode2Popup input').addEventListener('keyup', event => {
   if (event.code === 'Enter') applyMode2Popup()
 })
 
-$('#wordsInput').on('focus', () => {
+document.getElementById('wordsInput').addEventListener('focus', () => {
   showCaret()
   testActive
     ? showTestRunningPanel()
@@ -126,7 +126,7 @@ document.getElementById('wordsInput').addEventListener('keydown', event => {
 
 // ----------------------------------------------------------------- misc events
 
-$('#wordsInput').on('focusout', hideCaret)
+document.getElementById('wordsInput').addEventListener('blur', hideCaret)
 
 window.addEventListener('beforeunload', event => {
   if (false === testActive) return

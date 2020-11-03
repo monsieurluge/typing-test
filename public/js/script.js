@@ -10,6 +10,9 @@ let testStart = 0
 let timer = null
 let wordsList = []
 
+const resultElement = document.getElementById('result')
+const caretElement = document.getElementById('caret')
+
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']
 const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
 
@@ -24,28 +27,32 @@ const removeClass = className => element => {
 }
 
 const hardHide = element => () => {
-  element.addClass('hidden')
+  addClass('hidden')(element)
 }
 
 const hardShow = element => () => {
-  element.removeClass('hidden')
+  removeClass('hidden')(element)
 }
 
 const softHide = element => onDone => {
-  element
-    .stop(true, true)
-    .animate({ opacity: 0 }, 125, onDone)
-    .addClass('hidden')
+  // element
+  //   .stop(true, true)
+  //   .animate({ opacity: 0 }, 125, onDone)
+  //   .addClass('hidden')
+  addClass('hidden')(element)
+  onDone()
 }
 
 const softShow = element => onDone => {
-  element
-    .stop(true, true)
-    .removeClass('hidden')
-    .animate({ opacity: 1 }, 125, onDone)
+  // element
+  //   .stop(true, true)
+  //   .removeClass('hidden')
+  //   .animate({ opacity: 1 }, 125, onDone)
+  removeClass('hidden')(element)
+  onDone()
 }
 
-const isHidden = element => element.hasClass('hidden')
+const isHidden = element => element.classList.contains('hidden')
 
 const hideBottomPanel = panel => {
   removeClass('opened')(panel)
@@ -71,13 +78,13 @@ const showTestRunningPanel = () => {
   enableBottomPanel('test-running')
 }
 
-const hideCaret = hardHide($('#caret'))
+const hideCaret = hardHide(caretElement)
 
 const showCaret = () => {
-  if (false === isHidden($('#result'))) return
+  if (false === isHidden(resultElement)) return
   updateCaretPosition()
-  hardShow($('#caret'))()
-  addClass('flashing')(document.getElementById('caret'))
+  hardShow(caretElement)()
+  addClass('flashing')(caretElement)
 }
 
 // ----------------------------------------------------------- DATA MANIPULATION
@@ -108,33 +115,33 @@ const resetTest = (withSameWordset = false) => {
   showTestConfigPanel()
   document.getElementById('words').style.marginTop = 0
 
-  softHide($('#result'))(() => {
+  softHide(resultElement)(() => {
     if (false === withSameWordset) newWordsSet()
-    prepareWords($('#words'))
+    prepareWords(document.getElementById('words'))
     resetTestData()
     addClass('active')(currentWordElement)
     updateCaretPosition();
-    softShow($('#typingTest'))(focusWords)
+    softShow(document.getElementById('typingTest'))(focusWords)
   })
 }
 
 const focusWords = () => {
-  if (isHidden($('#wordsWrapper'))) return
-  $('#wordsInput').focus()
+  if (isHidden(document.getElementById('wordsWrapper'))) return
+  document.getElementById('wordsInput').focus()
 }
 
 const enableTimeMode = () => {
-  $('#test-config button.mode').removeClass('active')
-  $("#test-config button.mode[mode='time']").addClass('active')
-  $('#test-config .wordCount').addClass('hidden')
-  $('#test-config .time').removeClass('hidden')
+  removeClass('active')(document.querySelector('#test-config button.mode'))
+  addClass('active')(document.querySelector('#test-config button.mode[mode="time"]'))
+  addClass('hidden')(document.querySelector('#test-config .wordCount'))
+  removeClass('hidden')(document.querySelector('#test-config .time'))
 }
 
 const enableWordsMode = () => {
-  $('#test-config button.mode').removeClass('active')
-  $("#test-config button.mode[mode='words']").addClass('active')
-  $('#test-config .wordCount').removeClass('hidden')
-  $('#test-config .time').addClass('hidden')
+  removeClass('active')(document.querySelector('#test-config button.mode'))
+  addClass('active')(document.querySelector('#test-config button.mode[mode="words"]'))
+  removeClass('hidden')(document.querySelector('#test-config .wordCount'))
+  addClass('hidden')(document.querySelector('#test-config .time'))
 }
 
 const changeMode = target =>  {
@@ -144,13 +151,13 @@ const changeMode = target =>  {
 }
 
 const enableFocus = () => {
-  $('#bottom-panels').addClass('focus')
-  $('body').css('cursor', 'none')
+  addClass('focus')(document.getElementById('bottom-panels'))
+  addClass('no-cursor')(document.querySelector('body'))
 }
 
 const disableFocus = () => {
-  $('#bottom-panels').removeClass('focus');
-  $('body').css('cursor', 'default');
+  removeClass('focus')(document.getElementById('bottom-panels'))
+  removeClass('no-cursor')(document.querySelector('body'))
 }
 
 const addWordToTest = () => {
@@ -193,7 +200,7 @@ const generateWordTags = (content, word) => {
 }
 
 const prepareWords = container => {
-  container.html(wordsList.reduce(generateWordTags, '<div class="filler"></div>'))
+  container.innerHTML = wordsList.reduce(generateWordTags, '<div class="filler"></div>')
 }
 
 function compareInput(showError) {
@@ -225,21 +232,20 @@ function highlightBadWord(element, showError) {
 }
 
 const updateCaretPosition = () => {
-  const caret = $('#caret')
   const inputLength = currentInput.length
   const currentLetterIndex = inputLength - 1 < 0 ? 0 : inputLength - 1
   const currentLetter = currentWordElement.querySelectorAll('letter')[currentLetterIndex]
-  if ($(currentLetter).length === 0) return
+  if (currentLetter.length === 0) return
   const currentLetterPosLeft = currentLetter.offsetLeft
   const newLeft = (inputLength === 0)
-    ? currentLetterPosLeft - caret.width() / 2
-    : currentLetterPosLeft + $(currentLetter).width() - caret.width() / 2
-  caret
-    .stop(true, true)
-    .animate({ left: newLeft }, 100)
-  removeClass('flashing')(document.getElementById('caret'))
-  document.getElementById('caret').offsetHeight
-  addClass('flashing')(document.getElementById('caret'))
+    ? currentLetterPosLeft - caretElement.offsetWidth / 2
+    : currentLetterPosLeft + currentLetter.offsetWidth - caretElement.offsetWidth / 2
+  // caret
+  //   .stop(true, true)
+  //   .animate({ left: newLeft }, 100)
+  removeClass('flashing')(caretElement)
+  caretElement.offsetWidth
+  addClass('flashing')(caretElement)
 }
 
 function countChars() {
