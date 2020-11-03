@@ -55,7 +55,7 @@ document.getElementById('customMode2PopupWrapper').addEventListener('click', eve
 
 document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
 
-document.getElementById('wordsWrapper', focusWords)
+document.getElementById('wordsWrapper').addEventListener('click', focusWords)
 
 // --------------------------------------------------------- shortcuts and menus
 
