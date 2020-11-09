@@ -233,7 +233,7 @@ const updateCaretPosition = () => {
   const inputLength = currentInput.length
   const currentLetterIndex = inputLength - 1 < 0 ? 0 : inputLength - 1
   const currentLetter = currentWordElement.querySelectorAll('letter')[currentLetterIndex]
-  if (currentLetter.length === 0) return
+  if (currentLetter === undefined) return
   const currentLetterPosLeft = currentLetter.offsetLeft
   const newLeft = (inputLength === 0)
     ? currentLetterPosLeft - caretElement.offsetWidth / 2
