@@ -133,6 +133,7 @@ const enableTimeMode = () => {
   addClass('active')(document.querySelector('#test-config button.mode[mode="time"]'))
   addClass('hidden')(document.querySelector('#test-config .wordCount'))
   document.querySelectorAll('#test-config .time').forEach(removeClass('hidden'))
+  resetTest()
 }
 
 const enableWordsMode = () => {
@@ -140,6 +141,7 @@ const enableWordsMode = () => {
   addClass('active')(document.querySelector('#test-config button.mode[mode="words"]'))
   addClass('hidden')(document.querySelector('#test-config .time'))
   document.querySelectorAll('#test-config .wordCount').forEach(removeClass('hidden'))
+  resetTest()
 }
 
 const changeMode = target =>  {
@@ -346,75 +348,6 @@ function calculateStats() {
   };
 }
 
-function showCustomMode2Popup(mode) {
-  if (isHidden($("#customMode2PopupWrapper"))) {
-    $("#customMode2PopupWrapper")
-      .stop(true, true)
-      .css("opacity", 0)
-      .removeClass("hidden")
-      .animate({ opacity: 1 }, 100, (e) => {
-        if (mode == "time") {
-          $("#customMode2Popup .text").text("Test length");
-          $("#customMode2Popup").attr("mode", "time");
-        } else if (mode == "words") {
-          $("#customMode2Popup .text").text("Word amount");
-          $("#customMode2Popup").attr("mode", "words");
-        }
-        $("#customMode2Popup input").focus().select();
-      });
-  }
-}
-
-function hideCustomMode2Popup() {
-  if (false === isHidden($("#customMode2PopupWrapper"))) {
-    $("#customMode2PopupWrapper")
-      .stop(true, true)
-      .css("opacity", 1)
-      .animate(
-        {
-          opacity: 0,
-        },
-        100,
-        (e) => {
-          $("#customMode2PopupWrapper").addClass("hidden");
-        }
-      );
-  }
-}
-
-function applyMode2Popup() {
-  let mode = $("#customMode2Popup").attr("mode");
-  let val = $("#customMode2Popup input").val();
-
-  if (mode == "time") {
-    if (val !== null && !isNaN(val) && val > 0) {
-      changeTimeConfig(val);
-      saveConfigToCookie()
-      manualRestart = true;
-      restartTest();
-      if (val >= 1800) {
-        showNotification("Stay safe and take breaks!", 3000);
-      }
-    } else {
-      showNotification("Custom time must be at least 1", 3000);
-    }
-  } else if (mode == "words") {
-    if (val !== null && !isNaN(val) && val > 0) {
-      changeWordCount(val);
-      saveConfigToCookie()
-      manualRestart = true;
-      restartTest();
-      if (val > 2000) {
-        showNotification("Stay safe and take breaks!", 3000);
-      }
-    } else {
-      showNotification("Custom word amount must be at least 1", 3000);
-    }
-  }
-
-  hideCustomMode2Popup();
-}
-
 function showResult(difficultyFailed = false) {
   resultCalculating = true;
   resultVisible = true;
@@ -478,20 +411,20 @@ function stopTestTimer() {
 }
 
 function showCustomMode2Popup(mode) {
-  softShow($('#customMode2PopupWrapper'))(() => {
+  softShow(document.getElementById('customMode2PopupWrapper'))(() => {
     if (mode === 'time') {
-      $('#customMode2Popup .text').text('Test length')
+      document.querySelector('#customMode2Popup .title').textContent = 'Test length'
       $('#customMode2Popup').attr('mode', 'time')
     } else if (mode === 'words') {
-      $('#customMode2Popup .text').text('Word amount')
+      document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
       $('#customMode2Popup').attr('mode', 'words')
     }
-    $('#customMode2Popup input').focus().select()
+    focusWords()
   })
 }
 
 function hideCustomMode2Popup() {
-  softHide($("#customMode2PopupWrapper"))(() => ({}))
+  softHide(document.getElementById('customMode2PopupWrapper'))(() => ({}))
 }
 
 function applyMode2Popup() {

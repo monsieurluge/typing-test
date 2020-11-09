@@ -4,37 +4,38 @@ document.querySelectorAll('#test-config button.mode').forEach(button => button.a
   if (event.target.classList.contains('active')) return
   changeMode(event.target.getAttribute('mode'))
   saveConfigToCookie()
-  removeClass('active')(document.querySelector('#test-config button.mode'))
-  addClass('active')(event.currentTarget)
-  resetTest()
+  removeClass('active')(button)
+  addClass('active')(event.target)
 }))
 
-document.querySelectorAll('#test-config .time button').forEach(button => button.addEventListener('click', event => {
-  const value = event.target.getAttribute('timeConfig')
+document.querySelectorAll('#test-config .time button').forEach(button => button.addEventListener('click', () => {
+  const value = button.getAttribute('timeConfig')
   if (value === 'custom') {
     showCustomMode2Popup('time')
   } else {
     changeTimeConfig(value)
     saveConfigToCookie()
-    document.getElementById('wordsInput').focus()
+    focusWords()
   }
 }))
 
-document.querySelectorAll('#test-config .wordCount button').forEach(button => button.addEventListener('click', event => {
-  const value = event.target.getAttribute('wordCount')
+document.querySelectorAll('#test-config .wordCount button').forEach(button => button.addEventListener('click', () => {
+  const value = button.getAttribute('wordCount')
   if (value === 'custom') {
     showCustomMode2Popup('words')
   } else {
     changeWordCount(value)
     saveConfigToCookie()
-    document.getElementById('wordsInput').focus()
+    focusWords()
     resetTest()
   }
 }))
 
-document.getElementById('customMode2PopupWrapper').addEventListener('click', event => {
-  if (event.target.attr('id') === 'customMode2PopupWrapper') hideCustomMode2Popup()
-})
+document.getElementById('customMode2PopupWrapper').addEventListener('click', hideCustomMode2Popup)
+
+document.getElementById('customMode2Popup').addEventListener('click', event => event.stopPropagation())
+
+document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
 
 document.addEventListener('mousemove', disableFocus)
 
@@ -48,9 +49,7 @@ document.getElementById('stop-test-button').addEventListener('click', () => rese
 
 document.getElementById('wordsWrapper').addEventListener('click', focusWords)
 
-document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
-
-document.querySelector('#test-config button').addEventListener('click', focusWords)
+document.querySelector('#test-config button:not(.custom)').addEventListener('click', focusWords)
 
 // --------------------------------------------------------- shortcuts and menus
 

@@ -51,7 +51,7 @@ function changeTimeConfig(timeString) {
   const timeToDisplay = ([15, 30, 60, 120].includes(time))
     ? time
     : 'custom'
-  addClass('active')(document.querySelector("#test-config .time button[timeConfig='" + timeString + "']"))
+  addClass('active')(document.querySelector("#test-config .time button[timeConfig='" + timeToDisplay + "']"))
 }
 
 function changeWordCount(wordCountString) {
@@ -61,5 +61,5 @@ function changeWordCount(wordCountString) {
   const wordCountToDisplay = ([10, 25, 50, 100, 200].includes(wordCount))
     ? wordCount
     : 'custom'
-  addClass('active')(document.querySelector("#test-config .wordCount button[wordCount='" + wordCountString + "']"))
+  addClass('active')(document.querySelector("#test-config .wordCount button[wordCount='" + wordCountToDisplay + "']"))
 }
