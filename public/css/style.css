@@ -275,6 +275,7 @@ button:hover key {
   background: var(--accent-color);
   border-radius: var(--roundness);
   transform-origin: top left;
+  transition: left 0.125s;
 }
 
 #caret.flashing {

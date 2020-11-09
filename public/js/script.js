@@ -240,9 +240,7 @@ const updateCaretPosition = () => {
   const newLeft = (inputLength === 0)
     ? currentLetterPosLeft - caretElement.offsetWidth / 2
     : currentLetterPosLeft + currentLetter.offsetWidth - caretElement.offsetWidth / 2
-  // caret
-  //   .stop(true, true)
-  //   .animate({ left: newLeft }, 100)
+  caret.style.left = `${newLeft}px`
   removeClass('flashing')(caretElement)
   caretElement.offsetWidth
   addClass('flashing')(caretElement)
