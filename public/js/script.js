@@ -110,8 +110,6 @@ const loadCookie = fallback => {
 
 const resetTest = (withSameWordset = false) => {
   stopTestTimer()
-  hideCaret()
-  disableFocus()
   showTestConfigPanel()
   document.getElementById('words').style.marginTop = 0
 

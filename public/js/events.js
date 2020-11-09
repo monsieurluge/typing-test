@@ -34,7 +34,6 @@ $(document).on('click', '#test-config .wordCount button', event => {
 
 $(document).on('click', '#blindMode', () => {
   toggleBlindMode()
-  focusWords()
 })
 
 $(document.body).on('click', '#reset-test-button', () => resetTest(false))
@@ -56,6 +55,10 @@ document.getElementById('customMode2PopupWrapper').addEventListener('click', eve
 document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
 
 document.getElementById('wordsWrapper').addEventListener('click', focusWords)
+
+$(document).on('click', '#test-config button', event => {
+  focusWords()
+})
 
 // --------------------------------------------------------- shortcuts and menus
 
