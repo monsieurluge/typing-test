@@ -129,17 +129,17 @@ const focusWords = () => {
 }
 
 const enableTimeMode = () => {
-  removeClass('active')(document.querySelector('#test-config button.mode'))
+  document.querySelectorAll('#test-config button.mode').forEach(removeClass('active'))
   addClass('active')(document.querySelector('#test-config button.mode[mode="time"]'))
   addClass('hidden')(document.querySelector('#test-config .wordCount'))
-  removeClass('hidden')(document.querySelector('#test-config .time'))
+  document.querySelectorAll('#test-config .time').forEach(removeClass('hidden'))
 }
 
 const enableWordsMode = () => {
-  removeClass('active')(document.querySelector('#test-config button.mode'))
+  document.querySelectorAll('#test-config button.mode').forEach(removeClass('active'))
   addClass('active')(document.querySelector('#test-config button.mode[mode="words"]'))
-  removeClass('hidden')(document.querySelector('#test-config .wordCount'))
   addClass('hidden')(document.querySelector('#test-config .time'))
+  document.querySelectorAll('#test-config .wordCount').forEach(removeClass('hidden'))
 }
 
 const changeMode = target =>  {

@@ -47,7 +47,7 @@ function setBlindMode(blind) {
 function changeTimeConfig(timeString) {
   const time = parseInt(timeString)
   config.time = time
-  removeClass('active')(document.querySelector('#test-config .time button'))
+  document.querySelectorAll('#test-config .time button').forEach(removeClass('active'))
   const timeToDisplay = ([15, 30, 60, 120].includes(time))
     ? time
     : 'custom'
@@ -57,7 +57,7 @@ function changeTimeConfig(timeString) {
 function changeWordCount(wordCountString) {
   const wordCount = parseInt(wordCountString)
   config.words = wordCount
-  removeClass('active')(document.querySelector('#test-config .wordCount button'))
+  document.querySelectorAll('#test-config .wordCount button').forEach(removeClass('active'))
   const wordCountToDisplay = ([10, 25, 50, 100, 200].includes(wordCount))
     ? wordCount
     : 'custom'
