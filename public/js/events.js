@@ -44,7 +44,7 @@ document.getElementById('reset-test-button').addEventListener('click', () => res
 
 document.getElementById('reset-test-button-with-same-wordset').addEventListener('click', () => resetTest(true))
 
-document.getElementById('stop-test-button').addEventListener('click', resetTest)
+document.getElementById('stop-test-button').addEventListener('click', () => resetTest(true))
 
 document.getElementById('wordsWrapper').addEventListener('click', focusWords)
 
