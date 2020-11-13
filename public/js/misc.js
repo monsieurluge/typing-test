@@ -43,38 +43,11 @@ function mean(array) {
 }
 
 function showNotification(text, time) {
-  let noti = $("#notification");
-  noti.removeClass('hidden')
-  noti.text(text);
-  noti.css("top", `-${noti.outerHeight()}px`);
-  noti.stop(true, false).animate(
-    {
-      top: "1rem",
-    },
-    250,
-    "swing",
-    () => {
-      noti.stop(true, false).animate(
-        {
-          opacity: 1,
-        },
-        time,
-        () => {
-          noti.stop(true, false).animate(
-            {
-              top: `-${noti.outerHeight()}px`,
-            },
-            250,
-            "swing",
-            () => {
-              noti.text("");
-              noti.addClass('hidden')
-            }
-          );
-        }
-      );
-    }
-  );
+  const element = document.getElementById('notification')
+  clearTimeout(notificationTimer)
+  element.textContent = text
+  addClass('displayed')(element)
+  notificationTimer = setTimeout(() => removeClass('displayed')(element), 4000)
 }
 
 function getLastChar(word) {

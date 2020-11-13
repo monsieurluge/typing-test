@@ -8,6 +8,7 @@ let testActive = false
 let testEnd = 0
 let testStart = 0
 let timer = null
+let notificationTimer = null
 let wordsList = []
 
 const resultElement = document.getElementById('result')

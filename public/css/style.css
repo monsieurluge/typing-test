@@ -229,13 +229,20 @@ button:hover key {
 
 #notification {
   position: absolute;
-  top: 1.5rem;
+  top: -2rem;
   right: 1.5rem;
   padding: 0.4em 1em;
   font-size: 0.75rem;
   color: var(--bg-color);
   background-color: var(--text-color);
   border-radius: var(--roundness);
+  opacity: 0;
+  transition: top 0.5s, opacity 0.5s;
+}
+
+#notification.displayed {
+  top: 1.5rem;
+  opacity: 1;
 }
 
 #customMode2PopupWrapper {
