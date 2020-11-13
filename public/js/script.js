@@ -349,40 +349,31 @@ function calculateStats() {
 }
 
 function showResult(difficultyFailed = false) {
-  resultCalculating = true;
-  resultVisible = true;
-  testActive = false;
-  disableFocus();
-  hideCaret();
-  showResultButtonsPanel();
-  const stats = calculateStats();
-  const testtime = stats.time;
-
-  $("#typingTest").addClass("hidden");
-  $("#result .main .wpm").text(Math.round(stats.wpm));
-  $("#result .main .wpm").attr("aria-label", stats.wpm + ` (${roundTo2(stats.wpm * 5)} cpm)`);
-  $("#result .main .acc").text(Math.floor(stats.acc) + "%");
-  $("#result .main .acc").attr("aria-label", stats.acc + "%");
-  $("#result .details .time").text(Math.round(testtime) + "s");
-
-  let correctcharpercent = roundTo2(
+  resultCalculating = true
+  resultVisible = true
+  testActive = false
+  disableFocus()
+  hideCaret()
+  showResultButtonsPanel()
+  const stats = calculateStats()
+  const testtime = stats.time
+  const correctcharpercent = roundTo2(
     ((stats.correctChars + stats.correctSpaces) /
       (stats.correctChars + stats.correctSpaces + stats.incorrectChars)) *
       100
-  );
-  $("#result .details .char").text(testtime + "s");
-  $("#result .details .char").attr("aria-label", `${correctcharpercent}%`);
-  $("#words").removeClass("blurred");
-  $("#result .details .char").text(stats.correctChars + stats.correctSpaces + "/" + stats.incorrectChars);
+  )
 
-  setTimeout(function () {
-    $("#result").removeClass("hidden").css("opacity", 0).animate(
-      {
-        opacity: 1,
-      },
-      125
-    );
-  }, 125);
+  addClass('hidden')(document.getElementById('typingTest'))
+  document.querySelector('#result .main .wpm').textContent = ''.concat(Math.round(stats.wpm))
+  document.querySelector('#result .main .wpm').setAttribute('aria-label', `${stats.wpm} (${roundTo2(stats.wpm * 5)}cpm)`)
+  document.querySelector('#result .main .acc').textContent = `${Math.floor(stats.acc)}%`
+  document.querySelector('#result .main .acc').setAttribute('aria-label', `${stats.acc}%`)
+  document.querySelector('#result .details .time').textContent = `${Math.round(testtime)}s`
+  document.querySelector('#result .details .char').textContent = `${testtime}s`
+  document.querySelector('#result .details .char').setAttribute('aria-label', `${correctcharpercent}%`)
+  document.querySelector('#result .details .char').textContent = `${stats.correctChars + stats.correctSpaces}/${stats.incorrectChars}`
+
+  softShow(resultElement)(() => ({}))
 }
 
 function startTest() {
