@@ -1,35 +1,35 @@
-let accuracyStats = { correct: 0, incorrect: 0 }
-let currentInput = ''
+let accuracyStats      = { correct: 0, incorrect: 0 }
+let currentInput       = ''
 let currentWordElement = undefined
-let inputHistory = []
-let resultCalculating = false
-let resultVisible = false
-let testActive = false
-let testEnd = 0
-let testStart = 0
-let timer = null
-let notificationTimer = null
-let wordsList = []
+let inputHistory       = []
+let notificationTimer  = null
+let resultCalculating  = false
+let resultVisible      = false
+let testActive         = false
+let testEnd            = 0
+let testStart          = 0
+let timer              = null
+let wordsList          = []
 
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']
-const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
+const excludedTestKeys     = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
 
 // ---------------------------------------------------------- FIXED DOM ELEMENTS
 
-const resultElement = document.getElementById('result')
-const caretElement = document.getElementById('caret')
-const notificationElement = document.getElementById('notification')
-const modePopupWrapperElement = document.getElementById('customMode2PopupWrapper')
-const modePopupElement = document.getElementById('customMode2Popup')
-const resetTestButtonElement = document.getElementById('reset-test-button')
+const resultElement                         = document.getElementById('result')
+const caretElement                          = document.getElementById('caret')
+const notificationElement                   = document.getElementById('notification')
+const modePopupWrapperElement               = document.getElementById('customMode2PopupWrapper')
+const modePopupElement                      = document.getElementById('customMode2Popup')
+const resetTestButtonElement                = document.getElementById('reset-test-button')
 const resetTestWithSameWordsetButtonElement = document.getElementById('reset-test-button-with-same-wordset')
-const stopTestButtonElement = document.getElementById('stop-test-button')
-const blindModeButtonElement = document.getElementById('blindMode')
-const wordsWrapperElement = document.getElementById('wordsWrapper')
-const wordsInputElement = document.getElementById('wordsInput')
-const wordsElement = document.getElementById('words')
-const testElement = document.getElementById('typingTest')
-const bottomPanelsElement = document.getElementById('bottom-panels')
+const stopTestButtonElement                 = document.getElementById('stop-test-button')
+const blindModeButtonElement                = document.getElementById('blindMode')
+const wordsWrapperElement                   = document.getElementById('wordsWrapper')
+const wordsInputElement                     = document.getElementById('wordsInput')
+const wordsElement                          = document.getElementById('words')
+const testElement                           = document.getElementById('typingTest')
+const bottomPanelsElement                   = document.getElementById('bottom-panels')
 
 // ----------------------------------------------------------- DATA MANIPULATION
 

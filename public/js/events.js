@@ -39,7 +39,7 @@ document.querySelector('#customMode2Popup .button').addEventListener('click', ap
 
 document.addEventListener('mousemove', disableFocus)
 
-document.getElementById('blindMode').addEventListener('click', toggleBlindMode)
+blindModeButtonElement.addEventListener('click', toggleBlindMode)
 
 resetTestButtonElement.addEventListener('click', () => resetTest(false))
 
@@ -81,7 +81,7 @@ document.querySelector('#customMode2Popup input').addEventListener('keyup', even
   if (event.code === 'Enter') applyMode2Popup()
 })
 
-document.getElementById('wordsInput').addEventListener('focus', () => {
+wordsInputElement.addEventListener('focus', () => {
   showCaret()
   testActive
     ? showTestRunningPanel()
@@ -90,21 +90,21 @@ document.getElementById('wordsInput').addEventListener('focus', () => {
 
 // ------------------------------------------------------------------- test keys
 
-document.getElementById('wordsInput').addEventListener('keydown', event => {
+wordsInputElement.addEventListener('keydown', event => {
   if (false === testActive) return
   if (event.code !== 'Backspace') return
   event.preventDefault()
   eraseCharacter()
 })
 
-document.getElementById('wordsInput').addEventListener('keydown', event => {
+wordsInputElement.addEventListener('keydown', event => {
   if (false === testActive) return
   if (event.key !== ' ') return
   event.preventDefault()
   jumpToNextWord()
 })
 
-document.getElementById('wordsInput').addEventListener('keydown', event => {
+wordsInputElement.addEventListener('keydown', event => {
   if (excludedTestKeycodes.includes(event.code)) return
   if (excludedTestKeys.includes(event.key)) return
   if (false === testActive) startTest()
@@ -112,7 +112,7 @@ document.getElementById('wordsInput').addEventListener('keydown', event => {
   handleTyping(event.key)
 })
 
-document.getElementById('wordsInput').addEventListener('keydown', event => {
+wordsInputElement.addEventListener('keydown', event => {
   if (event.code === 'Tab' && testActive) {
     disableFocus()
   }
@@ -120,7 +120,7 @@ document.getElementById('wordsInput').addEventListener('keydown', event => {
 
 // ----------------------------------------------------------------- misc events
 
-document.getElementById('wordsInput').addEventListener('blur', hideCaret)
+wordsInputElement.addEventListener('blur', hideCaret)
 
 window.addEventListener('beforeunload', event => {
   if (false === testActive) return
