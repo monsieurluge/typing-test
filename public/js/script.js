@@ -405,10 +405,10 @@ function showCustomMode2Popup(mode) {
   softShow(document.getElementById('customMode2PopupWrapper'))(() => {
     if (mode === 'time') {
       document.querySelector('#customMode2Popup .title').textContent = 'Test length'
-      $('#customMode2Popup').attr('mode', 'time')
+      document.getElementById('customMode2Popup').setAttribute('mode', 'time')
     } else if (mode === 'words') {
       document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
-      $('#customMode2Popup').attr('mode', 'words')
+      document.getElementById('customMode2Popup').setAttribute('mode', 'words')
     }
     focusWords()
   })
@@ -419,8 +419,8 @@ function hideCustomMode2Popup() {
 }
 
 function applyMode2Popup() {
-  const mode = $('#customMode2Popup').attr('mode')
-  const val = $('#customMode2Popup input').val()
+  const mode = document.getElementById('customMode2Popup').getAttribute('mode')
+  const val = document.querySelector('#customMode2Popup input').value
   if (mode === 'time') {
     if (val !== null && !isNaN(val) && val > 0) {
       changeTimeConfig(val)
