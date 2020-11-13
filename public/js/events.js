@@ -31,9 +31,9 @@ document.querySelectorAll('#test-config .wordCount button').forEach(button => bu
   }
 }))
 
-document.getElementById('customMode2PopupWrapper').addEventListener('click', hideCustomMode2Popup)
+modePopupWrapperElement.addEventListener('click', hideCustomMode2Popup)
 
-document.getElementById('customMode2Popup').addEventListener('click', event => event.stopPropagation())
+modePopupElement.addEventListener('click', event => event.stopPropagation())
 
 document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
 
@@ -41,13 +41,13 @@ document.addEventListener('mousemove', disableFocus)
 
 document.getElementById('blindMode').addEventListener('click', toggleBlindMode)
 
-document.getElementById('reset-test-button').addEventListener('click', () => resetTest(false))
+resetTestButtonElement.addEventListener('click', () => resetTest(false))
 
-document.getElementById('reset-test-button-with-same-wordset').addEventListener('click', () => resetTest(true))
+resetTestWithSameWordsetButtonElement.addEventListener('click', () => resetTest(true))
 
-document.getElementById('stop-test-button').addEventListener('click', () => resetTest(true))
+stopTestButtonElement.addEventListener('click', () => resetTest(true))
 
-document.getElementById('wordsWrapper').addEventListener('click', focusWords)
+wordsWrapperElement.addEventListener('click', focusWords)
 
 document.querySelector('#test-config button:not(.custom)').addEventListener('click', focusWords)
 
@@ -65,15 +65,15 @@ document.addEventListener('keyup', event => {
   }
 })
 
-document.getElementById('reset-test-button').addEventListener('keyup', event => {
+resetTestButtonElement.addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-document.getElementById('stop-test-button').addEventListener('keyup', event => {
+stopTestButtonElement.addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-document.getElementById('reset-test-button-with-same-wordset').addEventListener('keyup', event => {
+resetTestWithSameWordsetButtonElement.addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest(true)
 })
 

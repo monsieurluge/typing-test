@@ -11,11 +11,25 @@ let timer = null
 let notificationTimer = null
 let wordsList = []
 
-const resultElement = document.getElementById('result')
-const caretElement = document.getElementById('caret')
-
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']
 const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
+
+// ---------------------------------------------------------- FIXED DOM ELEMENTS
+
+const resultElement = document.getElementById('result')
+const caretElement = document.getElementById('caret')
+const notificationElement = document.getElementById('notification')
+const modePopupWrapperElement = document.getElementById('customMode2PopupWrapper')
+const modePopupElement = document.getElementById('customMode2Popup')
+const resetTestButtonElement = document.getElementById('reset-test-button')
+const resetTestWithSameWordsetButtonElement = document.getElementById('reset-test-button-with-same-wordset')
+const stopTestButtonElement = document.getElementById('stop-test-button')
+const blindModeButtonElement = document.getElementById('blindMode')
+const wordsWrapperElement = document.getElementById('wordsWrapper')
+const wordsInputElement = document.getElementById('wordsInput')
+const wordsElement = document.getElementById('words')
+const testElement = document.getElementById('typingTest')
+const bottomPanelsElement = document.getElementById('bottom-panels')
 
 // ----------------------------------------------------------- DATA MANIPULATION
 
@@ -50,21 +64,21 @@ const loadCookie = fallback => {
 const resetTest = (withSameWordset = false) => {
   stopTestTimer()
   showTestConfigPanel()
-  document.getElementById('words').style.marginTop = 0
+  wordsElement.style.marginTop = 0
 
   softHide(resultElement)(() => {
     if (false === withSameWordset) newWordsSet()
-    prepareWords(document.getElementById('words'))
+    prepareWords(wordsElement)
     resetTestData()
     addClass('active')(currentWordElement)
-    updateCaretPosition();
-    softShow(document.getElementById('typingTest'))(focusWords)
+    updateCaretPosition()
+    softShow(testElement)(focusWords)
   })
 }
 
 const focusWords = () => {
-  if (isHidden(document.getElementById('wordsWrapper'))) return
-  document.getElementById('wordsInput').focus()
+  if (isHidden(wordsWrapperElement)) return
+  wordsInputElement.focus()
 }
 
 const enableTimeMode = () => {
@@ -90,12 +104,12 @@ const changeMode = target =>  {
 }
 
 const enableFocus = () => {
-  addClass('focus')(document.getElementById('bottom-panels'))
+  addClass('focus')(bottomPanelsElement)
   addClass('no-cursor')(document.querySelector('body'))
 }
 
 const disableFocus = () => {
-  removeClass('focus')(document.getElementById('bottom-panels'))
+  removeClass('focus')(bottomPanelsElement)
   removeClass('no-cursor')(document.querySelector('body'))
 }
 
@@ -302,7 +316,7 @@ function showResult(difficultyFailed = false) {
       100
   )
 
-  addClass('hidden')(document.getElementById('typingTest'))
+  addClass('hidden')(testElement)
   document.querySelector('#result .main .wpm').textContent = ''.concat(Math.round(stats.wpm))
   document.querySelector('#result .main .wpm').setAttribute('aria-label', `${stats.wpm} (${roundTo2(stats.wpm * 5)}cpm)`)
   document.querySelector('#result .main .acc').textContent = `${Math.floor(stats.acc)}%`
@@ -341,24 +355,24 @@ function stopTestTimer() {
 }
 
 function showCustomMode2Popup(mode) {
-  softShow(document.getElementById('customMode2PopupWrapper'))(() => {
+  softShow(modePopupWrapperElement)(() => {
     if (mode === 'time') {
       document.querySelector('#customMode2Popup .title').textContent = 'Test length'
-      document.getElementById('customMode2Popup').setAttribute('mode', 'time')
+      modePopupElement.setAttribute('mode', 'time')
     } else if (mode === 'words') {
       document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
-      document.getElementById('customMode2Popup').setAttribute('mode', 'words')
+      modePopupElement.setAttribute('mode', 'words')
     }
     focusWords()
   })
 }
 
 function hideCustomMode2Popup() {
-  softHide(document.getElementById('customMode2PopupWrapper'))(() => ({}))
+  softHide(modePopupWrapperElement)(() => ({}))
 }
 
 function applyMode2Popup() {
-  const mode = document.getElementById('customMode2Popup').getAttribute('mode')
+  const mode = modePopupElement.getAttribute('mode')
   const val = document.querySelector('#customMode2Popup input').value
   if (mode === 'time') {
     if (val !== null && !isNaN(val) && val > 0) {
@@ -404,8 +418,8 @@ function eraseCharacter() {
     currentWordElement = currentWordElement.previousElementSibling
     if (currentWordElement.nextElementSibling.offsetTop > currentWordElement.offsetTop) {
       const wordHeight = currentWordElement.offsetHeight
-      const currentLineOffset = document.getElementById('words').style.marginTop
-      document.getElementById('words').style.marginTop = `calc(${currentLineOffset} + 2.3rem)`
+      const currentLineOffset = wordsElement.style.marginTop
+      wordsElement.style.marginTop = `calc(${currentLineOffset} + 2.3rem)`
     }
   }
   compareInput(!config.blindMode)
@@ -431,8 +445,8 @@ function jumpToNextWord() {
   addClass('active')(currentWordElement)
   if (currentWordElement.previousElementSibling.offsetTop < currentWordElement.offsetTop) {
     const wordHeight = currentWordElement.offsetHeight
-    const currentLineOffset = document.getElementById('words').style.marginTop
-    document.getElementById('words').style.marginTop = `calc(${currentLineOffset} - 2.3rem)`
+    const currentLineOffset = wordsElement.style.marginTop
+    wordsElement.style.marginTop = `calc(${currentLineOffset} - 2.3rem)`
   }
   if (config.mode === 'time') addWordToTest()
   updateCaretPosition()

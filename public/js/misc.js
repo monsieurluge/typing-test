@@ -43,11 +43,10 @@ function mean(array) {
 }
 
 function showNotification(text, time) {
-  const element = document.getElementById('notification')
   clearTimeout(notificationTimer)
-  element.textContent = text
-  addClass('displayed')(element)
-  notificationTimer = setTimeout(() => removeClass('displayed')(element), 4000)
+  notificationElement.textContent = text
+  addClass('displayed')(notificationElement)
+  notificationTimer = setTimeout(() => removeClass('displayed')(notificationElement), 4000)
 }
 
 function getLastChar(word) {
