@@ -8,7 +8,11 @@ let testActive = false
 let testEnd = 0
 let testStart = 0
 let timer = null
+let notificationTimer = null
 let wordsList = []
+
+const resultElement = document.getElementById('result')
+const caretElement = document.getElementById('caret')
 
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']
 const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
@@ -24,28 +28,32 @@ const removeClass = className => element => {
 }
 
 const hardHide = element => () => {
-  element.addClass('hidden')
+  addClass('hidden')(element)
 }
 
 const hardShow = element => () => {
-  element.removeClass('hidden')
+  removeClass('hidden')(element)
 }
 
 const softHide = element => onDone => {
-  element
-    .stop(true, true)
-    .animate({ opacity: 0 }, 125, onDone)
-    .addClass('hidden')
+  // element
+  //   .stop(true, true)
+  //   .animate({ opacity: 0 }, 125, onDone)
+  //   .addClass('hidden')
+  addClass('hidden')(element)
+  onDone()
 }
 
 const softShow = element => onDone => {
-  element
-    .stop(true, true)
-    .removeClass('hidden')
-    .animate({ opacity: 1 }, 125, onDone)
+  // element
+  //   .stop(true, true)
+  //   .removeClass('hidden')
+  //   .animate({ opacity: 1 }, 125, onDone)
+  removeClass('hidden')(element)
+  onDone()
 }
 
-const isHidden = element => element.hasClass('hidden')
+const isHidden = element => element.classList.contains('hidden')
 
 const hideBottomPanel = panel => {
   removeClass('opened')(panel)
@@ -71,13 +79,13 @@ const showTestRunningPanel = () => {
   enableBottomPanel('test-running')
 }
 
-const hideCaret = hardHide($('#caret'))
+const hideCaret = hardHide(caretElement)
 
 const showCaret = () => {
-  if (false === isHidden($('#result'))) return
+  if (false === isHidden(resultElement)) return
   updateCaretPosition()
-  hardShow($('#caret'))()
-  addClass('flashing')(document.getElementById('caret'))
+  hardShow(caretElement)()
+  addClass('flashing')(caretElement)
 }
 
 // ----------------------------------------------------------- DATA MANIPULATION
@@ -103,38 +111,38 @@ const loadCookie = fallback => {
 
 const resetTest = (withSameWordset = false) => {
   stopTestTimer()
-  hideCaret()
-  disableFocus()
   showTestConfigPanel()
   document.getElementById('words').style.marginTop = 0
 
-  softHide($('#result'))(() => {
+  softHide(resultElement)(() => {
     if (false === withSameWordset) newWordsSet()
-    prepareWords($('#words'))
+    prepareWords(document.getElementById('words'))
     resetTestData()
     addClass('active')(currentWordElement)
     updateCaretPosition();
-    softShow($('#typingTest'))(focusWords)
+    softShow(document.getElementById('typingTest'))(focusWords)
   })
 }
 
 const focusWords = () => {
-  if (isHidden($('#wordsWrapper'))) return
-  $('#wordsInput').focus()
+  if (isHidden(document.getElementById('wordsWrapper'))) return
+  document.getElementById('wordsInput').focus()
 }
 
 const enableTimeMode = () => {
-  $('#test-config button.mode').removeClass('active')
-  $("#test-config button.mode[mode='time']").addClass('active')
-  $('#test-config .wordCount').addClass('hidden')
-  $('#test-config .time').removeClass('hidden')
+  document.querySelectorAll('#test-config button.mode').forEach(removeClass('active'))
+  addClass('active')(document.querySelector('#test-config button.mode[mode="time"]'))
+  addClass('hidden')(document.querySelector('#test-config .wordCount'))
+  document.querySelectorAll('#test-config .time').forEach(removeClass('hidden'))
+  resetTest()
 }
 
 const enableWordsMode = () => {
-  $('#test-config button.mode').removeClass('active')
-  $("#test-config button.mode[mode='words']").addClass('active')
-  $('#test-config .wordCount').removeClass('hidden')
-  $('#test-config .time').addClass('hidden')
+  document.querySelectorAll('#test-config button.mode').forEach(removeClass('active'))
+  addClass('active')(document.querySelector('#test-config button.mode[mode="words"]'))
+  addClass('hidden')(document.querySelector('#test-config .time'))
+  document.querySelectorAll('#test-config .wordCount').forEach(removeClass('hidden'))
+  resetTest()
 }
 
 const changeMode = target =>  {
@@ -144,13 +152,13 @@ const changeMode = target =>  {
 }
 
 const enableFocus = () => {
-  $('#bottom-panels').addClass('focus')
-  $('body').css('cursor', 'none')
+  addClass('focus')(document.getElementById('bottom-panels'))
+  addClass('no-cursor')(document.querySelector('body'))
 }
 
 const disableFocus = () => {
-  $('#bottom-panels').removeClass('focus');
-  $('body').css('cursor', 'default');
+  removeClass('focus')(document.getElementById('bottom-panels'))
+  removeClass('no-cursor')(document.querySelector('body'))
 }
 
 const addWordToTest = () => {
@@ -193,7 +201,7 @@ const generateWordTags = (content, word) => {
 }
 
 const prepareWords = container => {
-  container.html(wordsList.reduce(generateWordTags, '<div class="filler"></div>'))
+  container.innerHTML = wordsList.reduce(generateWordTags, '<div class="filler"></div>')
 }
 
 function compareInput(showError) {
@@ -225,21 +233,18 @@ function highlightBadWord(element, showError) {
 }
 
 const updateCaretPosition = () => {
-  const caret = $('#caret')
   const inputLength = currentInput.length
   const currentLetterIndex = inputLength - 1 < 0 ? 0 : inputLength - 1
   const currentLetter = currentWordElement.querySelectorAll('letter')[currentLetterIndex]
-  if ($(currentLetter).length === 0) return
+  if (currentLetter === undefined) return
   const currentLetterPosLeft = currentLetter.offsetLeft
   const newLeft = (inputLength === 0)
-    ? currentLetterPosLeft - caret.width() / 2
-    : currentLetterPosLeft + $(currentLetter).width() - caret.width() / 2
-  caret
-    .stop(true, true)
-    .animate({ left: newLeft }, 100)
-  removeClass('flashing')(document.getElementById('caret'))
-  document.getElementById('caret').offsetHeight
-  addClass('flashing')(document.getElementById('caret'))
+    ? currentLetterPosLeft - caretElement.offsetWidth / 2
+    : currentLetterPosLeft + currentLetter.offsetWidth - caretElement.offsetWidth / 2
+  caret.style.left = `${newLeft}px`
+  removeClass('flashing')(caretElement)
+  caretElement.offsetWidth
+  addClass('flashing')(caretElement)
 }
 
 function countChars() {
@@ -344,110 +349,32 @@ function calculateStats() {
   };
 }
 
-function showCustomMode2Popup(mode) {
-  if (isHidden($("#customMode2PopupWrapper"))) {
-    $("#customMode2PopupWrapper")
-      .stop(true, true)
-      .css("opacity", 0)
-      .removeClass("hidden")
-      .animate({ opacity: 1 }, 100, (e) => {
-        if (mode == "time") {
-          $("#customMode2Popup .text").text("Test length");
-          $("#customMode2Popup").attr("mode", "time");
-        } else if (mode == "words") {
-          $("#customMode2Popup .text").text("Word amount");
-          $("#customMode2Popup").attr("mode", "words");
-        }
-        $("#customMode2Popup input").focus().select();
-      });
-  }
-}
-
-function hideCustomMode2Popup() {
-  if (false === isHidden($("#customMode2PopupWrapper"))) {
-    $("#customMode2PopupWrapper")
-      .stop(true, true)
-      .css("opacity", 1)
-      .animate(
-        {
-          opacity: 0,
-        },
-        100,
-        (e) => {
-          $("#customMode2PopupWrapper").addClass("hidden");
-        }
-      );
-  }
-}
-
-function applyMode2Popup() {
-  let mode = $("#customMode2Popup").attr("mode");
-  let val = $("#customMode2Popup input").val();
-
-  if (mode == "time") {
-    if (val !== null && !isNaN(val) && val > 0) {
-      changeTimeConfig(val);
-      saveConfigToCookie()
-      manualRestart = true;
-      restartTest();
-      if (val >= 1800) {
-        showNotification("Stay safe and take breaks!", 3000);
-      }
-    } else {
-      showNotification("Custom time must be at least 1", 3000);
-    }
-  } else if (mode == "words") {
-    if (val !== null && !isNaN(val) && val > 0) {
-      changeWordCount(val);
-      saveConfigToCookie()
-      manualRestart = true;
-      restartTest();
-      if (val > 2000) {
-        showNotification("Stay safe and take breaks!", 3000);
-      }
-    } else {
-      showNotification("Custom word amount must be at least 1", 3000);
-    }
-  }
-
-  hideCustomMode2Popup();
-}
-
 function showResult(difficultyFailed = false) {
-  resultCalculating = true;
-  resultVisible = true;
-  testActive = false;
-  disableFocus();
-  hideCaret();
-  showResultButtonsPanel();
-  const stats = calculateStats();
-  const testtime = stats.time;
-
-  $("#typingTest").addClass("hidden");
-  $("#result .main .wpm").text(Math.round(stats.wpm));
-  $("#result .main .wpm").attr("aria-label", stats.wpm + ` (${roundTo2(stats.wpm * 5)} cpm)`);
-  $("#result .main .acc").text(Math.floor(stats.acc) + "%");
-  $("#result .main .acc").attr("aria-label", stats.acc + "%");
-  $("#result .details .time").text(Math.round(testtime) + "s");
-
-  let correctcharpercent = roundTo2(
+  resultCalculating = true
+  resultVisible = true
+  testActive = false
+  disableFocus()
+  hideCaret()
+  showResultButtonsPanel()
+  const stats = calculateStats()
+  const testtime = stats.time
+  const correctcharpercent = roundTo2(
     ((stats.correctChars + stats.correctSpaces) /
       (stats.correctChars + stats.correctSpaces + stats.incorrectChars)) *
       100
-  );
-  $("#result .details .char").text(testtime + "s");
-  $("#result .details .char").attr("aria-label", `${correctcharpercent}%`);
-  $("#words").removeClass("blurred");
-  $("#result .details .char").text(stats.correctChars + stats.correctSpaces + "/" + stats.incorrectChars);
+  )
 
-  setTimeout(function () {
-    $("#result").removeClass("hidden").css("opacity", 0).animate(
-      {
-        opacity: 1,
-      },
-      125
-    );
-  }, 125);
+  addClass('hidden')(document.getElementById('typingTest'))
+  document.querySelector('#result .main .wpm').textContent = ''.concat(Math.round(stats.wpm))
+  document.querySelector('#result .main .wpm').setAttribute('aria-label', `${stats.wpm} (${roundTo2(stats.wpm * 5)}cpm)`)
+  document.querySelector('#result .main .acc').textContent = `${Math.floor(stats.acc)}%`
+  document.querySelector('#result .main .acc').setAttribute('aria-label', `${stats.acc}%`)
+  document.querySelector('#result .details .time').textContent = `${Math.round(testtime)}s`
+  document.querySelector('#result .details .char').textContent = `${testtime}s`
+  document.querySelector('#result .details .char').setAttribute('aria-label', `${correctcharpercent}%`)
+  document.querySelector('#result .details .char').textContent = `${stats.correctChars + stats.correctSpaces}/${stats.incorrectChars}`
+
+  softShow(resultElement)(() => ({}))
 }
 
 function startTest() {
@@ -476,25 +403,25 @@ function stopTestTimer() {
 }
 
 function showCustomMode2Popup(mode) {
-  softShow($('#customMode2PopupWrapper'))(() => {
+  softShow(document.getElementById('customMode2PopupWrapper'))(() => {
     if (mode === 'time') {
-      $('#customMode2Popup .text').text('Test length')
-      $('#customMode2Popup').attr('mode', 'time')
+      document.querySelector('#customMode2Popup .title').textContent = 'Test length'
+      document.getElementById('customMode2Popup').setAttribute('mode', 'time')
     } else if (mode === 'words') {
-      $('#customMode2Popup .text').text('Word amount')
-      $('#customMode2Popup').attr('mode', 'words')
+      document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
+      document.getElementById('customMode2Popup').setAttribute('mode', 'words')
     }
-    $('#customMode2Popup input').focus().select()
+    focusWords()
   })
 }
 
 function hideCustomMode2Popup() {
-  softHide($("#customMode2PopupWrapper"))(() => ({}))
+  softHide(document.getElementById('customMode2PopupWrapper'))(() => ({}))
 }
 
 function applyMode2Popup() {
-  const mode = $('#customMode2Popup').attr('mode')
-  const val = $('#customMode2Popup input').val()
+  const mode = document.getElementById('customMode2Popup').getAttribute('mode')
+  const val = document.querySelector('#customMode2Popup input').value
   if (mode === 'time') {
     if (val !== null && !isNaN(val) && val > 0) {
       changeTimeConfig(val)

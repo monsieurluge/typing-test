@@ -1,61 +1,55 @@
 // ----------------------------------------------------------- mouse interaction
 
-$(document).on('click', '#test-config button.mode', event => {
-  if ($(event.currentTarget).hasClass('active')) return
-  changeMode($(event.currentTarget).attr('mode'))
+document.querySelectorAll('#test-config button.mode').forEach(button => button.addEventListener('click', event => {
+  if (event.target.classList.contains('active')) return
+  changeMode(event.target.getAttribute('mode'))
   saveConfigToCookie()
-  $('#test-config button.mode').removeClass('active')
-  $(event.currentTarget).addClass('active')
-  resetTest()
-})
+  removeClass('active')(button)
+  addClass('active')(event.target)
+}))
 
-$(document).on('click', '#test-config .time button', event => {
-  const value = $(event.currentTarget).attr('timeConfig')
+document.querySelectorAll('#test-config .time button').forEach(button => button.addEventListener('click', () => {
+  const value = button.getAttribute('timeConfig')
   if (value === 'custom') {
     showCustomMode2Popup('time')
   } else {
     changeTimeConfig(value)
     saveConfigToCookie()
-    $('#wordsInput').focus()
+    focusWords()
   }
-})
+}))
 
-$(document).on('click', '#test-config .wordCount button', event => {
-  const value = $(event.currentTarget).attr('wordCount')
+document.querySelectorAll('#test-config .wordCount button').forEach(button => button.addEventListener('click', () => {
+  const value = button.getAttribute('wordCount')
   if (value === 'custom') {
     showCustomMode2Popup('words')
   } else {
     changeWordCount(value)
     saveConfigToCookie()
-    $('#wordsInput').focus()
+    focusWords()
     resetTest()
   }
-})
+}))
 
-$(document).on('click', '#blindMode', () => {
-  toggleBlindMode()
-  focusWords()
-})
+document.getElementById('customMode2PopupWrapper').addEventListener('click', hideCustomMode2Popup)
 
-$(document.body).on('click', '#reset-test-button', () => resetTest(false))
+document.getElementById('customMode2Popup').addEventListener('click', event => event.stopPropagation())
 
-$(document.body).on('click', '#reset-test-button-with-same-wordset', () => resetTest(true))
+document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
 
-$(document).on('click', '#stop-test-button', resetTest)
+document.addEventListener('mousemove', disableFocus)
 
-$(document).mousemove(event => {
-  if (event.originalEvent.movementX > 0 || event.originalEvent.movementY > 0) {
-    disableFocus()
-  }
-})
+document.getElementById('blindMode').addEventListener('click', toggleBlindMode)
 
-$('#customMode2PopupWrapper').click(event => {
-  if ($(event.target).attr('id') === 'customMode2PopupWrapper') hideCustomMode2Popup()
-})
+document.getElementById('reset-test-button').addEventListener('click', () => resetTest(false))
 
-$('#customMode2Popup .button').click(applyMode2Popup)
+document.getElementById('reset-test-button-with-same-wordset').addEventListener('click', () => resetTest(true))
 
-$('#wordsWrapper').on('click', focusWords)
+document.getElementById('stop-test-button').addEventListener('click', () => resetTest(true))
+
+document.getElementById('wordsWrapper').addEventListener('click', focusWords)
+
+document.querySelector('#test-config button:not(.custom)').addEventListener('click', focusWords)
 
 // --------------------------------------------------------- shortcuts and menus
 
@@ -71,23 +65,23 @@ document.addEventListener('keyup', event => {
   }
 })
 
-$('#reset-test-button').keypress(event => {
+document.getElementById('reset-test-button').addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-$('#stop-test-button').keypress(event => {
+document.getElementById('stop-test-button').addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-$('#reset-test-button-with-same-wordset').keypress(event => {
+document.getElementById('reset-test-button-with-same-wordset').addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest(true)
 })
 
-$("#customMode2Popup input").keypress(event => {
+document.querySelector('#customMode2Popup input').addEventListener('keyup', event => {
   if (event.code === 'Enter') applyMode2Popup()
 })
 
-$('#wordsInput').on('focus', () => {
+document.getElementById('wordsInput').addEventListener('focus', () => {
   showCaret()
   testActive
     ? showTestRunningPanel()
@@ -126,7 +120,7 @@ document.getElementById('wordsInput').addEventListener('keydown', event => {
 
 // ----------------------------------------------------------------- misc events
 
-$('#wordsInput').on('focusout', hideCaret)
+document.getElementById('wordsInput').addEventListener('blur', hideCaret)
 
 window.addEventListener('beforeunload', event => {
   if (false === testActive) return
