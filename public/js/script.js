@@ -64,7 +64,6 @@ const loadCookie = fallback => {
 const resetTest = (withSameWordset = false) => {
   stopTestTimer()
   showTestConfigPanel()
-  wordsElement.style.marginTop = 0
   softHide(resultElement)(() => {
     prepareTest(withSameWordset)
     softShow(testElement)(focusWords)
@@ -75,6 +74,7 @@ const prepareTest = (withSameWordset = false) => {
   if (false === withSameWordset) newWordsSet()
   prepareWords(wordsElement)
   resetTestData()
+  wordsElement.style.marginTop = 0
   addClass('active')(currentWordElement)
   updateCaretPosition()
 }
