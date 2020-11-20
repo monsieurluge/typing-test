@@ -34,16 +34,27 @@ const softShow = element => onDone => {
 
 const isHidden = element => element.classList.contains('hidden')
 
-const hideBottomPanel = panel => {
-  removeClass('opened')(panel)
-  removeClass('open')(panel)
-  addClass('close')(panel)
+const enableBottomPanel = name => {
+  document.querySelectorAll('.bottom-panel').forEach(panel => {
+    panel.id === name
+      ? openBottomPanel(panel)
+      : closeBottomPanel(panel)
+  })
 }
 
-const enableBottomPanel = name => {
-  document.querySelectorAll('.bottom-panel').forEach(hideBottomPanel)
-  removeClass('closed')(document.getElementById(name))
-  addClass('open')(document.getElementById(name))
+const openBottomPanel = panel => {
+  removeClass('closing')(panel)
+  removeClass('closed')(panel)
+  removeClass('hidden')(panel)
+  addClass('opening')(panel)
+  panel.offsetWidth
+}
+
+const closeBottomPanel = panel => {
+  removeClass('opening')(panel)
+  removeClass('opened')(panel)
+  addClass('closing')(panel)
+  panel.offsetWidth
 }
 
 const showTestConfigPanel = () => {

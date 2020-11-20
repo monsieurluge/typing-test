@@ -124,6 +124,14 @@ html {
   color: var(--sub-color);
 }
 
+.bottom-panel.closing {
+  animation: close-bottom-panel 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.bottom-panel.opening {
+  animation: open-bottom-panel 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
 .bottom-panel.opened {
   top: 0;
 }
@@ -193,14 +201,6 @@ button:hover key {
 
 #result-buttons .text-button:not(:last-child) {
   margin-right: 3rem;
-}
-
-.close {
-  animation: close-bottom-panel 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-.open {
-  animation: open-bottom-panel 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 /* ------------------------------------------------------------------ RESULTS */
