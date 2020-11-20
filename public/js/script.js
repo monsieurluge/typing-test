@@ -65,15 +65,18 @@ const resetTest = (withSameWordset = false) => {
   stopTestTimer()
   showTestConfigPanel()
   wordsElement.style.marginTop = 0
-
   softHide(resultElement)(() => {
-    if (false === withSameWordset) newWordsSet()
-    prepareWords(wordsElement)
-    resetTestData()
-    addClass('active')(currentWordElement)
-    updateCaretPosition()
+    prepareTest(withSameWordset)
     softShow(testElement)(focusWords)
   })
+}
+
+const prepareTest = (withSameWordset = false) => {
+  if (false === withSameWordset) newWordsSet()
+  prepareWords(wordsElement)
+  resetTestData()
+  addClass('active')(currentWordElement)
+  updateCaretPosition()
 }
 
 const focusWords = () => {
@@ -86,7 +89,9 @@ const enableTimeMode = () => {
   addClass('active')(document.querySelector('#test-config button.mode[mode="time"]'))
   addClass('hidden')(document.querySelector('#test-config .wordCount'))
   document.querySelectorAll('#test-config .time').forEach(removeClass('hidden'))
-  resetTest()
+  testActive
+    ? resetTest()
+    : prepareTest()
 }
 
 const enableWordsMode = () => {
@@ -94,7 +99,9 @@ const enableWordsMode = () => {
   addClass('active')(document.querySelector('#test-config button.mode[mode="words"]'))
   addClass('hidden')(document.querySelector('#test-config .time'))
   document.querySelectorAll('#test-config .wordCount').forEach(removeClass('hidden'))
-  resetTest()
+  testActive
+    ? resetTest()
+    : prepareTest()
 }
 
 const changeMode = target =>  {
@@ -136,7 +143,7 @@ const modes = new Map([
 
 const startApp = () => {
   applyConfig(loadCookie(defaultConfig))
-  resetTest()
+  prepareTest()
 }
 const generateLettersTags = letters => {
   return letters
