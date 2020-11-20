@@ -83,9 +83,9 @@ document.querySelector('#customMode2Popup input').addEventListener('keyup', even
 
 wordsInputElement.addEventListener('focus', () => {
   showCaret()
-  testActive
-    ? showTestRunningPanel()
-    : showTestConfigPanel()
+  // testActive
+  //   ? showTestRunningPanel()
+  //   : showTestConfigPanel()
 })
 
 // ------------------------------------------------------------------- test keys
