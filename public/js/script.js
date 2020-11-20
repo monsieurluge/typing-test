@@ -106,8 +106,8 @@ const enableWordsMode = () => {
 
 const changeMode = target =>  {
   if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
-  modes.get(target)()
   config.mode = target
+  modes.get(target)()
 }
 
 const enableFocus = () => {
