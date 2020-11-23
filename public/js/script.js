@@ -14,23 +14,6 @@ let wordsList          = []
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']
 const excludedTestKeys     = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
 
-// ---------------------------------------------------------- FIXED DOM ELEMENTS
-
-const resultElement                         = document.getElementById('result')
-const caretElement                          = document.getElementById('caret')
-const notificationElement                   = document.getElementById('notification')
-const modePopupWrapperElement               = document.getElementById('customMode2PopupWrapper')
-const modePopupElement                      = document.getElementById('customMode2Popup')
-const resetTestButtonElement                = document.getElementById('reset-test-button')
-const resetTestWithSameWordsetButtonElement = document.getElementById('reset-test-button-with-same-wordset')
-const stopTestButtonElement                 = document.getElementById('stop-test-button')
-const blindModeButtonElement                = document.getElementById('blindMode')
-const wordsWrapperElement                   = document.getElementById('wordsWrapper')
-const wordsInputElement                     = document.getElementById('wordsInput')
-const wordsElement                          = document.getElementById('words')
-const testElement                           = document.getElementById('typingTest')
-const bottomPanelsElement                   = document.getElementById('bottom-panels')
-
 // ----------------------------------------------------------- DATA MANIPULATION
 
 const resetTestData = () => {
@@ -42,15 +25,6 @@ const resetTestData = () => {
 }
 
 // ------------------------------------------------------------------- FUNCTIONS
-
-const hideCaret = hardHide(caretElement)
-
-const showCaret = () => {
-  if (false === isHidden(resultElement)) return
-  updateCaretPosition()
-  hardShow(caretElement)()
-  addClass('flashing')(caretElement)
-}
 
 const loadCookie = fallback => {
   return document.cookie.split('; ')           // split all the cookies
@@ -110,16 +84,6 @@ const changeMode = target =>  {
   if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
   config.mode = target
   modes.get(target)()
-}
-
-const enableFocus = () => {
-  addClass('focus')(bottomPanelsElement)
-  addClass('no-cursor')(document.querySelector('body'))
-}
-
-const disableFocus = () => {
-  removeClass('focus')(bottomPanelsElement)
-  removeClass('no-cursor')(document.querySelector('body'))
 }
 
 const addWordToTest = () => {
@@ -359,18 +323,6 @@ function startTestTimer() {
 
 function stopTestTimer() {
   window.clearTimeout(timer)
-}
-
-function showCustomMode2Popup(mode) {
-  hardShow(modePopupWrapperElement)()
-  if (mode === 'time') {
-    document.querySelector('#customMode2Popup .title').textContent = 'Test length'
-    modePopupElement.setAttribute('mode', 'time')
-  } else if (mode === 'words') {
-    document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
-    modePopupElement.setAttribute('mode', 'words')
-  }
-  focusWords()
 }
 
 function applyMode2Popup() {
