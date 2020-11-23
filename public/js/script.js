@@ -66,7 +66,8 @@ const resetTest = (withSameWordset = false) => {
   showTestConfigPanel()
   hardHide(resultElement)()
   prepareTest(withSameWordset)
-  softShow(testElement)(focusWords)
+  hardShow(testElement)()
+  focusWords()
 }
 
 const prepareTest = (withSameWordset = false) => {
@@ -322,8 +323,7 @@ function showResult(difficultyFailed = false) {
       (stats.correctChars + stats.correctSpaces + stats.incorrectChars)) *
       100
   )
-
-  addClass('hidden')(testElement)
+  hardHide(testElement)()
   document.querySelector('#result .main .wpm').textContent = ''.concat(Math.round(stats.wpm))
   document.querySelector('#result .main .wpm').setAttribute('aria-label', `${stats.wpm} (${roundTo2(stats.wpm * 5)}cpm)`)
   document.querySelector('#result .main .acc').textContent = `${Math.floor(stats.acc)}%`
@@ -332,8 +332,7 @@ function showResult(difficultyFailed = false) {
   document.querySelector('#result .details .char').textContent = `${testtime}s`
   document.querySelector('#result .details .char').setAttribute('aria-label', `${correctcharpercent}%`)
   document.querySelector('#result .details .char').textContent = `${stats.correctChars + stats.correctSpaces}/${stats.incorrectChars}`
-
-  softShow(resultElement)(() => ({}))
+  hardShow(resultElement)()
 }
 
 function startTest() {
@@ -362,16 +361,15 @@ function stopTestTimer() {
 }
 
 function showCustomMode2Popup(mode) {
-  softShow(modePopupWrapperElement)(() => {
-    if (mode === 'time') {
-      document.querySelector('#customMode2Popup .title').textContent = 'Test length'
-      modePopupElement.setAttribute('mode', 'time')
-    } else if (mode === 'words') {
-      document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
-      modePopupElement.setAttribute('mode', 'words')
-    }
-    focusWords()
-  })
+  hardShow(modePopupWrapperElement)()
+  if (mode === 'time') {
+    document.querySelector('#customMode2Popup .title').textContent = 'Test length'
+    modePopupElement.setAttribute('mode', 'time')
+  } else if (mode === 'words') {
+    document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
+    modePopupElement.setAttribute('mode', 'words')
+  }
+  focusWords()
 }
 
 function applyMode2Popup() {

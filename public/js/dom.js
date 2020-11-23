@@ -14,15 +14,6 @@ const hardShow = element => () => {
   removeClass('hidden')(element)
 }
 
-const softShow = element => onDone => {
-  // element
-  //   .stop(true, true)
-  //   .removeClass('hidden')
-  //   .animate({ opacity: 1 }, 125, onDone)
-  hardShow(element)()
-  onDone()
-}
-
 const isHidden = element => element.classList.contains('hidden')
 
 const enableBottomPanel = name => {
