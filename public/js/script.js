@@ -77,6 +77,7 @@ const prepareTest = (withSameWordset = false) => {
   wordsElement.style.marginTop = 0
   addClass('active')(currentWordElement)
   updateCaretPosition()
+  showCaret()
 }
 
 const focusWords = () => {
