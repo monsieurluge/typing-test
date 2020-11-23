@@ -40,8 +40,8 @@ function toggleBlindMode() {
 function setBlindMode(blind) {
   config.blindMode = blind
   blind
-    ? addClass('active')(document.getElementById('blindMode'))
-    : removeClass('active')(document.getElementById('blindMode'))
+    ? addClass('active')(blindModeButtonElement)
+    : removeClass('active')(blindModeButtonElement)
 }
 
 function changeTimeConfig(timeString) {

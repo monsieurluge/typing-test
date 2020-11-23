@@ -27,27 +27,27 @@ document.querySelectorAll('#test-config .wordCount button').forEach(button => bu
     changeWordCount(value)
     saveConfigToCookie()
     focusWords()
-    resetTest()
+    prepareTest()
   }
 }))
 
-document.getElementById('customMode2PopupWrapper').addEventListener('click', hideCustomMode2Popup)
+modePopupWrapperElement.addEventListener('click', hardHide(modePopupWrapperElement))
 
-document.getElementById('customMode2Popup').addEventListener('click', event => event.stopPropagation())
+modePopupElement.addEventListener('click', event => event.stopPropagation())
 
 document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
 
 document.addEventListener('mousemove', disableFocus)
 
-document.getElementById('blindMode').addEventListener('click', toggleBlindMode)
+blindModeButtonElement.addEventListener('click', toggleBlindMode)
 
-document.getElementById('reset-test-button').addEventListener('click', () => resetTest(false))
+resetTestButtonElement.addEventListener('click', () => resetTest(false))
 
-document.getElementById('reset-test-button-with-same-wordset').addEventListener('click', () => resetTest(true))
+resetTestWithSameWordsetButtonElement.addEventListener('click', () => resetTest(true))
 
-document.getElementById('stop-test-button').addEventListener('click', () => resetTest(true))
+stopTestButtonElement.addEventListener('click', () => resetTest(true))
 
-document.getElementById('wordsWrapper').addEventListener('click', focusWords)
+wordsWrapperElement.addEventListener('click', focusWords)
 
 document.querySelector('#test-config button:not(.custom)').addEventListener('click', focusWords)
 
@@ -65,15 +65,15 @@ document.addEventListener('keyup', event => {
   }
 })
 
-document.getElementById('reset-test-button').addEventListener('keyup', event => {
+resetTestButtonElement.addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-document.getElementById('stop-test-button').addEventListener('keyup', event => {
+stopTestButtonElement.addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-document.getElementById('reset-test-button-with-same-wordset').addEventListener('keyup', event => {
+resetTestWithSameWordsetButtonElement.addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest(true)
 })
 
@@ -81,30 +81,25 @@ document.querySelector('#customMode2Popup input').addEventListener('keyup', even
   if (event.code === 'Enter') applyMode2Popup()
 })
 
-document.getElementById('wordsInput').addEventListener('focus', () => {
-  showCaret()
-  testActive
-    ? showTestRunningPanel()
-    : showTestConfigPanel()
-})
+wordsInputElement.addEventListener('focus', showCaret)
 
 // ------------------------------------------------------------------- test keys
 
-document.getElementById('wordsInput').addEventListener('keydown', event => {
+wordsInputElement.addEventListener('keydown', event => {
   if (false === testActive) return
   if (event.code !== 'Backspace') return
   event.preventDefault()
   eraseCharacter()
 })
 
-document.getElementById('wordsInput').addEventListener('keydown', event => {
+wordsInputElement.addEventListener('keydown', event => {
   if (false === testActive) return
   if (event.key !== ' ') return
   event.preventDefault()
   jumpToNextWord()
 })
 
-document.getElementById('wordsInput').addEventListener('keydown', event => {
+wordsInputElement.addEventListener('keydown', event => {
   if (excludedTestKeycodes.includes(event.code)) return
   if (excludedTestKeys.includes(event.key)) return
   if (false === testActive) startTest()
@@ -112,7 +107,7 @@ document.getElementById('wordsInput').addEventListener('keydown', event => {
   handleTyping(event.key)
 })
 
-document.getElementById('wordsInput').addEventListener('keydown', event => {
+wordsInputElement.addEventListener('keydown', event => {
   if (event.code === 'Tab' && testActive) {
     disableFocus()
   }
@@ -120,10 +115,36 @@ document.getElementById('wordsInput').addEventListener('keydown', event => {
 
 // ----------------------------------------------------------------- misc events
 
-document.getElementById('wordsInput').addEventListener('blur', hideCaret)
+wordsInputElement.addEventListener('blur', hideCaret)
 
 window.addEventListener('beforeunload', event => {
   if (false === testActive) return
   event.returnValue = ''
   return ''
+})
+
+document.querySelectorAll('.bottom-panel').forEach(panel => {
+  panel.addEventListener('animationstart', event => {
+    if (event.animationName === 'open-bottom-panel') {
+      removeClass('closing')(event.target)
+      removeClass('closed')(event.target)
+      hardShow(event.target)()
+    }
+    if (event.animationName === 'close-bottom-panel') {
+      removeClass('opening')(event.target)
+      removeClass('opened')(event.target)
+    }
+  })
+
+  panel.addEventListener('animationend', event => {
+    if (event.animationName === 'open-bottom-panel') {
+      addClass('opened')(event.target)
+      removeClass('opening')(event.target)
+    }
+    if (event.animationName === 'close-bottom-panel') {
+      addClass('closed')(event.target)
+      hardHide(event.target)()
+      removeClass('closing')(event.target)
+    }
+  })
 })

@@ -1,92 +1,35 @@
-let accuracyStats = { correct: 0, incorrect: 0 }
-let currentInput = ''
+let accuracyStats      = { correct: 0, incorrect: 0 }
+let currentInput       = ''
 let currentWordElement = undefined
-let inputHistory = []
-let resultCalculating = false
-let resultVisible = false
-let testActive = false
-let testEnd = 0
-let testStart = 0
-let timer = null
-let notificationTimer = null
-let wordsList = []
-
-const resultElement = document.getElementById('result')
-const caretElement = document.getElementById('caret')
+let inputHistory       = []
+let notificationTimer  = null
+let resultCalculating  = false
+let resultVisible      = false
+let testActive         = false
+let testEnd            = 0
+let testStart          = 0
+let timer              = null
+let wordsList          = []
 
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']
-const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
+const excludedTestKeys     = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
 
-// -------------------------------------------------------- ELEMENT MANIPULATION
+// ---------------------------------------------------------- FIXED DOM ELEMENTS
 
-const addClass = className => element => {
-  element.classList.add(className)
-}
-
-const removeClass = className => element => {
-  element.classList.remove(className)
-}
-
-const hardHide = element => () => {
-  addClass('hidden')(element)
-}
-
-const hardShow = element => () => {
-  removeClass('hidden')(element)
-}
-
-const softHide = element => onDone => {
-  // element
-  //   .stop(true, true)
-  //   .animate({ opacity: 0 }, 125, onDone)
-  //   .addClass('hidden')
-  addClass('hidden')(element)
-  onDone()
-}
-
-const softShow = element => onDone => {
-  // element
-  //   .stop(true, true)
-  //   .removeClass('hidden')
-  //   .animate({ opacity: 1 }, 125, onDone)
-  removeClass('hidden')(element)
-  onDone()
-}
-
-const isHidden = element => element.classList.contains('hidden')
-
-const hideBottomPanel = panel => {
-  removeClass('opened')(panel)
-  removeClass('open')(panel)
-  addClass('close')(panel)
-}
-
-const enableBottomPanel = name => {
-  document.querySelectorAll('.bottom-panel').forEach(hideBottomPanel)
-  removeClass('closed')(document.getElementById(name))
-  addClass('open')(document.getElementById(name))
-}
-
-const showTestConfigPanel = () => {
-  enableBottomPanel('test-config')
-}
-
-const showResultButtonsPanel = () => {
-  enableBottomPanel('result-buttons')
-}
-
-const showTestRunningPanel = () => {
-  enableBottomPanel('test-running')
-}
-
-const hideCaret = hardHide(caretElement)
-
-const showCaret = () => {
-  if (false === isHidden(resultElement)) return
-  updateCaretPosition()
-  hardShow(caretElement)()
-  addClass('flashing')(caretElement)
-}
+const resultElement                         = document.getElementById('result')
+const caretElement                          = document.getElementById('caret')
+const notificationElement                   = document.getElementById('notification')
+const modePopupWrapperElement               = document.getElementById('customMode2PopupWrapper')
+const modePopupElement                      = document.getElementById('customMode2Popup')
+const resetTestButtonElement                = document.getElementById('reset-test-button')
+const resetTestWithSameWordsetButtonElement = document.getElementById('reset-test-button-with-same-wordset')
+const stopTestButtonElement                 = document.getElementById('stop-test-button')
+const blindModeButtonElement                = document.getElementById('blindMode')
+const wordsWrapperElement                   = document.getElementById('wordsWrapper')
+const wordsInputElement                     = document.getElementById('wordsInput')
+const wordsElement                          = document.getElementById('words')
+const testElement                           = document.getElementById('typingTest')
+const bottomPanelsElement                   = document.getElementById('bottom-panels')
 
 // ----------------------------------------------------------- DATA MANIPULATION
 
@@ -100,6 +43,15 @@ const resetTestData = () => {
 
 // ------------------------------------------------------------------- FUNCTIONS
 
+const hideCaret = hardHide(caretElement)
+
+const showCaret = () => {
+  if (false === isHidden(resultElement)) return
+  updateCaretPosition()
+  hardShow(caretElement)()
+  addClass('flashing')(caretElement)
+}
+
 const loadCookie = fallback => {
   return document.cookie.split('; ')           // split all the cookies
     .filter(row => row.startsWith(cookieName)) // keep only the app configs
@@ -111,22 +63,27 @@ const loadCookie = fallback => {
 
 const resetTest = (withSameWordset = false) => {
   stopTestTimer()
+  disableFocus()
   showTestConfigPanel()
-  document.getElementById('words').style.marginTop = 0
+  hardHide(resultElement)()
+  prepareTest(withSameWordset)
+  hardShow(testElement)()
+  focusWords()
+}
 
-  softHide(resultElement)(() => {
-    if (false === withSameWordset) newWordsSet()
-    prepareWords(document.getElementById('words'))
-    resetTestData()
-    addClass('active')(currentWordElement)
-    updateCaretPosition();
-    softShow(document.getElementById('typingTest'))(focusWords)
-  })
+const prepareTest = (withSameWordset = false) => {
+  if (false === withSameWordset) newWordsSet()
+  prepareWords(wordsElement)
+  resetTestData()
+  wordsElement.style.marginTop = 0
+  addClass('active')(currentWordElement)
+  updateCaretPosition()
+  showCaret()
 }
 
 const focusWords = () => {
-  if (isHidden(document.getElementById('wordsWrapper'))) return
-  document.getElementById('wordsInput').focus()
+  if (isHidden(wordsWrapperElement)) return
+  wordsInputElement.focus()
 }
 
 const enableTimeMode = () => {
@@ -134,7 +91,9 @@ const enableTimeMode = () => {
   addClass('active')(document.querySelector('#test-config button.mode[mode="time"]'))
   addClass('hidden')(document.querySelector('#test-config .wordCount'))
   document.querySelectorAll('#test-config .time').forEach(removeClass('hidden'))
-  resetTest()
+  testActive
+    ? resetTest()
+    : prepareTest()
 }
 
 const enableWordsMode = () => {
@@ -142,22 +101,24 @@ const enableWordsMode = () => {
   addClass('active')(document.querySelector('#test-config button.mode[mode="words"]'))
   addClass('hidden')(document.querySelector('#test-config .time'))
   document.querySelectorAll('#test-config .wordCount').forEach(removeClass('hidden'))
-  resetTest()
+  testActive
+    ? resetTest()
+    : prepareTest()
 }
 
 const changeMode = target =>  {
   if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
-  modes.get(target)()
   config.mode = target
+  modes.get(target)()
 }
 
 const enableFocus = () => {
-  addClass('focus')(document.getElementById('bottom-panels'))
+  addClass('focus')(bottomPanelsElement)
   addClass('no-cursor')(document.querySelector('body'))
 }
 
 const disableFocus = () => {
-  removeClass('focus')(document.getElementById('bottom-panels'))
+  removeClass('focus')(bottomPanelsElement)
   removeClass('no-cursor')(document.querySelector('body'))
 }
 
@@ -184,7 +145,7 @@ const modes = new Map([
 
 const startApp = () => {
   applyConfig(loadCookie(defaultConfig))
-  resetTest()
+  prepareTest()
 }
 const generateLettersTags = letters => {
   return letters
@@ -363,8 +324,7 @@ function showResult(difficultyFailed = false) {
       (stats.correctChars + stats.correctSpaces + stats.incorrectChars)) *
       100
   )
-
-  addClass('hidden')(document.getElementById('typingTest'))
+  hardHide(testElement)()
   document.querySelector('#result .main .wpm').textContent = ''.concat(Math.round(stats.wpm))
   document.querySelector('#result .main .wpm').setAttribute('aria-label', `${stats.wpm} (${roundTo2(stats.wpm * 5)}cpm)`)
   document.querySelector('#result .main .acc').textContent = `${Math.floor(stats.acc)}%`
@@ -373,8 +333,7 @@ function showResult(difficultyFailed = false) {
   document.querySelector('#result .details .char').textContent = `${testtime}s`
   document.querySelector('#result .details .char').setAttribute('aria-label', `${correctcharpercent}%`)
   document.querySelector('#result .details .char').textContent = `${stats.correctChars + stats.correctSpaces}/${stats.incorrectChars}`
-
-  softShow(resultElement)(() => ({}))
+  hardShow(resultElement)()
 }
 
 function startTest() {
@@ -403,30 +362,25 @@ function stopTestTimer() {
 }
 
 function showCustomMode2Popup(mode) {
-  softShow(document.getElementById('customMode2PopupWrapper'))(() => {
-    if (mode === 'time') {
-      document.querySelector('#customMode2Popup .title').textContent = 'Test length'
-      document.getElementById('customMode2Popup').setAttribute('mode', 'time')
-    } else if (mode === 'words') {
-      document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
-      document.getElementById('customMode2Popup').setAttribute('mode', 'words')
-    }
-    focusWords()
-  })
-}
-
-function hideCustomMode2Popup() {
-  softHide(document.getElementById('customMode2PopupWrapper'))(() => ({}))
+  hardShow(modePopupWrapperElement)()
+  if (mode === 'time') {
+    document.querySelector('#customMode2Popup .title').textContent = 'Test length'
+    modePopupElement.setAttribute('mode', 'time')
+  } else if (mode === 'words') {
+    document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
+    modePopupElement.setAttribute('mode', 'words')
+  }
+  focusWords()
 }
 
 function applyMode2Popup() {
-  const mode = document.getElementById('customMode2Popup').getAttribute('mode')
+  const mode = modePopupElement.getAttribute('mode')
   const val = document.querySelector('#customMode2Popup input').value
   if (mode === 'time') {
     if (val !== null && !isNaN(val) && val > 0) {
       changeTimeConfig(val)
       saveConfigToCookie()
-      hideCustomMode2Popup()
+      hardHide(modePopupWrapperElement)()
       resetTest()
     } else {
       showNotification('Custom time must be at least 1', 3000)
@@ -435,7 +389,7 @@ function applyMode2Popup() {
     if (val !== null && !isNaN(val) && val > 0) {
       changeWordCount(val)
       saveConfigToCookie()
-      hideCustomMode2Popup()
+      hardHide(modePopupWrapperElement)()
       resetTest()
     } else {
       showNotification('Custom word amount must be at least 1', 3000)
@@ -466,8 +420,8 @@ function eraseCharacter() {
     currentWordElement = currentWordElement.previousElementSibling
     if (currentWordElement.nextElementSibling.offsetTop > currentWordElement.offsetTop) {
       const wordHeight = currentWordElement.offsetHeight
-      const currentLineOffset = document.getElementById('words').style.marginTop
-      document.getElementById('words').style.marginTop = `calc(${currentLineOffset} + 2.3rem)`
+      const currentLineOffset = wordsElement.style.marginTop
+      wordsElement.style.marginTop = `calc(${currentLineOffset} + 2.3rem)`
     }
   }
   compareInput(!config.blindMode)
@@ -493,8 +447,8 @@ function jumpToNextWord() {
   addClass('active')(currentWordElement)
   if (currentWordElement.previousElementSibling.offsetTop < currentWordElement.offsetTop) {
     const wordHeight = currentWordElement.offsetHeight
-    const currentLineOffset = document.getElementById('words').style.marginTop
-    document.getElementById('words').style.marginTop = `calc(${currentLineOffset} - 2.3rem)`
+    const currentLineOffset = wordsElement.style.marginTop
+    wordsElement.style.marginTop = `calc(${currentLineOffset} - 2.3rem)`
   }
   if (config.mode === 'time') addWordToTest()
   updateCaretPosition()
