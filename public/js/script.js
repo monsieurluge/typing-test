@@ -63,6 +63,7 @@ const loadCookie = fallback => {
 
 const resetTest = (withSameWordset = false) => {
   stopTestTimer()
+  disableFocus()
   showTestConfigPanel()
   hardHide(resultElement)()
   prepareTest(withSameWordset)
