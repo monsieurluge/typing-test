@@ -14,21 +14,12 @@ const hardShow = element => () => {
   removeClass('hidden')(element)
 }
 
-const softHide = element => onDone => {
-  // element
-  //   .stop(true, true)
-  //   .animate({ opacity: 0 }, 125, onDone)
-  //   .addClass('hidden')
-  addClass('hidden')(element)
-  onDone()
-}
-
 const softShow = element => onDone => {
   // element
   //   .stop(true, true)
   //   .removeClass('hidden')
   //   .animate({ opacity: 1 }, 125, onDone)
-  removeClass('hidden')(element)
+  hardShow(element)()
   onDone()
 }
 

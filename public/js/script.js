@@ -64,10 +64,9 @@ const loadCookie = fallback => {
 const resetTest = (withSameWordset = false) => {
   stopTestTimer()
   showTestConfigPanel()
-  softHide(resultElement)(() => {
-    prepareTest(withSameWordset)
-    softShow(testElement)(focusWords)
-  })
+  hardHide(resultElement)()
+  prepareTest(withSameWordset)
+  softShow(testElement)(focusWords)
 }
 
 const prepareTest = (withSameWordset = false) => {
@@ -375,10 +374,6 @@ function showCustomMode2Popup(mode) {
   })
 }
 
-function hideCustomMode2Popup() {
-  softHide(modePopupWrapperElement)(() => ({}))
-}
-
 function applyMode2Popup() {
   const mode = modePopupElement.getAttribute('mode')
   const val = document.querySelector('#customMode2Popup input').value
@@ -386,7 +381,7 @@ function applyMode2Popup() {
     if (val !== null && !isNaN(val) && val > 0) {
       changeTimeConfig(val)
       saveConfigToCookie()
-      hideCustomMode2Popup()
+      hardHide(modePopupWrapperElement)()
       resetTest()
     } else {
       showNotification('Custom time must be at least 1', 3000)
@@ -395,7 +390,7 @@ function applyMode2Popup() {
     if (val !== null && !isNaN(val) && val > 0) {
       changeWordCount(val)
       saveConfigToCookie()
-      hideCustomMode2Popup()
+      hardHide(modePopupWrapperElement)()
       resetTest()
     } else {
       showNotification('Custom word amount must be at least 1', 3000)

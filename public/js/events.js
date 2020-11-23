@@ -31,7 +31,7 @@ document.querySelectorAll('#test-config .wordCount button').forEach(button => bu
   }
 }))
 
-modePopupWrapperElement.addEventListener('click', hideCustomMode2Popup)
+modePopupWrapperElement.addEventListener('click', hardHide(modePopupWrapperElement))
 
 modePopupElement.addEventListener('click', event => event.stopPropagation())
 
@@ -128,7 +128,7 @@ document.querySelectorAll('.bottom-panel').forEach(panel => {
     if (event.animationName === 'open-bottom-panel') {
       removeClass('closing')(event.target)
       removeClass('closed')(event.target)
-      removeClass('hidden')(event.target)
+      hardShow(event.target)()
     }
     if (event.animationName === 'close-bottom-panel') {
       removeClass('opening')(event.target)
@@ -143,7 +143,7 @@ document.querySelectorAll('.bottom-panel').forEach(panel => {
     }
     if (event.animationName === 'close-bottom-panel') {
       addClass('closed')(event.target)
-      addClass('hidden')(event.target)
+      hardHide(event.target)()
       removeClass('closing')(event.target)
     }
   })
