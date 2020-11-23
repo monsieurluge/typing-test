@@ -39,9 +39,9 @@ const resetTest = (withSameWordset = false) => {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
-  hardHide(resultElement)()
+  hardHide(resultElement)
   prepareTest(withSameWordset)
-  hardShow(testElement)()
+  hardShow(testElement)
   focusWords()
 }
 
@@ -288,7 +288,7 @@ function showResult(difficultyFailed = false) {
       (stats.correctChars + stats.correctSpaces + stats.incorrectChars)) *
       100
   )
-  hardHide(testElement)()
+  hardHide(testElement)
   document.querySelector('#result .main .wpm').textContent = ''.concat(Math.round(stats.wpm))
   document.querySelector('#result .main .wpm').setAttribute('aria-label', `${stats.wpm} (${roundTo2(stats.wpm * 5)}cpm)`)
   document.querySelector('#result .main .acc').textContent = `${Math.floor(stats.acc)}%`
@@ -297,7 +297,7 @@ function showResult(difficultyFailed = false) {
   document.querySelector('#result .details .char').textContent = `${testtime}s`
   document.querySelector('#result .details .char').setAttribute('aria-label', `${correctcharpercent}%`)
   document.querySelector('#result .details .char').textContent = `${stats.correctChars + stats.correctSpaces}/${stats.incorrectChars}`
-  hardShow(resultElement)()
+  hardShow(resultElement)
 }
 
 function startTest() {
@@ -332,7 +332,7 @@ function applyMode2Popup() {
     if (val !== null && !isNaN(val) && val > 0) {
       changeTimeConfig(val)
       saveConfigToCookie()
-      hardHide(modePopupWrapperElement)()
+      hardHide(modePopupWrapperElement)
       resetTest()
     } else {
       showNotification('Custom time must be at least 1', 3000)
@@ -341,7 +341,7 @@ function applyMode2Popup() {
     if (val !== null && !isNaN(val) && val > 0) {
       changeWordCount(val)
       saveConfigToCookie()
-      hardHide(modePopupWrapperElement)()
+      hardHide(modePopupWrapperElement)
       resetTest()
     } else {
       showNotification('Custom word amount must be at least 1', 3000)

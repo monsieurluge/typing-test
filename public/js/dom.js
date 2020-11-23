@@ -17,21 +17,13 @@ const bottomPanelsElement                   = document.getElementById('bottom-pa
 
 // ---------------------------------------------------- GENERIC DOM MANIPULATION
 
-const addClass = className => element => {
-  element.classList.add(className)
-}
+const addClass = className => element => element.classList.add(className)
 
-const removeClass = className => element => {
-  element.classList.remove(className)
-}
+const removeClass = className => element => element.classList.remove(className)
 
-const hardHide = element => () => {
-  addClass('hidden')(element)
-}
+const hardHide = addClass('hidden')
 
-const hardShow = element => () => {
-  removeClass('hidden')(element)
-}
+const hardShow = removeClass('hidden')
 
 const isHidden = element => element.classList.contains('hidden')
 
@@ -72,12 +64,12 @@ const showTestRunningPanel = () => {
   enableBottomPanel('test-running')
 }
 
-const hideCaret = hardHide(caretElement)
+const hideCaret = () => hardHide(caretElement)
 
 const showCaret = () => {
   if (false === isHidden(resultElement)) return
   updateCaretPosition()
-  hardShow(caretElement)()
+  hardShow(caretElement)
   addClass('flashing')(caretElement)
 }
 
@@ -92,7 +84,7 @@ const disableFocus = () => {
 }
 
 const showCustomMode2Popup = mode => {
-  hardShow(modePopupWrapperElement)()
+  hardShow(modePopupWrapperElement)
   if (mode === 'time') {
     document.querySelector('#customMode2Popup .title').textContent = 'Test length'
     modePopupElement.setAttribute('mode', 'time')
