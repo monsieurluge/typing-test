@@ -91,7 +91,7 @@ const disableFocus = () => {
   removeClass('no-cursor')(document.querySelector('body'))
 }
 
-function showCustomMode2Popup(mode) {
+const showCustomMode2Popup = mode => {
   hardShow(modePopupWrapperElement)()
   if (mode === 'time') {
     document.querySelector('#customMode2Popup .title').textContent = 'Test length'
@@ -101,4 +101,11 @@ function showCustomMode2Popup(mode) {
     modePopupElement.setAttribute('mode', 'words')
   }
   focusWords()
+}
+
+const showNotification = (text, time) => {
+  clearTimeout(notificationTimer)
+  notificationElement.textContent = text
+  addClass('displayed')(notificationElement)
+  notificationTimer = setTimeout(() => removeClass('displayed')(notificationElement), 4000)
 }
