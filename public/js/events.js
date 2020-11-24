@@ -103,6 +103,7 @@ wordsInputElement.addEventListener('keydown', event => {
 wordsInputElement.addEventListener('keydown', event => {
   if (false === testActive) return
   if (event.key !== ' ') return
+  if (currentInput.length === 0) return
   event.preventDefault()
   jumpToNextWord()
 })
