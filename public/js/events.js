@@ -39,10 +39,7 @@ document.querySelector('#customMode2Popup .button').addEventListener('click', ap
 
 document.addEventListener('mousemove', disableFocus)
 
-blindModeButtonElement.addEventListener('click', () => {
-  toggleBlindMode()
-  focusWords()
-})
+blindModeButtonElement.addEventListener('click', toggleBlindMode)
 
 resetTestButtonElement.addEventListener('click', () => resetTest(false))
 

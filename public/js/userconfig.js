@@ -35,6 +35,7 @@ function applyConfig(configObj) {
 function toggleBlindMode() {
   setBlindMode(!config.blindMode)
   saveConfigToCookie()
+  focusWords()
 }
 
 function setBlindMode(blind) {
