@@ -1,19 +1,19 @@
 // ---------------------------------------------------------- FIXED DOM ELEMENTS
 
-const resultElement                         = document.getElementById('result')
-const caretElement                          = document.getElementById('caret')
-const notificationElement                   = document.getElementById('notification')
-const modePopupWrapperElement               = document.getElementById('customMode2PopupWrapper')
-const modePopupElement                      = document.getElementById('customMode2Popup')
-const resetTestButtonElement                = document.getElementById('reset-test-button')
-const resetTestWithSameWordsetButtonElement = document.getElementById('reset-test-button-with-same-wordset')
-const stopTestButtonElement                 = document.getElementById('stop-test-button')
-const blindModeButtonElement                = document.getElementById('blindMode')
-const wordsWrapperElement                   = document.getElementById('wordsWrapper')
-const wordsInputElement                     = document.getElementById('wordsInput')
-const wordsElement                          = document.getElementById('words')
-const testElement                           = document.getElementById('typingTest')
-const bottomPanelsElement                   = document.getElementById('bottom-panels')
+const resultElement           = document.getElementById('result')
+const caretElement            = document.getElementById('caret')
+const notificationElement     = document.getElementById('notification')
+const modePopupWrapperElement = document.getElementById('customMode2PopupWrapper')
+const modePopupElement        = document.getElementById('customMode2Popup')
+const newTestButtonElement    = document.getElementById('new-test-button')
+const resetTestButtonElement  = document.getElementById('reset-test-button')
+const stopTestButtonElement   = document.getElementById('stop-test-button')
+const blindModeButtonElement  = document.getElementById('blindMode')
+const wordsWrapperElement     = document.getElementById('wordsWrapper')
+const wordsInputElement       = document.getElementById('wordsInput')
+const wordsElement            = document.getElementById('words')
+const testElement             = document.getElementById('typingTest')
+const bottomPanelsElement     = document.getElementById('bottom-panels')
 
 // ---------------------------------------------------- GENERIC DOM MANIPULATION
 

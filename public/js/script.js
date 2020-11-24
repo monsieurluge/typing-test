@@ -37,12 +37,22 @@ const loadCookie = fallback => {
 
 const currentWord = () => currentWordElement.getAttribute('data-value')
 
-const resetTest = (withSameWordset = false) => {
+const newTest = () => {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
   hardHide(resultElement)
-  prepareTest(withSameWordset)
+  prepareTest(false)
+  hardShow(testElement)
+  focusWords()
+}
+
+const resetTest = () => {
+  stopTestTimer()
+  disableFocus()
+  showTestConfigPanel()
+  hardHide(resultElement)
+  prepareTest(true)
   hardShow(testElement)
   focusWords()
 }
@@ -78,7 +88,7 @@ const enableWordsMode = () => {
   hardHide(document.querySelector('#test-config .time'))
   document.querySelectorAll('#test-config .wordCount').forEach(hardShow)
   testActive
-    ? resetTest()
+    ? newTest()
     : prepareTest()
 }
 
@@ -345,7 +355,7 @@ function applyMode2Popup() {
       changeWordCount(val)
       saveConfigToCookie()
       hardHide(modePopupWrapperElement)
-      resetTest()
+      newTest()
     } else {
       showNotification('Custom word amount must be at least 1', 3000)
     }

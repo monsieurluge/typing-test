@@ -41,11 +41,11 @@ document.addEventListener('mousemove', disableFocus)
 
 blindModeButtonElement.addEventListener('click', toggleBlindMode)
 
-resetTestButtonElement.addEventListener('click', () => resetTest(false))
+newTestButtonElement.addEventListener('click', () => newTest())
 
-resetTestWithSameWordsetButtonElement.addEventListener('click', () => resetTest(true))
+resetTestButtonElement.addEventListener('click', () => resetTest())
 
-stopTestButtonElement.addEventListener('click', () => resetTest(true))
+stopTestButtonElement.addEventListener('click', () => resetTest())
 
 wordsWrapperElement.addEventListener('click', focusWords)
 
@@ -54,27 +54,21 @@ document.querySelector('#test-config button:not(.custom)').addEventListener('cli
 // --------------------------------------------------------- shortcuts and menus
 
 document.addEventListener('keyup', event => {
-  if (event.code === 'KeyN' && event.shiftKey && false === testActive) {
-    resetTest()
-  }
-  if (event.code === 'KeyR' && event.shiftKey && false === testActive) {
-    resetTest(true)
-  }
-  if (event.code === 'KeyC' && event.ctrlKey && testActive) {
-    resetTest(true)
-  }
+  if (event.code === 'KeyN' && event.shiftKey && false === testActive) newTest()
+  if (event.code === 'KeyR' && event.shiftKey && false === testActive) resetTest()
+  if (event.code === 'KeyC' && event.ctrlKey && testActive) resetTest()
 })
 
-resetTestButtonElement.addEventListener('keyup', event => {
-  if (event.code === 'Enter') resetTest()
+newTestButtonElement.addEventListener('keyup', event => {
+  if (event.code === 'Enter') newTest()
 })
 
 stopTestButtonElement.addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
 })
 
-resetTestWithSameWordsetButtonElement.addEventListener('keyup', event => {
-  if (event.code === 'Enter') resetTest(true)
+resetTestButtonElement.addEventListener('keyup', event => {
+  if (event.code === 'Enter') resetTest()
 })
 
 document.querySelector('#customMode2Popup input').addEventListener('keyup', event => {
