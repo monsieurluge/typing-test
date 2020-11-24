@@ -25,6 +25,10 @@ const hardHide = addClass('hidden')
 
 const hardShow = removeClass('hidden')
 
+const activate = addClass('active')
+
+const deactivate = removeClass('active')
+
 const isHidden = element => element.classList.contains('hidden')
 
 // -------------------------------------------------- DEDICATED DOM MANIPULATION
@@ -40,7 +44,7 @@ const enableBottomPanel = name => {
 const openBottomPanel = panel => {
   removeClass('closing')(panel)
   removeClass('closed')(panel)
-  removeClass('hidden')(panel)
+  hardShow(panel)
   addClass('opening')(panel)
   panel.offsetWidth
 }

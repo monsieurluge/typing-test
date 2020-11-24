@@ -50,7 +50,7 @@ const prepareTest = (withSameWordset = false) => {
   prepareWords(wordsElement)
   resetTestData()
   wordsElement.style.marginTop = 0
-  addClass('active')(currentWordElement)
+  activate(currentWordElement)
   updateCaretPosition()
   showCaret()
 }
@@ -61,20 +61,20 @@ const focusWords = () => {
 }
 
 const enableTimeMode = () => {
-  document.querySelectorAll('#test-config button.mode').forEach(removeClass('active'))
-  addClass('active')(document.querySelector('#test-config button.mode[mode="time"]'))
-  addClass('hidden')(document.querySelector('#test-config .wordCount'))
-  document.querySelectorAll('#test-config .time').forEach(removeClass('hidden'))
+  document.querySelectorAll('#test-config button.mode').forEach(deactivate)
+  activate(document.querySelector('#test-config button.mode[mode="time"]'))
+  hardHide(document.querySelector('#test-config .wordCount'))
+  document.querySelectorAll('#test-config .time').forEach(hardShow)
   testActive
     ? resetTest()
     : prepareTest()
 }
 
 const enableWordsMode = () => {
-  document.querySelectorAll('#test-config button.mode').forEach(removeClass('active'))
-  addClass('active')(document.querySelector('#test-config button.mode[mode="words"]'))
-  addClass('hidden')(document.querySelector('#test-config .time'))
-  document.querySelectorAll('#test-config .wordCount').forEach(removeClass('hidden'))
+  document.querySelectorAll('#test-config button.mode').forEach(deactivate)
+  activate(document.querySelector('#test-config button.mode[mode="words"]'))
+  hardHide(document.querySelector('#test-config .time'))
+  document.querySelectorAll('#test-config .wordCount').forEach(hardShow)
   testActive
     ? resetTest()
     : prepareTest()
@@ -381,7 +381,7 @@ function eraseCharacter() {
 }
 
 function jumpToNextWord() {
-  removeClass('active')(currentWordElement)
+  deactivate(currentWordElement)
   if (config.blindMode) currentWordElement.querySelectorAll('letter').forEach(addClass('correct'))
   if (currentWordElement.getAttribute('data-value') === currentInput) {
     accuracyStats.correct++
@@ -396,7 +396,7 @@ function jumpToNextWord() {
     return
   }
   currentWordElement = currentWordElement.nextElementSibling
-  addClass('active')(currentWordElement)
+  activate(currentWordElement)
   if (currentWordElement.previousElementSibling.offsetTop < currentWordElement.offsetTop) {
     const wordHeight = currentWordElement.offsetHeight
     const currentLineOffset = wordsElement.style.marginTop

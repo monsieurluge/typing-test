@@ -4,8 +4,8 @@ document.querySelectorAll('#test-config button.mode').forEach(button => button.a
   if (event.target.classList.contains('active')) return
   changeMode(event.target.getAttribute('mode'))
   saveConfigToCookie()
-  removeClass('active')(button)
-  addClass('active')(event.target)
+  deactivate(button)
+  activate(event.target)
 }))
 
 document.querySelectorAll('#test-config .time button').forEach(button => button.addEventListener('click', () => {

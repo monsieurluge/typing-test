@@ -40,26 +40,26 @@ function toggleBlindMode() {
 function setBlindMode(blind) {
   config.blindMode = blind
   blind
-    ? addClass('active')(blindModeButtonElement)
-    : removeClass('active')(blindModeButtonElement)
+    ? activate(blindModeButtonElement)
+    : deactivate(blindModeButtonElement)
 }
 
 function changeTimeConfig(timeString) {
   const time = parseInt(timeString)
   config.time = time
-  document.querySelectorAll('#test-config .time button').forEach(removeClass('active'))
+  document.querySelectorAll('#test-config .time button').forEach(deactivate)
   const timeToDisplay = ([15, 30, 60, 120].includes(time))
     ? time
     : 'custom'
-  addClass('active')(document.querySelector("#test-config .time button[timeConfig='" + timeToDisplay + "']"))
+  activate(document.querySelector("#test-config .time button[timeConfig='" + timeToDisplay + "']"))
 }
 
 function changeWordCount(wordCountString) {
   const wordCount = parseInt(wordCountString)
   config.words = wordCount
-  document.querySelectorAll('#test-config .wordCount button').forEach(removeClass('active'))
+  document.querySelectorAll('#test-config .wordCount button').forEach(deactivate)
   const wordCountToDisplay = ([10, 25, 50, 100, 200].includes(wordCount))
     ? wordCount
     : 'custom'
-  addClass('active')(document.querySelector("#test-config .wordCount button[wordCount='" + wordCountToDisplay + "']"))
+  activate(document.querySelector("#test-config .wordCount button[wordCount='" + wordCountToDisplay + "']"))
 }
