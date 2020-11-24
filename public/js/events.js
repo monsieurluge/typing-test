@@ -102,6 +102,7 @@ wordsInputElement.addEventListener('keydown', event => {
 wordsInputElement.addEventListener('keydown', event => {
   if (excludedTestKeycodes.includes(event.code)) return
   if (excludedTestKeys.includes(event.key)) return
+  if (event.ctrlKey) return
   if (false === testActive) startTest()
   enableFocus()
   handleTyping(event.key)
