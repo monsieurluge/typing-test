@@ -80,6 +80,7 @@ const enableTimeMode = () => {
   testActive
     ? resetTest()
     : prepareTest()
+  focusWords()
 }
 
 const enableWordsMode = () => {
@@ -90,6 +91,7 @@ const enableWordsMode = () => {
   testActive
     ? newTest()
     : prepareTest()
+  focusWords()
 }
 
 const changeMode = target =>  {
