@@ -110,6 +110,7 @@ const modes = new Map([
 const startApp = () => {
   applyConfig(loadCookie(defaultConfig))
   prepareTest()
+  focusWords()
 }
 const generateLettersTags = letters => {
   return letters
