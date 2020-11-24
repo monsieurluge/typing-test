@@ -289,7 +289,7 @@ function calculateStats() {
   };
 }
 
-function showResult(difficultyFailed = false) {
+function showResult() {
   resultCalculating = true
   resultVisible = true
   testActive = false
