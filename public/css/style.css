@@ -64,6 +64,10 @@ html {
   cursor: none;
 }
 
+.blurred {
+  filter: blur(3px);
+}
+
 /* ------------------------------------------------------------------- LAYOUT */
 
 #page {
@@ -325,7 +329,7 @@ button:hover key {
   align-content: flex-start;
   font-family: WordsFont, serif;
   user-select: none;
-  transition: margin-top 0.3s;
+  transition: margin-top 0.3s, filter 0.3s;
 }
 
 #words .filler {
