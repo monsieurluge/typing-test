@@ -35,6 +35,8 @@ const loadCookie = fallback => {
     [0]                                        // then return the first config
 }
 
+const currentWord = () => currentWordElement.getAttribute('data-value')
+
 const resetTest = (withSameWordset = false) => {
   stopTestTimer()
   disableFocus()
@@ -131,10 +133,10 @@ const prepareWords = container => {
 }
 
 function compareInput(showError) {
-  const currentWord = currentWordElement.getAttribute('data-value')
+  const currentWordContent = currentWord()
   let ret = ''
   for (let i = 0; i < currentInput.length; i++) {
-    const currentLetter = currentWord.charAt(i)
+    const currentLetter = currentWordContent.charAt(i)
     const charCorrect = (currentLetter === currentInput[i])
     if (charCorrect || false === showError) {
       ret += `<letter class="correct">${currentLetter}</letter>`
@@ -142,12 +144,12 @@ function compareInput(showError) {
       ret += `<letter class="incorrect">${currentLetter}</letter>`
     }
   }
-  if (currentInput.length < currentWord.length) {
-    for (let i = currentInput.length; i < currentWord.length; i++) {
-      ret += `<letter>${currentWord[i]}</letter>`
+  if (currentInput.length < currentWordContent.length) {
+    for (let i = currentInput.length; i < currentWordContent.length; i++) {
+      ret += `<letter>${currentWordContent[i]}</letter>`
     }
   }
-  currentInput.length > currentWord.length
+  currentInput.length > currentWordContent.length
     ? addClass('extra-characters')(currentWordElement)
     : removeClass('extra-characters')(currentWordElement)
   currentWordElement.innerHTML = ret
@@ -350,8 +352,15 @@ function applyMode2Popup() {
   }
 }
 
+const testCompleted = () => {
+  const currentWordContent = currentWord()
+  return currentWordElement.nextElementSibling === null
+    && currentInput.length === currentWordContent.length
+    && (config.blindMode || currentInput.slice(-1) === currentWordContent.slice(-1))
+}
+
 function handleTyping(character) {
-  const target = currentWordElement.getAttribute('data-value').substring(currentInput.length, currentInput.length + 1)
+  const target = currentWord().substring(currentInput.length, currentInput.length + 1)
   const isValid = (target === character)
   isValid
     ? accuracyStats.correct++
@@ -359,13 +368,14 @@ function handleTyping(character) {
   currentInput += character
   compareInput(!config.blindMode)
   updateCaretPosition()
+  if (testCompleted()) jumpToNextWord()
 }
 
 function eraseCharacter() {
   if (currentInput.length === 0 && inputHistory.length === 0) return
-  const currentWord = currentWordElement.getAttribute('data-value')
-  if (currentInput.length > currentWord.length) {
-    currentInput = currentInput.slice(0, currentWord.length)
+  const currentWordLength = currentWord().length
+  if (currentInput.length > currentWordLength) {
+    currentInput = currentInput.slice(0, currentWordLength)
   } else if (currentInput.length > 0) {
     currentInput = currentInput.slice(0, - 1)
   } else {
@@ -384,7 +394,7 @@ function eraseCharacter() {
 function jumpToNextWord() {
   deactivate(currentWordElement)
   if (config.blindMode) currentWordElement.querySelectorAll('letter').forEach(addClass('correct'))
-  if (currentWordElement.getAttribute('data-value') === currentInput) {
+  if (currentWord() === currentInput) {
     accuracyStats.correct++
   } else {
     accuracyStats.incorrect++
