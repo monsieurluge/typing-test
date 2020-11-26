@@ -26,14 +26,9 @@ const resetTestData = () => {
 
 // ------------------------------------------------------------------- FUNCTIONS
 
-const loadCookie = fallback => {
-  return document.cookie.split('; ')           // split all the cookies
-    .filter(row => row.startsWith(cookieName)) // keep only the app configs
-    .map(cookie => cookie.split('=')[1])       // take the configs data
-    .map(JSON.parse)                           // convert them to an object
-    .concat(fallback)                          // add the default config to the list
-    [0]                                        // then return the first config
-}
+const loadAppConfig = loadCookie(cookieName)
+
+const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 
 const currentWord = () => currentWordElement.getAttribute('data-value')
 
@@ -124,7 +119,7 @@ const modes = new Map([
 // ----------------------------------------------------------------- APPLICATION
 
 const startApp = () => {
-  applyConfig(loadCookie(defaultConfig))
+  applyConfig(loadAppConfig(defaultConfig))
   prepareTest(newWordsSet)
   focusWords()
 }
@@ -349,7 +344,7 @@ function applyMode2Popup() {
   if (mode === 'time') {
     if (val !== null && !isNaN(val) && val > 0) {
       changeTimeConfig(val)
-      saveConfigToCookie()
+      saveAppConfig()
       hardHide(modePopupWrapperElement)
       resetTest()
     } else {
@@ -358,7 +353,7 @@ function applyMode2Popup() {
   } else if (mode === 'words') {
     if (val !== null && !isNaN(val) && val > 0) {
       changeWordCount(val)
-      saveConfigToCookie()
+      saveAppConfig()
       hardHide(modePopupWrapperElement)
       newTest()
     } else {

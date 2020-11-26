@@ -3,7 +3,7 @@
 document.querySelectorAll('#test-config button.mode').forEach(button => button.addEventListener('click', event => {
   if (event.target.classList.contains('active')) return
   changeMode(event.target.getAttribute('mode'))
-  saveConfigToCookie()
+  saveAppConfig()
   deactivate(button)
   activate(event.target)
 }))
@@ -14,7 +14,7 @@ document.querySelectorAll('#test-config .time button').forEach(button => button.
     showCustomMode2Popup('time')
   } else {
     changeTimeConfig(value)
-    saveConfigToCookie()
+    saveAppConfig()
     focusWords()
   }
 }))
@@ -25,7 +25,7 @@ document.querySelectorAll('#test-config .wordCount button').forEach(button => bu
     showCustomMode2Popup('words')
   } else {
     changeWordCount(value)
-    saveConfigToCookie()
+    saveAppConfig()
     focusWords()
     prepareTest(newWordsSet)
   }

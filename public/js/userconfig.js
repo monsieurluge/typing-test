@@ -1,4 +1,5 @@
 const cookieName = 'typing-test-config'
+
 const defaultConfig = {
   blindMode: false,
   mode: 'time',
@@ -10,13 +11,9 @@ const defaultConfig = {
 
 let config = { ...defaultConfig }
 
-async function saveConfigToCookie() {
-  document.cookie = `${cookieName}=${JSON.stringify(config)}; max-age=31536000; SameSite=Lax`
-}
-
 function resetConfig() {
   applyConfig({ ...defaultConfig })
-  saveConfigToCookie()
+  saveAppConfig()
 }
 
 function applyConfig(configObj) {
@@ -34,7 +31,7 @@ function applyConfig(configObj) {
 
 function toggleBlindMode() {
   setBlindMode(!config.blindMode)
-  saveConfigToCookie()
+  saveAppConfig()
   focusWords()
 }
 
