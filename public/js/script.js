@@ -38,7 +38,7 @@ const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 
 // ------------------------------------------------------------------- FUNCTIONS
 
-function currentWord() {
+function fetchCurrentWord() {
   return currentWordElement.getAttribute('data-value')
 }
 
@@ -148,7 +148,7 @@ function startApp() {
 }
 
 function compareInput(showError) {
-  const currentWordContent = currentWord()
+  const currentWordContent = fetchCurrentWord()
   let ret = ''
   for (let i = 0; i < currentInput.length; i++) {
     const currentLetter = currentWordContent.charAt(i)
@@ -368,14 +368,14 @@ function applyMode2Popup() {
 }
 
 function testCompleted() {
-  const currentWordContent = currentWord()
+  const currentWordContent = fetchCurrentWord()
   return currentWordElement.nextElementSibling === null
     && currentInput.length === currentWordContent.length
     && (config.blindMode || currentInput.slice(-1) === currentWordContent.slice(-1))
 }
 
 function handleTyping(character) {
-  const target = currentWord().substring(currentInput.length, currentInput.length + 1)
+  const target = fetchCurrentWord().substring(currentInput.length, currentInput.length + 1)
   const isValid = (target === character)
   isValid
     ? accuracyStats.correct++
@@ -388,7 +388,7 @@ function handleTyping(character) {
 
 function eraseCharacter() {
   if (currentInput.length === 0 && inputHistory.length === 0) return
-  const currentWordLength = currentWord().length
+  const currentWordLength = fetchCurrentWord().length
   if (currentInput.length > currentWordLength) {
     currentInput = currentInput.slice(0, currentWordLength)
   } else if (currentInput.length > 0) {
@@ -409,7 +409,7 @@ function eraseCharacter() {
 function jumpToNextWord() {
   deactivate(currentWordElement)
   if (config.blindMode) currentWordElement.querySelectorAll('letter').forEach(addClass('correct'))
-  if (currentWord() === currentInput) {
+  if (fetchCurrentWord() === currentInput) {
     accuracyStats.correct++
   } else {
     accuracyStats.incorrect++
