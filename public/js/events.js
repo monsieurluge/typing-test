@@ -1,4 +1,4 @@
-// ----------------------------------------------------------- mouse interaction
+// ----------------------------------------------------------- MOUSE INTERACTION
 
 document.querySelectorAll('#test-config button.mode').forEach(button => button.addEventListener('click', event => {
   if (event.target.classList.contains('active')) return
@@ -51,7 +51,7 @@ wordsWrapperElement.addEventListener('click', focusWords)
 
 document.querySelector('#test-config button:not(.custom)').addEventListener('click', focusWords)
 
-// --------------------------------------------------------- shortcuts and menus
+// --------------------------------------------------------- SHORTCUTS AND MENUS
 
 document.addEventListener('keyup', event => {
   if (event.code === 'KeyN' && event.shiftKey && false === testActive) newTest()
@@ -85,7 +85,7 @@ wordsInputElement.addEventListener('blur', () => {
   addClass('blurred')(wordsElement)
 })
 
-// ------------------------------------------------------------------- test keys
+// ------------------------------------------------------------------- TEST KEYS
 
 wordsInputElement.addEventListener('keydown', event => {
   if (false === testActive) return
@@ -117,7 +117,7 @@ wordsInputElement.addEventListener('keydown', event => {
   }
 })
 
-// ----------------------------------------------------------------- misc events
+// ----------------------------------------------------------------- MISC EVENTS
 
 wordsInputElement.addEventListener('blur', hideCaret)
 

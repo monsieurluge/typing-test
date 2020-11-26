@@ -33,7 +33,7 @@ const isHidden = element => element.classList.contains('hidden')
 
 // -------------------------------------------------- DEDICATED DOM MANIPULATION
 
-const enableBottomPanel = name => {
+function enableBottomPanel(name) {
   document.querySelectorAll('.bottom-panel').forEach(panel => {
     panel.id === name
       ? openBottomPanel(panel)
@@ -41,7 +41,7 @@ const enableBottomPanel = name => {
   })
 }
 
-const openBottomPanel = panel => {
+function openBottomPanel(panel) {
   removeClass('closing')(panel)
   removeClass('closed')(panel)
   hardShow(panel)
@@ -49,45 +49,47 @@ const openBottomPanel = panel => {
   panel.offsetWidth
 }
 
-const closeBottomPanel = panel => {
+function closeBottomPanel(panel) {
   removeClass('opening')(panel)
   removeClass('opened')(panel)
   addClass('closing')(panel)
   panel.offsetWidth
 }
 
-const showTestConfigPanel = () => {
+function showTestConfigPanel() {
   enableBottomPanel('test-config')
 }
 
-const showResultButtonsPanel = () => {
+function showResultButtonsPanel() {
   enableBottomPanel('result-buttons')
 }
 
-const showTestRunningPanel = () => {
+function showTestRunningPanel() {
   enableBottomPanel('test-running')
 }
 
-const hideCaret = () => hardHide(caretElement)
+function hideCaret() {
+  hardHide(caretElement)
+}
 
-const showCaret = () => {
+function showCaret() {
   if (false === isHidden(resultElement)) return
   updateCaretPosition()
   hardShow(caretElement)
   addClass('flashing')(caretElement)
 }
 
-const enableFocus = () => {
+function enableFocus() {
   addClass('focus')(bottomPanelsElement)
   addClass('no-cursor')(document.querySelector('body'))
 }
 
-const disableFocus = () => {
+function disableFocus() {
   removeClass('focus')(bottomPanelsElement)
   removeClass('no-cursor')(document.querySelector('body'))
 }
 
-const showCustomMode2Popup = mode => {
+function showCustomMode2Popup(mode) {
   hardShow(modePopupWrapperElement)
   if (mode === 'time') {
     document.querySelector('#customMode2Popup .title').textContent = 'Test length'
@@ -99,7 +101,7 @@ const showCustomMode2Popup = mode => {
   focusWords()
 }
 
-const showNotification = (text, time) => {
+function showNotification(text, time) {
   clearTimeout(notificationTimer)
   notificationElement.textContent = text
   addClass('displayed')(notificationElement)

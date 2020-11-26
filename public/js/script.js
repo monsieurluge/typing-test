@@ -1,3 +1,12 @@
+const cookieName = 'typing-test-config'
+const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'Escape']
+const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
+
+const modes = new Map([
+  [ 'time', enableTimeMode ],
+  [ 'words', enableWordsMode ],
+])
+
 let accuracyStats      = { correct: 0, incorrect: 0 }
 let currentInput       = ''
 let currentWordElement = undefined
@@ -11,12 +20,9 @@ let testStart          = 0
 let timer              = null
 let wordsList          = []
 
-const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'Escape']
-const excludedTestKeys     = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
-
 // ----------------------------------------------------------- DATA MANIPULATION
 
-const resetTestData = () => {
+function resetTestData() {
   accuracyStats = { correct: 0, incorrect: 0 }
   currentInput = ''
   currentWordElement = document.querySelector('#words .word')
@@ -24,15 +30,19 @@ const resetTestData = () => {
   testActive = false
 }
 
-// ------------------------------------------------------------------- FUNCTIONS
+// ------------------------------------------------------- SPECIALIZED FUNCTIONS
 
 const loadAppConfig = loadCookie(cookieName)
 
 const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 
-const currentWord = () => currentWordElement.getAttribute('data-value')
+// ------------------------------------------------------------------- FUNCTIONS
 
-const newTest = () => {
+function currentWord() {
+  return currentWordElement.getAttribute('data-value')
+}
+
+function newTest() {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
@@ -42,7 +52,7 @@ const newTest = () => {
   focusWords()
 }
 
-const resetTest = () => {
+function resetTest() {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
@@ -52,7 +62,7 @@ const resetTest = () => {
   focusWords()
 }
 
-const prepareTest = before => {
+function prepareTest(before) {
   before()
   prepareWords(wordsElement)
   resetTestData()
@@ -62,12 +72,12 @@ const prepareTest = before => {
   showCaret()
 }
 
-const focusWords = () => {
+function focusWords() {
   if (isHidden(wordsWrapperElement)) return
   wordsInputElement.focus()
 }
 
-const enableTimeMode = () => {
+function enableTimeMode() {
   document.querySelectorAll('#test-config button.mode').forEach(deactivate)
   activate(document.querySelector('#test-config button.mode[mode="time"]'))
   hardHide(document.querySelector('#test-config .wordCount'))
@@ -78,7 +88,7 @@ const enableTimeMode = () => {
   focusWords()
 }
 
-const enableWordsMode = () => {
+function enableWordsMode() {
   document.querySelectorAll('#test-config button.mode').forEach(deactivate)
   activate(document.querySelector('#test-config button.mode[mode="words"]'))
   hardHide(document.querySelector('#test-config .time'))
@@ -89,19 +99,19 @@ const enableWordsMode = () => {
   focusWords()
 }
 
-const changeMode = target =>  {
+function changeMode (target) {
   if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
   config.mode = target
   modes.get(target)()
 }
 
-const addWordToTest = () => {
+function addWordToTest() {
   const word = words[Math.floor(Math.random() * words.length)]
   if (wordsList.slice(-2).includes(word)) return // cannot add a new word
   wordsList.push(word)
 }
 
-const newWordsSet = () => {
+function newWordsSet() {
   wordsList = []
   const expectedLength = (config.mode === 'words') ? config.words : 60
   while (wordsList.length < expectedLength) {
@@ -109,28 +119,15 @@ const newWordsSet = () => {
   }
 }
 
-const sameWordsSet = () => {}
+function sameWordsSet() {} // do nothing, on purpose
 
-const modes = new Map([
-  ['time', enableTimeMode],
-  ['words', enableWordsMode],
-])
-
-// ----------------------------------------------------------------- APPLICATION
-
-const startApp = () => {
-  applyConfig(loadAppConfig(defaultConfig))
-  prepareTest(newWordsSet)
-  focusWords()
-}
-
-const generateLettersTags = letters => {
+function generateLettersTags(letters) {
   return letters
     .map(letter => `<letter>${letter}</letter>`)
     .join('')
 }
 
-const generateWordTags = (content, word) => {
+function generateWordTags(content, word) {
   return content.concat(
     `<div class="word" data-value="${word}">`,
     generateLettersTags(word.split('')),
@@ -138,8 +135,16 @@ const generateWordTags = (content, word) => {
   )
 }
 
-const prepareWords = container => {
+function prepareWords(container) {
   container.innerHTML = wordsList.reduce(generateWordTags, '<div class="filler"></div>')
+}
+
+// ----------------------------------------------------------------- APPLICATION
+
+function startApp() {
+  applyConfig(loadAppConfig(defaultConfig))
+  prepareTest(newWordsSet)
+  focusWords()
 }
 
 function compareInput(showError) {
@@ -170,7 +175,7 @@ function highlightBadWord(element, showError) {
   addClass('error')(element)
 }
 
-const updateCaretPosition = () => {
+function updateCaretPosition() {
   const inputLength = currentInput.length
   const currentLetterIndex = inputLength - 1 < 0 ? 0 : inputLength - 1
   const currentLetter = currentWordElement.querySelectorAll('letter')[currentLetterIndex]
@@ -362,7 +367,7 @@ function applyMode2Popup() {
   }
 }
 
-const testCompleted = () => {
+function testCompleted() {
   const currentWordContent = currentWord()
   return currentWordElement.nextElementSibling === null
     && currentInput.length === currentWordContent.length

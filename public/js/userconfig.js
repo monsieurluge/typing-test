@@ -1,5 +1,3 @@
-const cookieName = 'typing-test-config'
-
 const defaultConfig = {
   blindMode: false,
   mode: 'time',
@@ -10,6 +8,8 @@ const defaultConfig = {
 }
 
 let config = { ...defaultConfig }
+
+// ------------------------------------------------------------------- FUNCTIONS
 
 function resetConfig() {
   applyConfig({ ...defaultConfig })
