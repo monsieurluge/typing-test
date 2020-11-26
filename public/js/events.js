@@ -75,16 +75,6 @@ document.querySelector('#customMode2Popup input').addEventListener('keyup', even
   if (event.code === 'Enter') applyMode2Popup()
 })
 
-wordsInputElement.addEventListener('focus', () => {
-  showCaret()
-  removeClass('blurred')(wordsElement)
-})
-
-wordsInputElement.addEventListener('blur', () => {
-  hideCaret()
-  addClass('blurred')(wordsElement)
-})
-
 // ------------------------------------------------------------------- TEST KEYS
 
 wordsInputElement.addEventListener('keydown', event => {
@@ -119,7 +109,15 @@ wordsInputElement.addEventListener('keydown', event => {
 
 // ----------------------------------------------------------------- MISC EVENTS
 
-wordsInputElement.addEventListener('blur', hideCaret)
+wordsInputElement.addEventListener('focus', () => {
+  removeClass('blurred')(wordsElement)
+  showCaret()
+})
+
+wordsInputElement.addEventListener('blur', () => {
+  hideCaret()
+  addClass('blurred')(wordsElement)
+})
 
 window.addEventListener('beforeunload', event => {
   if (false === testActive) return
