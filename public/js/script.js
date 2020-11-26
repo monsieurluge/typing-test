@@ -42,7 +42,7 @@ const newTest = () => {
   disableFocus()
   showTestConfigPanel()
   hardHide(resultElement)
-  prepareTest(false)
+  prepareTest(newWordsSet)
   hardShow(testElement)
   focusWords()
 }
@@ -52,13 +52,13 @@ const resetTest = () => {
   disableFocus()
   showTestConfigPanel()
   hardHide(resultElement)
-  prepareTest(true)
+  prepareTest(sameWordsSet)
   hardShow(testElement)
   focusWords()
 }
 
-const prepareTest = (withSameWordset = false) => {
-  if (false === withSameWordset) newWordsSet()
+const prepareTest = before => {
+  before()
   prepareWords(wordsElement)
   resetTestData()
   wordsElement.style.marginTop = 0
@@ -79,7 +79,7 @@ const enableTimeMode = () => {
   document.querySelectorAll('#test-config .time').forEach(hardShow)
   testActive
     ? resetTest()
-    : prepareTest()
+    : prepareTest(newWordsSet)
   focusWords()
 }
 
@@ -90,7 +90,7 @@ const enableWordsMode = () => {
   document.querySelectorAll('#test-config .wordCount').forEach(hardShow)
   testActive
     ? newTest()
-    : prepareTest()
+    : prepareTest(newWordsSet)
   focusWords()
 }
 
@@ -114,6 +114,8 @@ const newWordsSet = () => {
   }
 }
 
+const sameWordsSet = () => {}
+
 const modes = new Map([
   ['time', enableTimeMode],
   ['words', enableWordsMode],
@@ -123,9 +125,10 @@ const modes = new Map([
 
 const startApp = () => {
   applyConfig(loadCookie(defaultConfig))
-  prepareTest()
+  prepareTest(newWordsSet)
   focusWords()
 }
+
 const generateLettersTags = letters => {
   return letters
     .map(letter => `<letter>${letter}</letter>`)

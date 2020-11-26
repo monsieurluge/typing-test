@@ -27,7 +27,7 @@ document.querySelectorAll('#test-config .wordCount button').forEach(button => bu
     changeWordCount(value)
     saveConfigToCookie()
     focusWords()
-    prepareTest()
+    prepareTest(newWordsSet)
   }
 }))
 
