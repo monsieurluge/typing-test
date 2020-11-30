@@ -68,8 +68,6 @@ function prepareTest(before) {
   resetTestData()
   wordsElement.style.marginTop = 0
   activate(currentWordElement)
-  updateCaretPosition()
-  showCaret()
 }
 
 function focusWords() {
@@ -87,7 +85,6 @@ function enableTimeMode() {
   testActive
     ? resetTest()
     : prepareTest(newWordsSet)
-  focusWords()
 }
 
 function enableWordsMode() {
@@ -98,7 +95,6 @@ function enableWordsMode() {
   testActive
     ? newTest()
     : prepareTest(newWordsSet)
-  focusWords()
 }
 
 function changeMode (target) {
