@@ -12,7 +12,7 @@ const blindModeButtonElement  = document.getElementById('blindMode')
 const wordsWrapperElement     = document.getElementById('wordsWrapper')
 const wordsInputElement       = document.getElementById('wordsInput')
 const wordsElement            = document.getElementById('words')
-const testElement             = document.getElementById('typingTest')
+const testElement             = document.getElementById('typing-test')
 const bottomPanelsElement     = document.getElementById('bottom-panels')
 
 // ---------------------------------------------------- GENERIC DOM MANIPULATION
@@ -30,6 +30,8 @@ const activate = addClass('active')
 const deactivate = removeClass('active')
 
 const isHidden = element => element.classList.contains('hidden')
+
+const isVisible = element => false === element.classList.contains('hidden')
 
 // -------------------------------------------------- DEDICATED DOM MANIPULATION
 
@@ -73,8 +75,7 @@ function hideCaret() {
 }
 
 function showCaret() {
-  if (false === isHidden(resultElement)) return
-  updateCaretPosition()
+  if (isVisible(resultElement)) return
   hardShow(caretElement)
   addClass('flashing')(caretElement)
 }

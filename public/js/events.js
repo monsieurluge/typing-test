@@ -6,6 +6,7 @@ document.querySelectorAll('#test-config button.mode').forEach(button => button.a
   saveAppConfig()
   deactivate(button)
   activate(event.target)
+  focusWords()
 }))
 
 document.querySelectorAll('#test-config .time button').forEach(button => button.addEventListener('click', () => {
@@ -26,8 +27,8 @@ document.querySelectorAll('#test-config .wordCount button').forEach(button => bu
   } else {
     changeWordCount(value)
     saveAppConfig()
-    focusWords()
     prepareTest(newWordsSet)
+    focusWords()
   }
 }))
 
@@ -109,15 +110,7 @@ wordsInputElement.addEventListener('keydown', event => {
 
 // ----------------------------------------------------------------- MISC EVENTS
 
-wordsInputElement.addEventListener('focus', () => {
-  removeClass('blurred')(wordsElement)
-  showCaret()
-})
-
-wordsInputElement.addEventListener('blur', () => {
-  hideCaret()
-  addClass('blurred')(wordsElement)
-})
+wordsInputElement.addEventListener('blur', hideCaret)
 
 window.addEventListener('beforeunload', event => {
   if (false === testActive) return

@@ -75,6 +75,8 @@ function prepareTest(before) {
 function focusWords() {
   if (isHidden(wordsWrapperElement)) return
   wordsInputElement.focus()
+  updateCaretPosition()
+  showCaret()
 }
 
 function enableTimeMode() {
@@ -177,17 +179,24 @@ function highlightBadWord(element, showError) {
 
 function updateCaretPosition() {
   const inputLength = currentInput.length
-  const currentLetterIndex = inputLength - 1 < 0 ? 0 : inputLength - 1
-  const currentLetter = currentWordElement.querySelectorAll('letter')[currentLetterIndex]
-  if (currentLetter === undefined) return
-  const currentLetterPosLeft = currentLetter.offsetLeft
-  const newLeft = (inputLength === 0)
-    ? currentLetterPosLeft - caretElement.offsetWidth / 2
-    : currentLetterPosLeft + currentLetter.offsetWidth - caretElement.offsetWidth / 2
-  caret.style.left = `${newLeft}px`
+  const wordLength = fetchCurrentWord().length - 1
+  const targetLetter = currentWordElement.querySelectorAll('letter')[Math.min(inputLength, wordLength)]
+  inputLength > wordLength
+    ? moveCaretAfter(targetLetter)
+    : moveCaretBefore(targetLetter)
   removeClass('flashing')(caretElement)
   caretElement.offsetWidth
   addClass('flashing')(caretElement)
+}
+
+function moveCaretBefore(letterElement) {
+  const newPosition = letterElement.offsetLeft - caretElement.offsetWidth / 2
+  caret.style.left = `${newPosition}px`
+}
+
+function moveCaretAfter(letterElement) {
+  const newPosition = letterElement.offsetLeft + letterElement.offsetWidth - caretElement.offsetWidth / 2
+  caret.style.left = `${newPosition}px`
 }
 
 function countChars() {
