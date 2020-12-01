@@ -17,11 +17,20 @@ const bottomPanelsElement     = document.getElementById('bottom-panels')
 
 // ---------------------------------------------------- GENERIC DOM MANIPULATION
 
-const refresh = element => element.offsetWidth
+const refresh = element => {
+  element.offsetWidth
+  return element
+}
 
-const addClass = className => element => element.classList.add(className)
+const addClass = className => element => {
+  element.classList.add(className)
+  return element
+}
 
-const removeClass = className => element => element.classList.remove(className)
+const removeClass = className => element => {
+  element.classList.remove(className)
+  return element
+}
 
 const isHidden = element => element.classList.contains('hidden')
 
@@ -43,13 +52,52 @@ const gotExtraCharacters = addClass('extra-characters')
 
 const lostExtraCharacters = removeClass('extra-characters')
 
-const resetAnimation = className => element => {
-  removeClass(className)(element)
-  refresh(element)
-  addClass(className)(element)
-}
+const resetAnimation = className => pipe(
+  removeClass(className),
+  refresh,
+  addClass(className)
+)
 
 const resetFlashing = resetAnimation('flashing')
+
+const open = pipe(
+  removeClass('closing'),
+  removeClass('closed'),
+  hardShow
+)
+
+const close = pipe(
+  removeClass('opening'),
+  removeClass('opened')
+)
+
+const ping = element => {
+  element.offsetWidth
+  return element
+}
+
+const openBottomPanel = pipe(
+  open,
+  addClass('opening'),
+  ping
+)
+
+const opened = pipe(
+  addClass('opened'),
+  removeClass('opening')
+)
+
+const closeBottomPanel = pipe(
+  close,
+  addClass('closing'),
+  ping
+)
+
+const closed = pipe(
+  addClass('closed'),
+  removeClass('closing'),
+  hardHide
+)
 
 // -------------------------------------------------- DEDICATED DOM MANIPULATION
 
@@ -59,40 +107,6 @@ function enableBottomPanel(name) {
       ? openBottomPanel(panel)
       : closeBottomPanel(panel)
   })
-}
-
-function open(panel) {
-  removeClass('closing')(panel)
-  removeClass('closed')(panel)
-  hardShow(panel)
-}
-
-function openBottomPanel(panel) {
-  open(panel)
-  addClass('opening')(panel)
-  panel.offsetWidth
-}
-
-function opened(panel) {
-  addClass('opened')(panel)
-  removeClass('opening')(panel)
-}
-
-function close(panel) {
-  removeClass('opening')(panel)
-  removeClass('opened')(panel)
-}
-
-function closeBottomPanel(panel) {
-  close(panel)
-  addClass('closing')(panel)
-  panel.offsetWidth
-}
-
-function closed(panel) {
-  addClass('closed')(panel)
-  removeClass('closing')(panel)
-  hardHide(panel)
 }
 
 function showTestConfigPanel() {
