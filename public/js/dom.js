@@ -71,15 +71,10 @@ const close = pipe(
   removeClass('opened')
 )
 
-const ping = element => {
-  element.offsetWidth
-  return element
-}
-
 const openBottomPanel = pipe(
   open,
   addClass('opening'),
-  ping
+  refresh
 )
 
 const opened = pipe(
@@ -90,7 +85,7 @@ const opened = pipe(
 const closeBottomPanel = pipe(
   close,
   addClass('closing'),
-  ping
+  refresh
 )
 
 const closed = pipe(
