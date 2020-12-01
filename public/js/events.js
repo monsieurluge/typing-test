@@ -121,25 +121,19 @@ window.addEventListener('beforeunload', event => {
 document.querySelectorAll('.bottom-panel').forEach(panel => {
   panel.addEventListener('animationstart', event => {
     if (event.animationName === 'open-bottom-panel') {
-      removeClass('closing')(event.target)
-      removeClass('closed')(event.target)
-      hardShow(event.target)
+      open(event.target)
     }
     if (event.animationName === 'close-bottom-panel') {
-      removeClass('opening')(event.target)
-      removeClass('opened')(event.target)
+      close(event.target)
     }
   })
 
   panel.addEventListener('animationend', event => {
     if (event.animationName === 'open-bottom-panel') {
-      addClass('opened')(event.target)
-      removeClass('opening')(event.target)
+      opened(event.target)
     }
     if (event.animationName === 'close-bottom-panel') {
-      addClass('closed')(event.target)
-      hardHide(event.target)
-      removeClass('closing')(event.target)
+      closed(event.target)
     }
   })
 })

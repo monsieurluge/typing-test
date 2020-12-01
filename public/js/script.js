@@ -97,7 +97,7 @@ function enableWordsMode() {
     : prepareTest(newWordsSet)
 }
 
-function changeMode (target) {
+function changeMode(target) {
   if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
   config.mode = target
   modes.get(target)()
@@ -163,14 +163,14 @@ function compareInput(showError) {
     }
   }
   currentInput.length > currentWordContent.length
-    ? addClass('extra-characters')(currentWordElement)
-    : removeClass('extra-characters')(currentWordElement)
+    ? gotExtraCharacters(currentWordElement)
+    : lostExtraCharacters(currentWordElement)
   currentWordElement.innerHTML = ret
 }
 
 function highlightBadWord(element, showError) {
   if (false === showError) return
-  addClass('error')(element)
+  incorrect(element)
 }
 
 function updateCaretPosition() {
@@ -180,9 +180,7 @@ function updateCaretPosition() {
   inputLength > wordLength
     ? moveCaretAfter(targetLetter)
     : moveCaretBefore(targetLetter)
-  removeClass('flashing')(caretElement)
-  caretElement.offsetWidth
-  addClass('flashing')(caretElement)
+  resetFlashing(caretElement)
 }
 
 function moveCaretBefore(letterElement) {
@@ -413,7 +411,7 @@ function eraseCharacter() {
 
 function jumpToNextWord() {
   deactivate(currentWordElement)
-  if (config.blindMode) currentWordElement.querySelectorAll('letter').forEach(addClass('correct'))
+  if (config.blindMode) currentWordElement.querySelectorAll('letter').forEach(correct)
   if (fetchCurrentWord() === currentInput) {
     accuracyStats.correct++
   } else {

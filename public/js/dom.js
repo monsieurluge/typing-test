@@ -17,9 +17,15 @@ const bottomPanelsElement     = document.getElementById('bottom-panels')
 
 // ---------------------------------------------------- GENERIC DOM MANIPULATION
 
+const refresh = element => element.offsetWidth
+
 const addClass = className => element => element.classList.add(className)
 
 const removeClass = className => element => element.classList.remove(className)
+
+const isHidden = element => element.classList.contains('hidden')
+
+const isVisible = element => false === element.classList.contains('hidden')
 
 const hardHide = addClass('hidden')
 
@@ -29,9 +35,21 @@ const activate = addClass('active')
 
 const deactivate = removeClass('active')
 
-const isHidden = element => element.classList.contains('hidden')
+const correct = addClass('correct')
 
-const isVisible = element => false === element.classList.contains('hidden')
+const incorrect = addClass('error')
+
+const gotExtraCharacters = addClass('extra-characters')
+
+const lostExtraCharacters = removeClass('extra-characters')
+
+const resetAnimation = className => element => {
+  removeClass(className)(element)
+  refresh(element)
+  addClass(className)(element)
+}
+
+const resetFlashing = resetAnimation('flashing')
 
 // -------------------------------------------------- DEDICATED DOM MANIPULATION
 
@@ -43,19 +61,38 @@ function enableBottomPanel(name) {
   })
 }
 
-function openBottomPanel(panel) {
+function open(panel) {
   removeClass('closing')(panel)
   removeClass('closed')(panel)
   hardShow(panel)
+}
+
+function openBottomPanel(panel) {
+  open(panel)
   addClass('opening')(panel)
   panel.offsetWidth
 }
 
-function closeBottomPanel(panel) {
+function opened(panel) {
+  addClass('opened')(panel)
+  removeClass('opening')(panel)
+}
+
+function close(panel) {
   removeClass('opening')(panel)
   removeClass('opened')(panel)
+}
+
+function closeBottomPanel(panel) {
+  close(panel)
   addClass('closing')(panel)
   panel.offsetWidth
+}
+
+function closed(panel) {
+  addClass('closed')(panel)
+  removeClass('closing')(panel)
+  hardHide(panel)
 }
 
 function showTestConfigPanel() {
@@ -77,7 +114,7 @@ function hideCaret() {
 function showCaret() {
   if (isVisible(resultElement)) return
   hardShow(caretElement)
-  addClass('flashing')(caretElement)
+  resetFlashing(caretElement)
 }
 
 function enableFocus() {
