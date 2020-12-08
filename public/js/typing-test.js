@@ -138,7 +138,7 @@ function showResult() {
   disableFocus()
   hideCaret()
   showResultButtonsPanel()
-  const stats = calculateStats()
+  const stats = generateStats()
   const testtime = stats.time
   const correctcharpercent = roundTo2(
     ((stats.correctChars + stats.correctSpaces) /

@@ -36,38 +36,18 @@ function typingData() {
     .reduce(computeStats, base)
 }
 
-function calculateStats() {
-  let testSeconds = roundTo2((testEnd - testStart) / 1000);
-  let chars = typingData();
-  let wpm = roundTo2(
-    ((chars.correctChars + chars.correctSpaces) * (60 / testSeconds)) / 5
-  );
-  let wpmraw = roundTo2(
-    ((chars.correctChars +
-      chars.spaces +
-      chars.incorrectChars +
-      chars.extraChars) *
-      (60 / testSeconds)) /
-      5
-  );
-  let acc = roundTo2(
-    (accuracyStats.correct /
-      (accuracyStats.correct + accuracyStats.incorrect)) *
-      100
-  );
+function generateStats() {
+  const testSeconds = roundTo2((testEnd - testStart) / 1000)
+  const chars = typingData()
+  const wpm = roundTo2(((chars.correctChars + chars.correctSpaces) * (60 / testSeconds)) / 5)
   return {
     wpm: isNaN(wpm) ? 0 : wpm,
-    wpmRaw: isNaN(wpmraw) ? 0 : wpmraw,
-    acc: acc,
+    acc: roundTo2((accuracyStats.correct / (accuracyStats.correct + accuracyStats.incorrect)) * 100),
     correctChars: chars.correctChars,
     incorrectChars: chars.incorrectChars + chars.extraChars + chars.missingChars,
-    allChars:
-      chars.correctChars +
-      chars.spaces +
-      chars.incorrectChars +
-      chars.extraChars,
+    allChars: chars.correctChars + chars.spaces + chars.incorrectChars + chars.extraChars,
     time: testSeconds,
     spaces: chars.spaces,
     correctSpaces: chars.correctSpaces,
-  };
+  }
 }
