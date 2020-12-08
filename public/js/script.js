@@ -193,80 +193,54 @@ function moveCaretAfter(letterElement) {
   caret.style.left = `${newPosition}px`
 }
 
-function countChars() {
-  let correctWordChars = 0;
-  let correctChars = 0;
-  let incorrectChars = 0;
-  let extraChars = 0;
-  let missedChars = 0;
-  let spaces = 0;
-  let correctspaces = 0;
-  for (let i = 0; i < inputHistory.length; i++) {
-    if (inputHistory[i] === "") {
-      //last word that was not started
-      continue;
-    }
-    if (inputHistory[i] == wordsList[i]) {
-      //the word is correct
-      correctWordChars += wordsList[i].length;
-      correctChars += wordsList[i].length;
-      if (i < inputHistory.length - 1) {
-        correctspaces++;
-      }
-    } else if (inputHistory[i].length >= wordsList[i].length) {
-      //too many chars
-      for (let c = 0; c < inputHistory[i].length; c++) {
-        if (c < wordsList[i].length) {
-          //on char that still has a word list pair
-          if (inputHistory[i][c] == wordsList[i][c]) {
-            correctChars++;
-          } else {
-            incorrectChars++;
-          }
-        } else {
-          //on char that is extra
-          extraChars++;
-        }
-      }
-    } else {
-      //not enough chars
-      for (let c = 0; c < wordsList[i].length; c++) {
-        if (c < inputHistory[i].length) {
-          //on char that still has a word list pair
-          if (inputHistory[i][c] == wordsList[i][c]) {
-            correctChars++;
-          } else {
-            incorrectChars++;
-          }
-        } else {
-          //on char that is extra
-          missedChars++;
-        }
-      }
-    }
-    if (i < inputHistory.length - 1) {
-      spaces++;
-    }
-  }
+const zipByIndexWith = right => (left, index) => ({ left, right: right[index] })
+
+function compare(left, right) {
+  return Array.from(left)
+    .map(zipByIndexWith(right))
+    .reduce((accumulator, members) => {
+        return members.left === members.right
+          ? { ...accumulator, correct: accumulator.correct + 1 }
+          : { ...accumulator, incorrect: accumulator.incorrect + 1 }
+      },
+      { correct: 0, incorrect: 0 }
+    )
+}
+
+function computeStats(current, { left, right }) {
+  const comparison = compare(left, right)
   return {
-    spaces: spaces,
-    correctWordChars: correctWordChars,
-    allCorrectChars: correctChars,
-    incorrectChars: incorrectChars,
-    extraChars: extraChars,
-    missedChars: missedChars,
-    correctSpaces: correctspaces,
-  };
+    ...current,
+    correctChars: current.correctChars + comparison.correct,
+    correctSpaces: current.correctSpaces + (right === left) ? 1 : 0,
+    extraChars: current.extraChars + Math.max(0, right.length - left.length),
+    incorrectChars: current.incorrectChars + comparison.incorrect,
+    missingChars: current.missingChars + Math.max(0, left.length - right.length),
+  }
+}
+
+function typingData() {
+  const base = {
+    correctChars: 0,
+    correctSpaces: 0,
+    extraChars: 0,
+    incorrectChars: 0,
+    missingChars: 0,
+    spaces: wordsList.length - 1,
+  }
+  return wordsList
+    .map(zipByIndexWith(inputHistory))
+    .reduce(computeStats, base)
 }
 
 function calculateStats() {
   let testSeconds = roundTo2((testEnd - testStart) / 1000);
-  let chars = countChars();
+  let chars = typingData();
   let wpm = roundTo2(
-    ((chars.correctWordChars + chars.correctSpaces) * (60 / testSeconds)) / 5
+    ((chars.correctChars + chars.correctSpaces) * (60 / testSeconds)) / 5
   );
   let wpmraw = roundTo2(
-    ((chars.allCorrectChars +
+    ((chars.correctChars +
       chars.spaces +
       chars.incorrectChars +
       chars.extraChars) *
@@ -282,10 +256,10 @@ function calculateStats() {
     wpm: isNaN(wpm) ? 0 : wpm,
     wpmRaw: isNaN(wpmraw) ? 0 : wpmraw,
     acc: acc,
-    correctChars: chars.correctWordChars,
-    incorrectChars: chars.incorrectChars + chars.extraChars + chars.missedChars,
+    correctChars: chars.correctChars,
+    incorrectChars: chars.incorrectChars + chars.extraChars + chars.missingChars,
     allChars:
-      chars.allCorrectChars +
+      chars.correctChars +
       chars.spaces +
       chars.incorrectChars +
       chars.extraChars,
