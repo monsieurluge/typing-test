@@ -2,11 +2,6 @@ const cookieName = 'typing-test-config'
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'Escape']
 const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
 
-const modes = new Map([
-  [ 'time', enableTimeMode ],
-  [ 'words', enableWordsMode ],
-])
-
 let accuracyStats      = { correct: 0, incorrect: 0 }
 let currentInput       = ''
 let currentWordElement = undefined
@@ -75,32 +70,6 @@ function focusWords() {
   wordsInputElement.focus()
   updateCaretPosition()
   showCaret()
-}
-
-function enableTimeMode() {
-  document.querySelectorAll('#test-config button.mode').forEach(deactivate)
-  activate(document.querySelector('#test-config button.mode[mode="time"]'))
-  hardHide(document.querySelector('#test-config .wordCount'))
-  document.querySelectorAll('#test-config .time').forEach(hardShow)
-  testActive
-    ? resetTest()
-    : prepareTest(newWordsSet)
-}
-
-function enableWordsMode() {
-  document.querySelectorAll('#test-config button.mode').forEach(deactivate)
-  activate(document.querySelector('#test-config button.mode[mode="words"]'))
-  hardHide(document.querySelector('#test-config .time'))
-  document.querySelectorAll('#test-config .wordCount').forEach(hardShow)
-  testActive
-    ? newTest()
-    : prepareTest(newWordsSet)
-}
-
-function changeMode(target) {
-  if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
-  config.mode = target
-  modes.get(target)()
 }
 
 function addWordToTest() {
@@ -242,30 +211,6 @@ function startTestTimer() {
 
 function stopTestTimer() {
   window.clearTimeout(timer)
-}
-
-function applyMode2Popup() {
-  const mode = modePopupElement.getAttribute('mode')
-  const val = document.querySelector('#customMode2Popup input').value
-  if (mode === 'time') {
-    if (val !== null && !isNaN(val) && val > 0) {
-      changeTimeConfig(val)
-      saveAppConfig()
-      hardHide(modePopupWrapperElement)
-      resetTest()
-    } else {
-      showNotification('Custom time must be at least 1', 3000)
-    }
-  } else if (mode === 'words') {
-    if (val !== null && !isNaN(val) && val > 0) {
-      changeWordCount(val)
-      saveAppConfig()
-      hardHide(modePopupWrapperElement)
-      newTest()
-    } else {
-      showNotification('Custom word amount must be at least 1', 3000)
-    }
-  }
 }
 
 function testCompleted() {
