@@ -31,8 +31,8 @@ function typingData() {
     missingChars: 0,
     spaces: wordsList.length - 1,
   }
-  return wordsList
-    .map(zipByIndexWith(inputHistory))
+  return inputHistory
+    .map(zipByIndexWith(wordsList))
     .reduce(computeStats, base)
 }
 

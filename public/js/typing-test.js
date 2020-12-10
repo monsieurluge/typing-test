@@ -54,7 +54,7 @@ function stopTestTimer() {
   window.clearTimeout(timer)
 }
 
-function testCompleted() {
+function isWordCompleted() {
   const currentWordContent = fetchCurrentWord()
   return currentWordElement.nextElementSibling === null
     && currentInput.length === currentWordContent.length

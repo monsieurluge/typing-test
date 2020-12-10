@@ -30,7 +30,7 @@ function handleTyping(character) {
   currentInput += character
   compareInput(!config.blindMode)
   updateCaretPosition()
-  if (testCompleted()) jumpToNextWord()
+  if (isWordCompleted()) jumpToNextWord()
 }
 
 function eraseCharacter() {
@@ -62,12 +62,12 @@ function jumpToNextWord() {
     accuracyStats.incorrect++
     highlightBadWord(currentWordElement, !config.blindMode)
   }
-  inputHistory.push(currentInput)
-  currentInput = ''
   if (null === currentWordElement.nextSibling) {
     stopTest()
     return
   }
+  inputHistory.push(currentInput)
+  currentInput = ''
   currentWordElement = currentWordElement.nextElementSibling
   activate(currentWordElement)
   if (currentWordElement.previousElementSibling.offsetTop < currentWordElement.offsetTop) {
