@@ -26,3 +26,4 @@ The idea and the design comes from the wonderful "[Monkey Type](https://github.c
  - [ ] simple theming capability (drag and drop an "SVG theme file")
  - [ ] stats over time
  - [ ] global menu to access some settings and user data like the stats
+ - [ ] heatmap
