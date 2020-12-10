@@ -1,5 +1,3 @@
-const cookieName = 'typing-test-config'
-
 let accuracyStats      = { correct: 0, incorrect: 0 }
 let currentInput       = ''
 let currentWordElement = undefined
@@ -22,12 +20,6 @@ function resetTestData() {
   inputHistory = []
   testActive = false
 }
-
-// ------------------------------------------------------- SPECIALIZED FUNCTIONS
-
-const loadAppConfig = loadCookie(cookieName)
-
-const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 
 // ----------------------------------------------------------------- APPLICATION
 

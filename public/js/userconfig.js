@@ -1,3 +1,5 @@
+const cookieName = 'typing-test-config'
+
 const defaultConfig = {
   blindMode: false,
   mode: 'time',
@@ -8,6 +10,12 @@ const defaultConfig = {
 }
 
 let config = { ...defaultConfig }
+
+// --------------------------------------------------------- DEDICATED FUNCTIONS
+
+const loadAppConfig = loadCookie(cookieName)
+
+const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 
 // ------------------------------------------------------------------- FUNCTIONS
 
