@@ -69,4 +69,5 @@ function changeWordCount(wordCountString) {
     ? wordCount
     : 'custom'
   activate(document.querySelector("#test-config .wordCount button[wordCount='" + wordCountToDisplay + "']"))
+  wordsModeButton.textContent = `${config.words} words`
 }
