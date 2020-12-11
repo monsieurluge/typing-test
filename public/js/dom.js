@@ -1,19 +1,20 @@
 // ---------------------------------------------------------- FIXED DOM ELEMENTS
 
-const resultElement           = document.getElementById('result')
+const blindModeButtonElement  = document.getElementById('blindMode')
+const bottomPanelsElement     = document.getElementById('bottom-panels')
 const caretElement            = document.getElementById('caret')
-const notificationElement     = document.getElementById('notification')
 const modePopupWrapperElement = document.getElementById('customMode2PopupWrapper')
 const modePopupElement        = document.getElementById('customMode2Popup')
 const newTestButtonElement    = document.getElementById('new-test-button')
+const notificationElement     = document.getElementById('notification')
 const resetTestButtonElement  = document.getElementById('reset-test-button')
+const resultElement           = document.getElementById('result')
 const stopTestButtonElement   = document.getElementById('stop-test-button')
-const blindModeButtonElement  = document.getElementById('blindMode')
-const wordsWrapperElement     = document.getElementById('wordsWrapper')
-const wordsInputElement       = document.getElementById('wordsInput')
-const wordsElement            = document.getElementById('words')
 const testElement             = document.getElementById('typing-test')
-const bottomPanelsElement     = document.getElementById('bottom-panels')
+const timeModeButton          = document.getElementById('time-mode-button')
+const wordsElement            = document.getElementById('words')
+const wordsInputElement       = document.getElementById('wordsInput')
+const wordsWrapperElement     = document.getElementById('wordsWrapper')
 
 // ---------------------------------------------------- GENERIC DOM MANIPULATION
 

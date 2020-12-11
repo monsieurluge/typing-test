@@ -52,4 +52,3 @@ function applyMode2Popup() {
     }
   }
 }
-

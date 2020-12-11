@@ -58,6 +58,7 @@ function changeTimeConfig(timeString) {
     ? time
     : 'custom'
   activate(document.querySelector("#test-config .time button[timeConfig='" + timeToDisplay + "']"))
+  timeModeButton.textContent = `${config.time}s long`
 }
 
 function changeWordCount(wordCountString) {
