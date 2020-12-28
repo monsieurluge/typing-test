@@ -20,7 +20,7 @@ function changeDurationConfig(durationString) {
     ? duration
     : 'custom'
   activate(durationSelectorElement.querySelector("[timeConfig='" + durationText + "']"))
-  durationButtonElement.textContent = `${config.time}s long`
+  durationButtonElement.title = `${config.time}s long`
 }
 
 durationButtonsElements.forEach(button => button.addEventListener('click', () => {
