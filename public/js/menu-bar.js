@@ -3,16 +3,6 @@ const modes = new Map([
   [ 'words', enableWordsMode ],
 ])
 
-function enableTimeMode() {
-  document.querySelectorAll('#test-config button.mode').forEach(deactivate)
-  activate(document.querySelector('#test-config button.mode[mode="time"]'))
-  hardHide(document.querySelector('#test-config .wordCount'))
-  document.querySelectorAll('#test-config .time').forEach(hardShow)
-  testActive
-    ? resetTest()
-    : prepareTest(newWordsSet)
-}
-
 function enableWordsMode() {
   document.querySelectorAll('#test-config button.mode').forEach(deactivate)
   activate(document.querySelector('#test-config button.mode[mode="words"]'))

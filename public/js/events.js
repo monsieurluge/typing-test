@@ -9,17 +9,6 @@ document.querySelectorAll('#test-config button.mode').forEach(button => button.a
   focusWords()
 }))
 
-document.querySelectorAll('#test-config .time button').forEach(button => button.addEventListener('click', () => {
-  const value = button.getAttribute('timeConfig')
-  if (value === 'custom') {
-    showCustomMode2Popup('time')
-  } else {
-    changeTimeConfig(value)
-    saveAppConfig()
-    focusWords()
-  }
-}))
-
 document.querySelectorAll('#test-config .wordCount button').forEach(button => button.addEventListener('click', () => {
   const value = button.getAttribute('wordCount')
   if (value === 'custom') {
