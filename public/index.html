@@ -39,30 +39,27 @@
     <div id="bottom-panels">
       <div id="test-config" class="bottom-panel opened">
         <div class="items-wrapper">
-          <div class="group">
-            <div id="duration-selector-wrapper" class="selector">
-              <button id="duration-button" class="item mode active" title="duration" mode="time">duration</button>
-              <div id="duration-selector" class="subgroup duration">
-                <button class="item" timeconfig="15">15s</button>
-                <button class="item" timeconfig="30">30s</button>
-                <button class="item" timeconfig="60">60s</button>
-                <button class="item" timeconfig="120">120s</button>
-                <button class="item custom" timeconfig="custom"><span class="icon-cog"></span></button>
-              </div>
-            </div>
-            <div class="item separator">|</div>
-            <div id="words-selector-wrapper" class="selector">
-              <button id="words-mode-button" class="item mode" title="words" mode="words">words</button>
-              <div id="words-selector" class="subgroup wordCount hidden">
-                <button class="item" wordCount="10">10</button>
-                <button class="item" wordCount="25">25</button>
-                <button class="item active" wordCount="50">50</button>
-                <button class="item" wordCount="100">100</button>
-                <button class="item custom" wordCount="custom"><span class="icon-cog"></span></button>
-              </div>
+          <div id="duration-selector-wrapper" class="selector">
+            <button id="duration-button" class="mode active" title="duration" mode="time">duration</button>
+            <div id="duration-selector" class="duration">
+              <button class="item" timeconfig="15">15s</button>
+              <button class="item" timeconfig="30">30s</button>
+              <button class="item" timeconfig="60">60s</button>
+              <button class="item" timeconfig="120">120s</button>
+              <button class="item custom" timeconfig="custom"><span class="icon-cog"></span></button>
             </div>
           </div>
-          <button id="blindMode" class="item">blind</button>
+          <div id="words-selector-wrapper" class="selector">
+            <button id="words-mode-button" class="mode" title="words" mode="words">words</button>
+            <div id="words-selector" class="wordCount hidden">
+              <button class="item" wordCount="10">10</button>
+              <button class="item" wordCount="25">25</button>
+              <button class="item active" wordCount="50">50</button>
+              <button class="item" wordCount="100">100</button>
+              <button class="item custom" wordCount="custom"><span class="icon-cog"></span></button>
+            </div>
+          </div>
+          <button id="blindMode">blind</button>
         </div>
       </div>
       <div id="result-buttons" class="bottom-panel closed">

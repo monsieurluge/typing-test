@@ -144,12 +144,6 @@ html {
   top: 5em;
 }
 
-.bottom-panel .group,
-.bottom-panel .subgroup {
-  display: flex;
-  flex-direction: row;
-}
-
 .bottom-panel .items-wrapper {
   display: flex;
   flex-direction: row;
@@ -161,10 +155,6 @@ html {
 
 .bottom-panel .item:not(:last-child) {
   margin-right: 0.5em;
-}
-
-.bottom-panel .separator {
-  padding: 0;
 }
 
 key {
