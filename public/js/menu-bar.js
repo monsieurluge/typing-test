@@ -6,7 +6,8 @@ const modes = new Map([
 function enableWordsMode() {
   document.querySelectorAll('#test-config button.mode').forEach(deactivate)
   activate(document.querySelector('#test-config button.mode[mode="words"]'))
-  hardHide(document.querySelector('#test-config .time'))
+  hardHide(durationSelectorElement)
+  hardShow(wordsSelectorElement)
   document.querySelectorAll('#test-config .wordCount').forEach(hardShow)
   testActive
     ? newTest()

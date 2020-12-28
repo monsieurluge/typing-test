@@ -14,6 +14,7 @@ const testElement             = document.getElementById('typing-test')
 const wordsElement            = document.getElementById('words')
 const wordsInputElement       = document.getElementById('wordsInput')
 const wordsModeButton         = document.getElementById('words-mode-button')
+const wordsSelectorElement    = document.getElementById('words-selector')
 const wordsWrapperElement     = document.getElementById('wordsWrapper')
 
 // ---------------------------------------------------- GENERIC DOM MANIPULATION

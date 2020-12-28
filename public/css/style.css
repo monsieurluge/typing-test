@@ -207,6 +207,11 @@ button:hover key {
   margin-right: 3rem;
 }
 
+.bottom-panel .selector {
+  display: flex;
+  flex-direction: row;
+}
+
 /* ------------------------------------------------------------------ RESULTS */
 
 #result {
