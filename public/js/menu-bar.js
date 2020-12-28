@@ -1,5 +1,5 @@
 const modes = new Map([
-  [ 'time', enableTimeMode ],
+  [ 'time', enableDurationMode ],
   [ 'words', enableWordsMode ],
 ])
 
@@ -24,7 +24,7 @@ function applyMode2Popup() {
   const val = document.querySelector('#customMode2Popup input').value
   if (mode === 'time') {
     if (val !== null && !isNaN(val) && val > 0) {
-      changeTimeConfig(val)
+      changeDurationConfig(val)
       saveAppConfig()
       hardHide(modePopupWrapperElement)
       resetTest()

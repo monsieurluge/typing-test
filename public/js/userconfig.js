@@ -26,7 +26,7 @@ function resetConfig() {
 
 function applyConfig(configObj) {
   changeMode(configObj.mode)
-  changeTimeConfig(configObj.time, true)
+  changeDurationConfig(configObj.time, true)
   changeWordCount(configObj.words, true)
   setBlindMode(configObj.blindMode, true)
   Object.keys(defaultConfig).forEach(configKey => {

@@ -1,6 +1,6 @@
-const timeModeButton = document.getElementById('time-mode-button')
+const durationButtonElement = document.getElementById('duration-button')
 
-function enableTimeMode() {
+function enableDurationMode() {
   document.querySelectorAll('#test-config button.mode').forEach(deactivate)
   activate(document.querySelector('#test-config button.mode[mode="time"]'))
   hardHide(document.querySelector('#test-config .wordCount'))
@@ -10,15 +10,15 @@ function enableTimeMode() {
     : prepareTest(newWordsSet)
 }
 
-function changeTimeConfig(timeString) {
-  const time = parseInt(timeString)
-  config.time = time
+function changeDurationConfig(durationString) {
+  const duration = parseInt(durationString)
+  config.time = duration
   document.querySelectorAll('#test-config .time button').forEach(deactivate)
-  const timeToDisplay = ([15, 30, 60, 120].includes(time))
-    ? time
+  const durationText = ([15, 30, 60, 120].includes(duration))
+    ? duration
     : 'custom'
-  activate(document.querySelector("#test-config .time button[timeConfig='" + timeToDisplay + "']"))
-  timeModeButton.textContent = `${config.time}s long`
+  activate(document.querySelector("#test-config .time button[timeConfig='" + durationText + "']"))
+  durationButtonElement.textContent = `${config.time}s long`
 }
 
 document.querySelectorAll('#test-config .time button').forEach(button => button.addEventListener('click', () => {
@@ -26,7 +26,7 @@ document.querySelectorAll('#test-config .time button').forEach(button => button.
   if (value === 'custom') {
     showCustomMode2Popup('time')
   } else {
-    changeTimeConfig(value)
+    changeDurationConfig(value)
     saveAppConfig()
     focusWords()
   }
