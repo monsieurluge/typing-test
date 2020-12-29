@@ -53,10 +53,10 @@ function setBlindMode(blind) {
 function changeWordCount(wordCountString) {
   const wordCount = parseInt(wordCountString)
   config.words = wordCount
-  document.querySelectorAll('#test-config .wordCount button').forEach(deactivate)
+  wordsButtonsElements.forEach(deactivate)
   const wordCountToDisplay = ([10, 25, 50, 100, 200].includes(wordCount))
     ? wordCount
     : 'custom'
-  activate(document.querySelector("#test-config .wordCount button[wordCount='" + wordCountToDisplay + "']"))
-  wordsModeButton.title = `${config.words} words`
+  activate(wordsSelectorElement.querySelector('[data-total="' + wordCountToDisplay + '"]'))
+  wordsButtonElement.title = `${config.words} words`
 }

@@ -40,26 +40,26 @@
       <div id="test-config" class="bottom-panel opened">
         <div class="items-wrapper">
           <div id="duration-selector-wrapper" class="selector">
-            <button id="duration-button" class="mode active" title="duration" mode="time">duration</button>
-            <div id="duration-selector" class="duration">
-              <button class="item" timeconfig="15">15s</button>
-              <button class="item" timeconfig="30">30s</button>
-              <button class="item" timeconfig="60">60s</button>
-              <button class="item" timeconfig="120">120s</button>
-              <button class="item custom" timeconfig="custom"><span class="icon-cog"></span></button>
+            <button id="duration-mode-button" class="mode-selector active" title="duration" mode="time">duration</button>
+            <div id="duration-selector">
+              <button data-duration="15">15s</button>
+              <button data-duration="30">30s</button>
+              <button data-duration="60">60s</button>
+              <button data-duration="120">120s</button>
+              <button data-duration="custom"><span class="icon-cog"></span></button>
             </div>
           </div>
           <div id="words-selector-wrapper" class="selector">
-            <button id="words-mode-button" class="mode" title="words" mode="words">words</button>
-            <div id="words-selector" class="wordCount hidden">
-              <button class="item" wordCount="10">10</button>
-              <button class="item" wordCount="25">25</button>
-              <button class="item active" wordCount="50">50</button>
-              <button class="item" wordCount="100">100</button>
-              <button class="item custom" wordCount="custom"><span class="icon-cog"></span></button>
+            <button id="words-mode-button" class="mode-selector" title="words" mode="words">words</button>
+            <div id="words-selector" class="hidden">
+              <button data-total="10">10</button>
+              <button data-total="25">25</button>
+              <button data-total="50">50</button>
+              <button data-total="100">100</button>
+              <button data-total="custom"><span class="icon-cog"></span></button>
             </div>
           </div>
-          <button id="blindMode">blind</button>
+          <button id="blind-mode-button">blind</button>
         </div>
       </div>
       <div id="result-buttons" class="bottom-panel closed">

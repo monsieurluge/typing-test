@@ -1,19 +1,21 @@
 // ---------------------------------------------------------- FIXED DOM ELEMENTS
 
-const blindModeButtonElement  = document.getElementById('blindMode')
+const blindModeButtonElement  = document.getElementById('blind-mode-button')
 const bottomPanelsElement     = document.getElementById('bottom-panels')
 const caretElement            = document.getElementById('caret')
 const modePopupWrapperElement = document.getElementById('customMode2PopupWrapper')
 const modePopupElement        = document.getElementById('customMode2Popup')
+const modeSelectorElements    = document.querySelectorAll('#test-config button.mode-selector')
 const newTestButtonElement    = document.getElementById('new-test-button')
 const notificationElement     = document.getElementById('notification')
 const resetTestButtonElement  = document.getElementById('reset-test-button')
 const resultElement           = document.getElementById('result')
 const stopTestButtonElement   = document.getElementById('stop-test-button')
 const testElement             = document.getElementById('typing-test')
+const wordsButtonElement      = document.getElementById('words-mode-button')
+const wordsButtonsElements    = document.querySelectorAll('#words-selector button')
 const wordsElement            = document.getElementById('words')
 const wordsInputElement       = document.getElementById('wordsInput')
-const wordsModeButton         = document.getElementById('words-mode-button')
 const wordsSelectorElement    = document.getElementById('words-selector')
 const wordsWrapperElement     = document.getElementById('wordsWrapper')
 

@@ -1,6 +1,6 @@
 // ----------------------------------------------------------- MOUSE INTERACTION
 
-document.querySelectorAll('#test-config button.mode').forEach(button => button.addEventListener('click', event => {
+modeSelectorElements.forEach(button => button.addEventListener('click', event => {
   if (event.target.classList.contains('active')) return
   changeMode(event.target.getAttribute('mode'))
   saveAppConfig()
@@ -9,8 +9,8 @@ document.querySelectorAll('#test-config button.mode').forEach(button => button.a
   focusWords()
 }))
 
-document.querySelectorAll('#test-config .wordCount button').forEach(button => button.addEventListener('click', () => {
-  const value = button.getAttribute('wordCount')
+wordsButtonsElements.forEach(button => button.addEventListener('click', () => {
+  const value = button.dataset.total
   if (value === 'custom') {
     showCustomMode2Popup('words')
   } else {
