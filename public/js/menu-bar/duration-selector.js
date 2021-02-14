@@ -1,5 +1,6 @@
-const durationButtonElement = document.getElementById('duration-mode-button')
+const durationButtonElement   = document.getElementById('duration-mode-button')
 const durationButtonsElements = document.querySelectorAll('#duration-selector button')
+const durationInputElement    = document.querySelector('#duration-selector input')
 const durationSelectorElement = document.getElementById('duration-selector')
 
 function enableDurationMode() {
@@ -20,6 +21,7 @@ function changeDurationConfig(durationString) {
     ? duration
     : 'custom'
   activate(durationSelectorElement.querySelector("[data-duration='" + durationText + "']"))
+  durationInputElement.value = config.time
   durationButtonElement.title = `${config.time}s long`
 }
 
@@ -33,3 +35,11 @@ durationButtonsElements.forEach(button => button.addEventListener('click', () =>
     focusWords()
   }
 }))
+
+durationInputElement.addEventListener('change', event => {
+  const duration = event.target.value
+  if (isNaN(duration)) return
+  changeDurationConfig(duration)
+  saveAppConfig()
+  focusWords()
+})
