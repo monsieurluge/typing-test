@@ -202,7 +202,7 @@ button:hover key {
   flex-direction: row;
 }
 
-#duration-selector input {
+.selector-input {
   width: 3rem;
   color: var(--sub-color);
   background-color: transparent;
@@ -213,32 +213,12 @@ button:hover key {
   outline: none;
 }
 
-#duration-selector input::selection {
+.selector-input::selection {
   color: var(--bg-color);
   background-color: var(--accent-color);
 }
 
-#duration-selector input:focus {
-  color: var(--accent-color);
-}
-
-#words-selector input {
-  width: 3rem;
-  color: var(--sub-color);
-  background-color: transparent;
-  border-top: none;
-  border-right: none;
-  border-bottom: 1px solid var(--sub-color);
-  border-left: none;
-  outline: none;
-}
-
-#words-selector input::selection {
-  color: var(--bg-color);
-  background-color: var(--accent-color);
-}
-
-#words-selector input:focus {
+.selector-input:focus {
   color: var(--accent-color);
 }
 
