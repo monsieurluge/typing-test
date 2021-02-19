@@ -3,16 +3,6 @@ const modes = new Map([
   [ 'words', enableWordsMode ],
 ])
 
-function enableWordsMode() {
-  deactivate(durationButtonElement)
-  activate(wordsButtonElement)
-  hardHide(durationSelectorElement)
-  hardShow(wordsSelectorElement)
-  testActive
-    ? newTest()
-    : prepareTest(newWordsSet)
-}
-
 function changeMode(target) {
   if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
   config.mode = target

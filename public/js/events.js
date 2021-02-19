@@ -9,18 +9,6 @@ modeSelectorElements.forEach(button => button.addEventListener('click', event =>
   focusWords()
 }))
 
-wordsButtonsElements.forEach(button => button.addEventListener('click', () => {
-  const value = button.dataset.total
-  if (value === 'custom') {
-    showCustomMode2Popup('words')
-  } else {
-    changeWordCount(value)
-    saveAppConfig()
-    prepareTest(newWordsSet)
-    focusWords()
-  }
-}))
-
 modePopupWrapperElement.addEventListener('click', hardHide(modePopupWrapperElement))
 
 modePopupElement.addEventListener('click', event => event.stopPropagation())

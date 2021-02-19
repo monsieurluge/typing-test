@@ -12,11 +12,8 @@ const resetTestButtonElement  = document.getElementById('reset-test-button')
 const resultElement           = document.getElementById('result')
 const stopTestButtonElement   = document.getElementById('stop-test-button')
 const testElement             = document.getElementById('typing-test')
-const wordsButtonElement      = document.getElementById('words-mode-button')
-const wordsButtonsElements    = document.querySelectorAll('#words-selector button')
 const wordsElement            = document.getElementById('words')
 const wordsInputElement       = document.getElementById('wordsInput')
-const wordsSelectorElement    = document.getElementById('words-selector')
 const wordsWrapperElement     = document.getElementById('wordsWrapper')
 
 // ---------------------------------------------------- GENERIC DOM MANIPULATION
