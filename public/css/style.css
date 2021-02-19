@@ -222,6 +222,26 @@ button:hover key {
   color: var(--accent-color);
 }
 
+#words-selector input {
+  width: 3rem;
+  color: var(--sub-color);
+  background-color: transparent;
+  border-top: none;
+  border-right: none;
+  border-bottom: 1px solid var(--sub-color);
+  border-left: none;
+  outline: none;
+}
+
+#words-selector input::selection {
+  color: var(--bg-color);
+  background-color: var(--accent-color);
+}
+
+#words-selector input:focus {
+  color: var(--accent-color);
+}
+
 /* ------------------------------------------------------------------ RESULTS */
 
 #result {

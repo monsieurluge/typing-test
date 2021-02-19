@@ -1,6 +1,7 @@
-const wordsButtonElement      = document.getElementById('words-mode-button')
-const wordsButtonsElements    = document.querySelectorAll('#words-selector button')
-const wordsSelectorElement    = document.getElementById('words-selector')
+const wordsButtonElement     = document.getElementById('words-mode-button')
+const wordsButtonsElements   = document.querySelectorAll('#words-selector button')
+const wordsSelectorElement   = document.getElementById('words-selector')
+const wordsCountInputElement = document.querySelector('#words-selector input')
 
 function enableWordsMode() {
   deactivate(durationButtonElement)
@@ -20,6 +21,7 @@ function changeWordCount(wordCountString) {
     ? wordCount
     : 'custom'
   activate(wordsSelectorElement.querySelector('[data-total="' + wordCountToDisplay + '"]'))
+  wordsCountInputElement.value = config.words
   wordsButtonElement.title = `${config.words} words`
 }
 
@@ -34,3 +36,12 @@ wordsButtonsElements.forEach(button => button.addEventListener('click', () => {
     focusWords()
   }
 }))
+
+wordsCountInputElement.addEventListener('change', event => {
+    const words = event.target.value
+    if (isNaN(words)) return
+    changeWordCount(words)
+    saveAppConfig()
+    prepareTest(newWordsSet)
+    focusWords()
+})
