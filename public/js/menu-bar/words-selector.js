@@ -20,10 +20,10 @@ function changeWordCount(wordCountString) {
 }
 
 wordsCountInputElement.addEventListener('change', event => {
-    const words = event.target.value
-    if (isNaN(words)) return
-    changeWordCount(words)
-    saveAppConfig()
-    prepareTest(newWordsSet)
-    focusWords()
+  const words = event.target.value
+  if (isNaN(words)) return
+  changeWordCount(words)
+  saveAppConfig()
+  prepareTest(newWordsSet)
+  focusWords()
 })
