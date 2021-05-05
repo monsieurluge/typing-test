@@ -46,14 +46,6 @@ function stopTest() {
   showResult()
 }
 
-function startTestTimer() {
-  timer = window.setTimeout(stopTest, config.time * 1000)
-}
-
-function stopTestTimer() {
-  window.clearTimeout(timer)
-}
-
 function isWordCompleted() {
   const currentWordContent = fetchCurrentWord()
   return currentWordElement.nextElementSibling === null
