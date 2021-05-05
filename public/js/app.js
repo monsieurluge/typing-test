@@ -1,5 +1,11 @@
-function startApp() {
-  applyConfig(loadAppConfig(defaultConfig))
-  prepareTest(newWordsSet)
-  focusWords()
+function App(config) {
+  function start() {
+    applyConfig(loadAppConfig(config))
+    prepareTest(newWordsSet)
+    focusWords()
+  }
+
+  return Object.freeze({
+    start,
+  })
 }

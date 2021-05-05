@@ -97,6 +97,17 @@
   <script src="js/app.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', startApp)
+    document.addEventListener('DOMContentLoaded', () => {
+      const defaultConfig = {
+        blindMode: false,
+        mode: 'time',
+        numbers: false,
+        punctuation: false,
+        time: 30,
+        words: 50,
+      }
+      const app = App(defaultConfig)
+      app.start()
+    })
   </script>
 </html>
