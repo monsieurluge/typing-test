@@ -26,7 +26,7 @@ function applyMode2Popup() {
       changeWordCount(val)
       saveAppConfig()
       hardHide(modePopupWrapperElement)
-      newTest()
+      generateTest()
     } else {
       showNotification('Custom word amount must be at least 1', 3000)
     }

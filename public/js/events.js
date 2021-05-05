@@ -19,7 +19,7 @@ document.addEventListener('mousemove', disableFocus)
 
 blindModeButtonElement.addEventListener('click', toggleBlindMode)
 
-newTestButtonElement.addEventListener('click', () => newTest())
+newTestButtonElement.addEventListener('click', () => generateTest())
 
 resetTestButtonElement.addEventListener('click', () => resetTest())
 
@@ -32,13 +32,13 @@ document.querySelector('#test-config button:not(.custom)').addEventListener('cli
 // --------------------------------------------------------- SHORTCUTS AND MENUS
 
 document.addEventListener('keyup', event => {
-  if (event.code === 'KeyN' && event.shiftKey && false === testActive) newTest()
+  if (event.code === 'KeyN' && event.shiftKey && false === testActive) generateTest()
   if (event.code === 'KeyR' && event.shiftKey && false === testActive) resetTest()
   if (event.code === 'KeyC' && event.ctrlKey && testActive) resetTest()
 })
 
 newTestButtonElement.addEventListener('keyup', event => {
-  if (event.code === 'Enter') newTest()
+  if (event.code === 'Enter') generateTest()
 })
 
 stopTestButtonElement.addEventListener('keyup', event => {

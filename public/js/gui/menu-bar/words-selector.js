@@ -8,7 +8,7 @@ function enableWordsMode() {
   hardHide(durationSelectorElement)
   hardShow(wordsSelectorElement)
   testActive
-    ? newTest()
+    ? generateTest()
     : prepareTest(newWordsSet)
 }
 

@@ -15,7 +15,7 @@ function stopTest() {
   showResult()
 }
 
-function newTest() {
+function generateTest() {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
