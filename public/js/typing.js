@@ -1,26 +1,6 @@
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'Escape']
 const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
 
-function updateCaretPosition() {
-  const inputLength = currentInput.length
-  const wordLength = fetchCurrentWord().length - 1
-  const targetLetter = currentWordElement.querySelectorAll('letter')[Math.min(inputLength, wordLength)]
-  inputLength > wordLength
-    ? moveCaretAfter(targetLetter)
-    : moveCaretBefore(targetLetter)
-  resetFlashing(caretElement)
-}
-
-function moveCaretBefore(letterElement) {
-  const newPosition = letterElement.offsetLeft - caretElement.offsetWidth / 2
-  caret.style.left = `${newPosition}px`
-}
-
-function moveCaretAfter(letterElement) {
-  const newPosition = letterElement.offsetLeft + letterElement.offsetWidth - caretElement.offsetWidth / 2
-  caret.style.left = `${newPosition}px`
-}
-
 function handleTyping(character) {
   const target = fetchCurrentWord().substring(currentInput.length, currentInput.length + 1)
   const isValid = (target === character)
