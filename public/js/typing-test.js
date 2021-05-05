@@ -1,9 +1,3 @@
-function startApp() {
-  applyConfig(loadAppConfig(defaultConfig))
-  prepareTest(newWordsSet)
-  focusWords()
-}
-
 function startTest() {
   resetTestData()
   testActive = true
