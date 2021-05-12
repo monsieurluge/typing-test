@@ -1,4 +1,4 @@
-function startTest() {
+export function startTest() {
   resetTestData()
   testActive = true
   testStart = Date.now()
@@ -6,7 +6,7 @@ function startTest() {
   showTestRunningPanel()
 }
 
-function stopTest() {
+export function stopTest() {
   testEnd = Date.now()
   testActive = false
   stopTestTimer()
@@ -15,7 +15,7 @@ function stopTest() {
   showResult()
 }
 
-function generateTest() {
+export function generateTest() {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
@@ -25,7 +25,7 @@ function generateTest() {
   focusWords()
 }
 
-function resetTest() {
+export function resetTest() {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
@@ -35,7 +35,7 @@ function resetTest() {
   focusWords()
 }
 
-function prepareTest(before) {
+export function prepareTest(before) {
   before()
   prepareWords(wordsElement)
   resetTestData()

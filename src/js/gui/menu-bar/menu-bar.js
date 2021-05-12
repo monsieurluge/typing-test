@@ -1,15 +1,19 @@
+import { enableDurationMode } from './duration-selector.js'
+import { enableWordsMode } from './words-selector.js'
+import { config } from '../../userconfig.js'
+
 const modes = new Map([
   [ 'time', enableDurationMode ],
   [ 'words', enableWordsMode ],
 ])
 
-function changeMode(target) {
+export function changeMode(target) {
   if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
   config.mode = target
   modes.get(target)()
 }
 
-function applyMode2Popup() {
+export function applyMode2Popup() {
   const mode = modePopupElement.getAttribute('mode')
   const val = document.querySelector('#customMode2Popup input').value
   if (mode === 'time') {

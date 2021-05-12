@@ -1,8 +1,8 @@
-const wordsButtonElement = document.getElementById('words-mode-button')
-const wordsSelectorElement = document.getElementById('words-selector')
-const wordsCountInputElement = document.querySelector('#words-selector input')
+export const wordsButtonElement = document.getElementById('words-mode-button')
+export const wordsSelectorElement = document.getElementById('words-selector')
+export const wordsCountInputElement = document.querySelector('#words-selector input')
 
-function enableWordsMode() {
+export function enableWordsMode() {
   deactivate(durationButtonElement)
   activate(wordsButtonElement)
   hardHide(durationSelectorElement)
@@ -12,7 +12,7 @@ function enableWordsMode() {
     : prepareTest(newWordsSet)
 }
 
-function changeWordCount(wordCountString) {
+export function changeWordCount(wordCountString) {
   const wordCount = parseInt(wordCountString)
   config.words = wordCount
   wordsCountInputElement.value = config.words

@@ -1,17 +1,19 @@
-function isWordCompleted() {
+import { wordsList } from './storage'
+
+export function isWordCompleted() {
   const currentWordContent = fetchCurrentWord()
   return currentWordElement.nextElementSibling === null
     && currentInput.length === currentWordContent.length
     && (config.blindMode || currentInput.slice(-1) === currentWordContent.slice(-1))
 }
 
-function addWordToTest() {
+export function addWordToTest() {
   const word = words[Math.floor(Math.random() * words.length)]
   if (wordsList.slice(-2).includes(word)) return // cannot add a new word
   wordsList.push(word)
 }
 
-function newWordsSet() {
+export function newWordsSet() {
   wordsList = []
   const expectedLength = (config.mode === 'words') ? config.words : 60
   while (wordsList.length < expectedLength) {
@@ -19,15 +21,15 @@ function newWordsSet() {
   }
 }
 
-function sameWordsSet() {} // do nothing, on purpose
+export function sameWordsSet() {} // do nothing, on purpose
 
-function generateLettersTags(letters) {
+export function generateLettersTags(letters) {
   return letters
     .map(letter => `<letter>${letter}</letter>`)
     .join('')
 }
 
-function generateWordTags(content, word) {
+export function generateWordTags(content, word) {
   return content.concat(
     `<div class="word" data-value="${word}">`,
     generateLettersTags(word.split('')),
@@ -35,6 +37,6 @@ function generateWordTags(content, word) {
   )
 }
 
-function prepareWords(container) {
+export function prepareWords(container) {
   container.innerHTML = wordsList.reduce(generateWordTags, '<div class="filler"></div>')
 }

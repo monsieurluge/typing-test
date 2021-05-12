@@ -1,3 +1,8 @@
+import { loadCookie, saveContentToCookie } from './lib/cookie.js'
+import { changeMode } from './gui/menu-bar/menu-bar.js'
+import { changeDurationConfig } from './gui/menu-bar/duration-selector.js'
+import { changeWordCount } from './gui/menu-bar/words-selector.js'
+
 const cookieName = 'typing-test-config'
 
 const defaultConfig = {
@@ -9,22 +14,22 @@ const defaultConfig = {
   words: 50,
 }
 
-let config = { ...defaultConfig }
+export let config = { ...defaultConfig }
 
 // --------------------------------------------------------- DEDICATED FUNCTIONS
 
-const loadAppConfig = loadCookie(cookieName)
+export const loadAppConfig = loadCookie(cookieName)
 
-const saveAppConfig = () => saveContentToCookie(cookieName)(config)
+export const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 
 // ------------------------------------------------------------------- FUNCTIONS
 
-function resetConfig() {
+export function resetConfig() {
   applyConfig({ ...defaultConfig })
   saveAppConfig()
 }
 
-function applyConfig(configObj) {
+export function applyConfig(configObj) {
   changeMode(configObj.mode)
   changeDurationConfig(configObj.time, true)
   changeWordCount(configObj.words, true)
@@ -37,13 +42,13 @@ function applyConfig(configObj) {
   return configObj
 }
 
-function toggleBlindMode() {
+export function toggleBlindMode() {
   setBlindMode(!config.blindMode)
   saveAppConfig()
   focusWords()
 }
 
-function setBlindMode(blind) {
+export function setBlindMode(blind) {
   config.blindMode = blind
   blind
     ? activate(blindModeButtonElement)
