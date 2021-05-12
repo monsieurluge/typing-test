@@ -27,3 +27,17 @@ The idea and the design comes from the wonderful "[Monkey Type](https://github.c
  - [ ] stats over time
  - [ ] global menu to access some settings and user data like the stats
  - [ ] heatmap
+
+## Notes
+
+Init the project:
+
+`sudo docker run -v "$PWD":/usr/src/services --user $(id -u):$(id -g) -it -w /usr/src/services node:11 npm init`
+
+Webpack compilation:
+
+`sudo docker run -v "$PWD":/usr/src/services --user $(id -u):$(id -g) -it -w /usr/src/services node:11 npx webpack --mode development`
+
+or better
+
+`sudo docker-compose -f docker-compose.builder.yml run --rm build`

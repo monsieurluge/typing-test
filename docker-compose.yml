@@ -1,0 +1,8 @@
+version: '3'
+services:
+  dev:
+    image: node:11
+    volumes:
+      - .:/usr/src/services
+    working_dir: /usr/src/services
+    command: npm run dev

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing Test</title>
+    <link rel="stylesheet" href="../src/css/balloon.css" />
+    <link rel="stylesheet" href="../src/css/icomoon-font.css" />
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <link id="favicon" rel="shortcut icon" href="../src/fav.png" />
+    <link rel="shortcut icon" href="../src/fav.png" />
+    <meta name="name" content="Typing Test" />
+    <meta name="description" content="A minimalistic distraction free typing test."/>
+    <meta name="keywords" content="typing, test, typing-test, typing test, wpm, words per minute, typing website, minimalistic, distraction free, random words"/>
+    <meta property="og:description" content="A minimalistic distraction free typing test."/>
+    <meta name="theme-color" content="#e2b714" id="metaThemeColor" />
+  </head>
+
+  <body>
+    <div id="page">
+      <div id="typing-test">
+        <input id="wordsInput" class="" tabindex="0" autocomplete="off" />
+        <div id="wordsWrapper">
+          <div id="caret" class="hidden"></div>
+          <div id="words"></div>
+        </div>
+      </div>
+      <div id="result" class="hidden">
+        <div class="main group">
+          <div class="item">wpm <span class="value wpm" aria-label="" data-balloon-pos="up">--</span></div>
+          <div class="item">accuracy <span class="value acc" aria-label="" data-balloon-pos="up">--</span></div>
+        </div>
+        <div class="details group">
+          <div>time <span class="value time" aria-label="" data-balloon-pos="bottom">--s</span></div>
+          <div>char <span class="value char" aria-label="" data-balloon-pos="bottom">--</span></div>
+        </div>
+      </div>
+    </div>
+    <div id="bottom-panels">
+      <div id="test-config" class="bottom-panel opened">
+        <div class="items-wrapper">
+          <div id="duration-selector-wrapper" class="selector">
+            <button id="duration-mode-button" class="mode-selector active" title="duration" mode="time">duration</button>
+            <div id="duration-selector">
+              <input type="text" name="duration" class="selector-input" value="60" />
+            </div>
+          </div>
+          <div id="words-selector-wrapper" class="selector">
+            <button id="words-mode-button" class="mode-selector" title="words" mode="words">words</button>
+            <div id="words-selector" class="hidden">
+              <input type="text" name="word-count" class="selector-input" value="50" />
+            </div>
+          </div>
+          <button id="blind-mode-button">blind</button>
+        </div>
+      </div>
+      <div id="result-buttons" class="bottom-panel closed">
+        <div class="items-wrapper">
+          <button id="new-test-button" class="item"><key>shift</key><key>n</key> new test</button>
+          <button id="reset-test-button" class="item"><key>shift</key><key>r</key> restart test</button>
+        </div>
+      </div>
+      <div id="test-running" class="bottom-panel closed">
+        <div class="items-wrapper">
+          <button id="stop-test-button" class="item"><key>ctrl</key><key>c</key> stop the test</button>
+        </div>
+      </div>
+    </div>
+    <div id="customMode2PopupWrapper" class="hidden">
+      <div id="customMode2Popup" mode="">
+        <div class="title">Test length</div>
+        <input type="number" value="1" min="1" max="10000" />
+        <div class="button">ok</div>
+      </div>
+    </div>
+    <div id="notification">---</div>
+  </body>
+
+  <script src="main.js"></script>
+</html>

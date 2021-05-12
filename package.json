@@ -1,0 +1,26 @@
+{
+  "name": "typingtest",
+  "version": "0.1.0",
+  "description": "minimalistic typing test",
+  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monsieurluge/typing-test.git"
+  },
+  "author": "monsieurluge",
+  "license": "UNLICENCED",
+  "bugs": {
+    "url": "https://github.com/monsieurluge/typing-test/issues"
+  },
+  "homepage": "https://github.com/monsieurluge/typing-test#readme",
+  "devDependencies": {
+    "webpack": "^5.37.0",
+    "webpack-cli": "^4.7.0"
+  }
+}

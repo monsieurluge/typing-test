@@ -1,0 +1,19 @@
+version: '2'
+services:
+  base:
+    image: node:11
+    volumes:
+      - .:/usr/src/services
+    working_dir: /usr/src/services
+  install:
+    extends:
+      service: base
+    command: npm install
+  build:
+    extends:
+      service: base
+    command: npm run build
+  watch:
+    extends:
+      service: base
+    command: npm run watch
