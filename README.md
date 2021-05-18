@@ -36,8 +36,4 @@ Init the project:
 
 Webpack compilation:
 
-`sudo docker run -v "$PWD":/usr/src/services --user $(id -u):$(id -g) -it -w /usr/src/services node:11 npx webpack --mode development`
-
-or better
-
 `sudo docker-compose -f docker-compose.builder.yml run --rm build`
