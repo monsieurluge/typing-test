@@ -1,8 +1,7 @@
 import { pipe, roundTo2, zipByIndexWith } from './js/lib/misc'
 import { loadCookie, saveContentToCookie } from './js/lib/cookie'
 import { words } from './js/dictionaries/english'
-import { activate, addClass, close, closeBottomPanel, closed, correct, deactivate, generateLettersTags, generateWordTags, gotExtraCharacters, hardHide, hardShow, incorrect, isHidden, isVisible, lostExtraCharacters, open, openBottomPanel, opened, refresh, removeClass, resetAnimation, resetFlashing } from './js/gui'
-
+import { activate, addClass, close, closeBottomPanel, closed, correct, deactivate, generateLettersTags, generateWordTags, gotExtraCharacters, hardHide, hardShow, incorrect, isHidden, isVisible, lostExtraCharacters, open, openBottomPanel, opened, refresh, removeClass, resetAnimation, resetFlashing, enableBottomPanel, showTestConfigPanel, showResultButtonsPanel, showTestRunningPanel, hideCaret, showCaret, enableFocus, disableFocus } from './js/gui'
 // ----------------------------------------------------------------------------
 // GLOBAL VARIABLES
 // ----------------------------------------------------------------------------
@@ -91,46 +90,6 @@ const wordsWrapperElement     = document.getElementById('wordsWrapper')
 
 function prepareWords(container) {
   container.innerHTML = wordsList.reduce(generateWordTags, '<div class="filler"></div>')
-}
-
-function enableBottomPanel(name) {
-  document.querySelectorAll('.bottom-panel').forEach(panel => {
-    panel.id === name
-      ? openBottomPanel(panel)
-      : closeBottomPanel(panel)
-  })
-}
-
-function showTestConfigPanel() {
-  enableBottomPanel('test-config')
-}
-
-function showResultButtonsPanel() {
-  enableBottomPanel('result-buttons')
-}
-
-function showTestRunningPanel() {
-  enableBottomPanel('test-running')
-}
-
-function hideCaret() {
-  hardHide(caretElement)
-}
-
-function showCaret() {
-  if (isVisible(resultElement)) return
-  hardShow(caretElement)
-  resetFlashing(caretElement)
-}
-
-function enableFocus() {
-  addClass('focus')(bottomPanelsElement)
-  addClass('no-cursor')(document.querySelector('body'))
-}
-
-function disableFocus() {
-  removeClass('focus')(bottomPanelsElement)
-  removeClass('no-cursor')(document.querySelector('body'))
 }
 
 function showCustomMode2Popup(mode) {
@@ -304,8 +263,8 @@ function showResult() {
   resultCalculating = true
   resultVisible = true
   testActive = false
-  disableFocus()
-  hideCaret()
+  disableFocus(bottomPanelsElement)
+  hideCaret(caretElement)
   showResultButtonsPanel()
   const stats = generateStats()
   const testtime = stats.time
@@ -482,7 +441,7 @@ function focusWords() {
   if (isHidden(wordsWrapperElement)) return
   wordsInputElement.focus()
   updateCaretPosition()
-  showCaret()
+  showCaret({caretElement, resultElement})
 }
 
 // ----------------------------------------------------------------------------
@@ -504,7 +463,7 @@ modePopupElement.addEventListener('click', event => event.stopPropagation())
 
 document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
 
-document.addEventListener('mousemove', disableFocus)
+document.addEventListener('mousemove', () => disableFocus(bottomPanelsElement))
 
 blindModeButtonElement.addEventListener('click', toggleBlindMode)
 
@@ -560,17 +519,17 @@ wordsInputElement.addEventListener('keydown', event => {
   if (excludedTestKeys.includes(event.key)) return
   if (event.ctrlKey) return
   if (false === testActive) startTest()
-  enableFocus()
+  enableFocus(bottomPanelsElement)
   handleTyping(event.key)
 })
 
 wordsInputElement.addEventListener('keydown', event => {
   if (event.code === 'Tab' && testActive) {
-    disableFocus()
+    disableFocus(bottomPanelsElement)
   }
 })
 
-wordsInputElement.addEventListener('blur', hideCaret)
+wordsInputElement.addEventListener('blur', () => hideCaret(caretElement))
 
 window.addEventListener('beforeunload', event => {
   if (false === testActive) return
@@ -638,14 +597,14 @@ function stopTest() {
   testEnd = Date.now()
   testActive = false
   stopTestTimer()
-  hideCaret()
+  hideCaret(caretElement)
   inputHistory.push(currentInput)
   showResult()
 }
 
 function generateTest() {
   stopTestTimer()
-  disableFocus()
+  disableFocus(bottomPanelsElement)
   showTestConfigPanel()
   hardHide(resultElement)
   prepareTest(newWordsSet)
@@ -655,7 +614,7 @@ function generateTest() {
 
 function resetTest() {
   stopTestTimer()
-  disableFocus()
+  disableFocus(bottomPanelsElement)
   showTestConfigPanel()
   hardHide(resultElement)
   prepareTest(sameWordsSet)

@@ -90,3 +90,43 @@ export function generateWordTags(content, word) {
     '</div>'
   )
 }
+
+export function enableBottomPanel(name) {
+  document.querySelectorAll('.bottom-panel').forEach(panel => {
+    panel.id === name
+      ? openBottomPanel(panel)
+      : closeBottomPanel(panel)
+  })
+}
+
+export function showTestConfigPanel() {
+  enableBottomPanel('test-config')
+}
+
+export function showResultButtonsPanel() {
+  enableBottomPanel('result-buttons')
+}
+
+export function showTestRunningPanel() {
+  enableBottomPanel('test-running')
+}
+
+export function hideCaret(caretElement) {
+  hardHide(caretElement)
+}
+
+export function showCaret({caretElement, resultElement}) {
+  if (isVisible(resultElement)) return
+  hardShow(caretElement)
+  resetFlashing(caretElement)
+}
+
+export function enableFocus(bottomPanelsElement) {
+  addClass('focus')(bottomPanelsElement)
+  addClass('no-cursor')(document.querySelector('body'))
+}
+
+export function disableFocus(bottomPanelsElement) {
+  removeClass('focus')(bottomPanelsElement)
+  removeClass('no-cursor')(document.querySelector('body'))
+}
