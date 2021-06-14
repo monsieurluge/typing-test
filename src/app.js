@@ -1,6 +1,7 @@
 import { pipe, roundTo2, zipByIndexWith } from './js/lib/misc'
 import { loadCookie, saveContentToCookie } from './js/lib/cookie'
 import { words } from './js/dictionaries/english'
+import { activate, addClass, close, closeBottomPanel, closed, correct, deactivate, generateLettersTags, generateWordTags, gotExtraCharacters, hardHide, hardShow, incorrect, isHidden, isVisible, lostExtraCharacters, open, openBottomPanel, opened, refresh, removeClass, resetAnimation, resetFlashing } from './js/gui'
 
 // ----------------------------------------------------------------------------
 // GLOBAL VARIABLES
@@ -26,30 +27,6 @@ const modes = new Map([
 
 const excludedTestKeycodes = ['Backspace', 'Delete', 'Enter', 'Tab', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'Escape']
 const excludedTestKeys = [' ', 'Dead', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12']
-
-const wordsButtonElement = document.getElementById('words-mode-button')
-const wordsSelectorElement = document.getElementById('words-selector')
-const wordsCountInputElement = document.querySelector('#words-selector input')
-
-const durationButtonElement = document.getElementById('duration-mode-button')
-const durationInputElement = document.querySelector('#duration-selector input')
-const durationSelectorElement = document.getElementById('duration-selector')
-
-const blindModeButtonElement  = document.getElementById('blind-mode-button')
-const bottomPanelsElement     = document.getElementById('bottom-panels')
-const caretElement            = document.getElementById('caret')
-const modePopupWrapperElement = document.getElementById('customMode2PopupWrapper')
-const modePopupElement        = document.getElementById('customMode2Popup')
-const modeSelectorElements    = document.querySelectorAll('#test-config button.mode-selector')
-const newTestButtonElement    = document.getElementById('new-test-button')
-const notificationElement     = document.getElementById('notification')
-const resetTestButtonElement  = document.getElementById('reset-test-button')
-const resultElement           = document.getElementById('result')
-const stopTestButtonElement   = document.getElementById('stop-test-button')
-const testElement             = document.getElementById('typing-test')
-const wordsElement            = document.getElementById('words')
-const wordsInputElement       = document.getElementById('wordsInput')
-const wordsWrapperElement     = document.getElementById('wordsWrapper')
 
 const cookieName = 'typing-test-config'
 
@@ -84,82 +61,96 @@ const loadAppConfig = loadCookie(cookieName)
 
 const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 
-const refresh = element => {
-  element.offsetWidth
-  return element
+// ----------------------------------------------------------------------------
+// GUI
+// ----------------------------------------------------------------------------
+
+const wordsButtonElement = document.getElementById('words-mode-button')
+const wordsSelectorElement = document.getElementById('words-selector')
+const wordsCountInputElement = document.querySelector('#words-selector input')
+
+const durationButtonElement = document.getElementById('duration-mode-button')
+const durationInputElement = document.querySelector('#duration-selector input')
+const durationSelectorElement = document.getElementById('duration-selector')
+
+const blindModeButtonElement  = document.getElementById('blind-mode-button')
+const bottomPanelsElement     = document.getElementById('bottom-panels')
+const caretElement            = document.getElementById('caret')
+const modePopupWrapperElement = document.getElementById('customMode2PopupWrapper')
+const modePopupElement        = document.getElementById('customMode2Popup')
+const modeSelectorElements    = document.querySelectorAll('#test-config button.mode-selector')
+const newTestButtonElement    = document.getElementById('new-test-button')
+const notificationElement     = document.getElementById('notification')
+const resetTestButtonElement  = document.getElementById('reset-test-button')
+const resultElement           = document.getElementById('result')
+const stopTestButtonElement   = document.getElementById('stop-test-button')
+const testElement             = document.getElementById('typing-test')
+const wordsElement            = document.getElementById('words')
+const wordsInputElement       = document.getElementById('wordsInput')
+const wordsWrapperElement     = document.getElementById('wordsWrapper')
+
+function prepareWords(container) {
+  container.innerHTML = wordsList.reduce(generateWordTags, '<div class="filler"></div>')
 }
 
-const addClass = className => element => {
-  element.classList.add(className)
-  return element
+function enableBottomPanel(name) {
+  document.querySelectorAll('.bottom-panel').forEach(panel => {
+    panel.id === name
+      ? openBottomPanel(panel)
+      : closeBottomPanel(panel)
+  })
 }
 
-const removeClass = className => element => {
-  element.classList.remove(className)
-  return element
+function showTestConfigPanel() {
+  enableBottomPanel('test-config')
 }
 
-const isHidden = element => element.classList.contains('hidden')
+function showResultButtonsPanel() {
+  enableBottomPanel('result-buttons')
+}
 
-const isVisible = element => false === element.classList.contains('hidden')
+function showTestRunningPanel() {
+  enableBottomPanel('test-running')
+}
 
-const hardHide = addClass('hidden')
+function hideCaret() {
+  hardHide(caretElement)
+}
 
-const hardShow = removeClass('hidden')
+function showCaret() {
+  if (isVisible(resultElement)) return
+  hardShow(caretElement)
+  resetFlashing(caretElement)
+}
 
-const activate = addClass('active')
+function enableFocus() {
+  addClass('focus')(bottomPanelsElement)
+  addClass('no-cursor')(document.querySelector('body'))
+}
 
-const deactivate = removeClass('active')
+function disableFocus() {
+  removeClass('focus')(bottomPanelsElement)
+  removeClass('no-cursor')(document.querySelector('body'))
+}
 
-const correct = addClass('correct')
+function showCustomMode2Popup(mode) {
+  hardShow(modePopupWrapperElement)
+  if (mode === 'time') {
+    document.querySelector('#customMode2Popup .title').textContent = 'Test length'
+    modePopupElement.setAttribute('mode', 'time')
+  } else if (mode === 'words') {
+    document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
+    modePopupElement.setAttribute('mode', 'words')
+  }
+  focusWords()
+}
 
-const incorrect = addClass('error')
-
-const gotExtraCharacters = addClass('extra-characters')
-
-const lostExtraCharacters = removeClass('extra-characters')
-
-const resetAnimation = className => pipe(
-  removeClass(className),
-  refresh,
-  addClass(className)
-)
-
-const resetFlashing = resetAnimation('flashing')
-
-const open = pipe(
-  removeClass('closing'),
-  removeClass('closed'),
-  hardShow
-)
-
-const close = pipe(
-  removeClass('opening'),
-  removeClass('opened')
-)
-
-const openBottomPanel = pipe(
-  open,
-  addClass('opening'),
-  refresh
-)
-
-const opened = pipe(
-  addClass('opened'),
-  removeClass('opening')
-)
-
-const closeBottomPanel = pipe(
-  close,
-  addClass('closing'),
-  refresh
-)
-
-const closed = pipe(
-  addClass('closed'),
-  removeClass('closing'),
-  hardHide
-)
+function showNotification(text, time) {
+  clearTimeout(notificationTimer)
+  notificationElement.textContent = text
+  addClass('displayed')(notificationElement)
+  notificationTimer = setTimeout(() => removeClass('displayed')(notificationElement), 4000)
+}
 
 // ----------------------------------------------------------------------------
 // WORDS
@@ -187,24 +178,6 @@ function newWordsSet() {
 }
 
 function sameWordsSet() {} // do nothing, on purpose
-
-function generateLettersTags(letters) {
-  return letters
-    .map(letter => `<letter>${letter}</letter>`)
-    .join('')
-}
-
-function generateWordTags(content, word) {
-  return content.concat(
-    `<div class="word" data-value="${word}">`,
-    generateLettersTags(word.split('')),
-    '</div>'
-  )
-}
-
-function prepareWords(container) {
-  container.innerHTML = wordsList.reduce(generateWordTags, '<div class="filler"></div>')
-}
 
 // ----------------------------------------------------------------------------
 // MENU BAR
@@ -321,69 +294,6 @@ function moveCaretBefore(letterElement) {
 function moveCaretAfter(letterElement) {
   const newPosition = letterElement.offsetLeft + letterElement.offsetWidth - caretElement.offsetWidth / 2
   caret.style.left = `${newPosition}px`
-}
-
-// ----------------------------------------------------------------------------
-// DOM
-// ----------------------------------------------------------------------------
-
-function enableBottomPanel(name) {
-  document.querySelectorAll('.bottom-panel').forEach(panel => {
-    panel.id === name
-      ? openBottomPanel(panel)
-      : closeBottomPanel(panel)
-  })
-}
-
-function showTestConfigPanel() {
-  enableBottomPanel('test-config')
-}
-
-function showResultButtonsPanel() {
-  enableBottomPanel('result-buttons')
-}
-
-function showTestRunningPanel() {
-  enableBottomPanel('test-running')
-}
-
-function hideCaret() {
-  hardHide(caretElement)
-}
-
-function showCaret() {
-  if (isVisible(resultElement)) return
-  hardShow(caretElement)
-  resetFlashing(caretElement)
-}
-
-function enableFocus() {
-  addClass('focus')(bottomPanelsElement)
-  addClass('no-cursor')(document.querySelector('body'))
-}
-
-function disableFocus() {
-  removeClass('focus')(bottomPanelsElement)
-  removeClass('no-cursor')(document.querySelector('body'))
-}
-
-function showCustomMode2Popup(mode) {
-  hardShow(modePopupWrapperElement)
-  if (mode === 'time') {
-    document.querySelector('#customMode2Popup .title').textContent = 'Test length'
-    modePopupElement.setAttribute('mode', 'time')
-  } else if (mode === 'words') {
-    document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
-    modePopupElement.setAttribute('mode', 'words')
-  }
-  focusWords()
-}
-
-function showNotification(text, time) {
-  clearTimeout(notificationTimer)
-  notificationElement.textContent = text
-  addClass('displayed')(notificationElement)
-  notificationTimer = setTimeout(() => removeClass('displayed')(notificationElement), 4000)
 }
 
 // ----------------------------------------------------------------------------
