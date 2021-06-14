@@ -1,7 +1,8 @@
 import { pipe, roundTo2, zipByIndexWith } from './js/lib/misc'
 import { loadCookie, saveContentToCookie } from './js/lib/cookie'
 import { words } from './js/dictionaries/english'
-import { activate, addClass, close, closeBottomPanel, closed, correct, deactivate, generateLettersTags, generateWordTags, gotExtraCharacters, hardHide, hardShow, incorrect, isHidden, isVisible, lostExtraCharacters, open, openBottomPanel, opened, refresh, removeClass, resetAnimation, resetFlashing, enableBottomPanel, showTestConfigPanel, showResultButtonsPanel, showTestRunningPanel, hideCaret, showCaret, enableFocus, disableFocus } from './js/gui'
+import { activate, addClass, close, closed, deactivate, disableFocus, enableFocus, generateWordTags, gotExtraCharacters, hardHide, hardShow, hideCaret, incorrect, isHidden, lostExtraCharacters, open, opened, removeClass, resetFlashing, showCaret, showTestConfigPanel, showResultButtonsPanel, showTestRunningPanel } from './js/gui'
+
 // ----------------------------------------------------------------------------
 // GLOBAL VARIABLES
 // ----------------------------------------------------------------------------

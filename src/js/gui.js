@@ -1,6 +1,6 @@
 import { pipe } from './lib/misc'
 
-export const refresh = element => {
+const refresh = element => {
   element.offsetWidth
   return element
 }
@@ -17,7 +17,7 @@ export const removeClass = className => element => {
 
 export const isHidden = element => element.classList.contains('hidden')
 
-export const isVisible = element => false === element.classList.contains('hidden')
+const isVisible = element => false === element.classList.contains('hidden')
 
 export const hardHide = addClass('hidden')
 
@@ -27,15 +27,13 @@ export const activate = addClass('active')
 
 export const deactivate = removeClass('active')
 
-export const correct = addClass('correct')
-
 export const incorrect = addClass('error')
 
 export const gotExtraCharacters = addClass('extra-characters')
 
 export const lostExtraCharacters = removeClass('extra-characters')
 
-export const resetAnimation = className => pipe(
+const resetAnimation = className => pipe(
   removeClass(className),
   refresh,
   addClass(className)
@@ -54,7 +52,7 @@ export const close = pipe(
   removeClass('opened')
 )
 
-export const openBottomPanel = pipe(
+const openBottomPanel = pipe(
   open,
   addClass('opening'),
   refresh
@@ -65,11 +63,25 @@ export const opened = pipe(
   removeClass('opening')
 )
 
-export const closeBottomPanel = pipe(
+const closeBottomPanel = pipe(
   close,
   addClass('closing'),
   refresh
 )
+
+function generateLettersTags(letters) {
+  return letters
+    .map(letter => `<letter>${letter}</letter>`)
+    .join('')
+}
+
+function enableBottomPanel(name) {
+  document.querySelectorAll('.bottom-panel').forEach(panel => {
+    panel.id === name
+      ? openBottomPanel(panel)
+      : closeBottomPanel(panel)
+  })
+}
 
 export const closed = pipe(
   addClass('closed'),
@@ -77,26 +89,12 @@ export const closed = pipe(
   hardHide
 )
 
-export function generateLettersTags(letters) {
-  return letters
-    .map(letter => `<letter>${letter}</letter>`)
-    .join('')
-}
-
 export function generateWordTags(content, word) {
   return content.concat(
     `<div class="word" data-value="${word}">`,
     generateLettersTags(word.split('')),
     '</div>'
   )
-}
-
-export function enableBottomPanel(name) {
-  document.querySelectorAll('.bottom-panel').forEach(panel => {
-    panel.id === name
-      ? openBottomPanel(panel)
-      : closeBottomPanel(panel)
-  })
 }
 
 export function showTestConfigPanel() {
