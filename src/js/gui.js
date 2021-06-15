@@ -4,6 +4,7 @@ import { pipe } from './lib/misc'
 // ELEMENTS
 // ----------------------------------------------------------------------------
 
+const bottomPanelsElement = document.getElementById('bottom-panels')
 const durationButtonElement = document.getElementById('duration-mode-button')
 const durationSelectorElement = document.getElementById('duration-selector')
 const wordsButtonElement = document.getElementById('words-mode-button')
@@ -132,12 +133,12 @@ export function showCaret({caretElement, resultElement}) {
   resetFlashing(caretElement)
 }
 
-export function enableFocus(bottomPanelsElement) {
+export function enableFocus() {
   addClass('focus')(bottomPanelsElement)
   addClass('no-cursor')(document.querySelector('body'))
 }
 
-export function disableFocus(bottomPanelsElement) {
+export function disableFocus() {
   removeClass('focus')(bottomPanelsElement)
   removeClass('no-cursor')(document.querySelector('body'))
 }

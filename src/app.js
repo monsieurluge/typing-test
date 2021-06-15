@@ -100,7 +100,6 @@ const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 const wordsCountInputElement  = document.querySelector('#words-selector input')
 const durationInputElement    = document.querySelector('#duration-selector input')
 const blindModeButtonElement  = document.getElementById('blind-mode-button')
-const bottomPanelsElement     = document.getElementById('bottom-panels')
 const caretElement            = document.getElementById('caret')
 const modeSelectorElements    = document.querySelectorAll('#test-config button.mode-selector')
 const newTestButtonElement    = document.getElementById('new-test-button')
@@ -244,7 +243,7 @@ function showResult() {
   resultCalculating = true
   resultVisible = true
   testActive = false
-  disableFocus(bottomPanelsElement)
+  disableFocus()
   hideCaret(caretElement)
   showResultButtonsPanel()
   const stats = generateStats()
@@ -438,7 +437,7 @@ modeSelectorElements.forEach(button => button.addEventListener('click', event =>
   focusWords()
 }))
 
-document.addEventListener('mousemove', () => disableFocus(bottomPanelsElement))
+document.addEventListener('mousemove', disableFocus)
 
 blindModeButtonElement.addEventListener('click', toggleBlindMode)
 
@@ -490,13 +489,13 @@ wordsInputElement.addEventListener('keydown', event => {
   if (excludedTestKeys.includes(event.key)) return
   if (event.ctrlKey) return
   if (false === testActive) startTest()
-  enableFocus(bottomPanelsElement)
+  enableFocus()
   handleTyping(event.key)
 })
 
 wordsInputElement.addEventListener('keydown', event => {
   if (event.code === 'Tab' && testActive) {
-    disableFocus(bottomPanelsElement)
+    disableFocus()
   }
 })
 
@@ -575,7 +574,7 @@ function stopTest() {
 
 function generateTest() {
   stopTestTimer()
-  disableFocus(bottomPanelsElement)
+  disableFocus()
   showTestConfigPanel()
   hardHide(resultElement)
   prepareTest(newWordsSet)
@@ -585,7 +584,7 @@ function generateTest() {
 
 function resetTest() {
   stopTestTimer()
-  disableFocus(bottomPanelsElement)
+  disableFocus()
   showTestConfigPanel()
   hardHide(resultElement)
   prepareTest(sameWordsSet)
