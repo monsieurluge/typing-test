@@ -11,7 +11,6 @@ let accuracyStats      = { correct: 0, incorrect: 0 }
 let currentInput       = ''
 let currentWordElement = undefined
 let inputHistory       = []
-let notificationTimer  = null
 let resultCalculating  = false
 let resultVisible      = false
 let testActive         = false
@@ -76,11 +75,8 @@ const durationSelectorElement = document.getElementById('duration-selector')
 const blindModeButtonElement  = document.getElementById('blind-mode-button')
 const bottomPanelsElement     = document.getElementById('bottom-panels')
 const caretElement            = document.getElementById('caret')
-const modePopupWrapperElement = document.getElementById('customMode2PopupWrapper')
-const modePopupElement        = document.getElementById('customMode2Popup')
 const modeSelectorElements    = document.querySelectorAll('#test-config button.mode-selector')
 const newTestButtonElement    = document.getElementById('new-test-button')
-const notificationElement     = document.getElementById('notification')
 const resetTestButtonElement  = document.getElementById('reset-test-button')
 const resultElement           = document.getElementById('result')
 const stopTestButtonElement   = document.getElementById('stop-test-button')
@@ -91,25 +87,6 @@ const wordsWrapperElement     = document.getElementById('wordsWrapper')
 
 function prepareWords(container) {
   container.innerHTML = wordsList.reduce(generateWordTags, '<div class="filler"></div>')
-}
-
-function showCustomMode2Popup(mode) {
-  hardShow(modePopupWrapperElement)
-  if (mode === 'time') {
-    document.querySelector('#customMode2Popup .title').textContent = 'Test length'
-    modePopupElement.setAttribute('mode', 'time')
-  } else if (mode === 'words') {
-    document.querySelector('#customMode2Popup .title').textContent = 'Word amount'
-    modePopupElement.setAttribute('mode', 'words')
-  }
-  focusWords()
-}
-
-function showNotification(text, time) {
-  clearTimeout(notificationTimer)
-  notificationElement.textContent = text
-  addClass('displayed')(notificationElement)
-  notificationTimer = setTimeout(() => removeClass('displayed')(notificationElement), 4000)
 }
 
 // ----------------------------------------------------------------------------
@@ -147,30 +124,6 @@ function changeMode(target) {
   if (false === modes.has(target)) throw `cannot change to unknown mode "${target}"`
   config.mode = target
   modes.get(target)()
-}
-
-function applyMode2Popup() {
-  const mode = modePopupElement.getAttribute('mode')
-  const val = document.querySelector('#customMode2Popup input').value
-  if (mode === 'time') {
-    if (val !== null && !isNaN(val) && val > 0) {
-      changeDurationConfig(val)
-      saveAppConfig()
-      hardHide(modePopupWrapperElement)
-      resetTest()
-    } else {
-      showNotification('Custom time must be at least 1', 3000)
-    }
-  } else if (mode === 'words') {
-    if (val !== null && !isNaN(val) && val > 0) {
-      changeWordCount(val)
-      saveAppConfig()
-      hardHide(modePopupWrapperElement)
-      generateTest()
-    } else {
-      showNotification('Custom word amount must be at least 1', 3000)
-    }
-  }
 }
 
 // ----------------------------------------------------------------------------
@@ -458,12 +411,6 @@ modeSelectorElements.forEach(button => button.addEventListener('click', event =>
   focusWords()
 }))
 
-modePopupWrapperElement.addEventListener('click', hardHide(modePopupWrapperElement))
-
-modePopupElement.addEventListener('click', event => event.stopPropagation())
-
-document.querySelector('#customMode2Popup .button').addEventListener('click', applyMode2Popup)
-
 document.addEventListener('mousemove', () => disableFocus(bottomPanelsElement))
 
 blindModeButtonElement.addEventListener('click', toggleBlindMode)
@@ -494,10 +441,6 @@ stopTestButtonElement.addEventListener('keyup', event => {
 
 resetTestButtonElement.addEventListener('keyup', event => {
   if (event.code === 'Enter') resetTest()
-})
-
-document.querySelector('#customMode2Popup input').addEventListener('keyup', event => {
-  if (event.code === 'Enter') applyMode2Popup()
 })
 
 wordsInputElement.addEventListener('keydown', event => {
