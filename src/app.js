@@ -18,6 +18,7 @@ import { activate,
   hardShow,
   hideCaret,
   hideDurationSelector,
+  hideResultPanel,
   hideWordsSelector,
   incorrect,
   isHidden,
@@ -28,8 +29,9 @@ import { activate,
   resetFlashing,
   showCaret,
   showDurationSelector,
-  showWordsSelector,
+  showResultPanel,
   showTestConfigPanel,
+  showWordsSelector,
   showResultButtonsPanel,
   showTestRunningPanel,
   updateDurationButtonTitle,
@@ -104,7 +106,6 @@ const caretElement            = document.getElementById('caret')
 const modeSelectorElements    = document.querySelectorAll('#test-config button.mode-selector')
 const newTestButtonElement    = document.getElementById('new-test-button')
 const resetTestButtonElement  = document.getElementById('reset-test-button')
-const resultElement           = document.getElementById('result')
 const stopTestButtonElement   = document.getElementById('stop-test-button')
 const testElement             = document.getElementById('typing-test')
 const wordsElement            = document.getElementById('words')
@@ -262,7 +263,7 @@ function showResult() {
   document.querySelector('#result .details .char').textContent = `${testtime}s`
   document.querySelector('#result .details .char').setAttribute('aria-label', `${correctcharpercent}%`)
   document.querySelector('#result .details .char').textContent = `${stats.correctChars + stats.correctSpaces}/${stats.incorrectChars}`
-  hardShow(resultElement)
+  showResultPanel()
 }
 
 // ----------------------------------------------------------------------------
@@ -421,7 +422,7 @@ function focusWords() {
   if (isHidden(wordsWrapperElement)) return
   wordsInputElement.focus()
   updateCaretPosition()
-  showCaret({caretElement, resultElement})
+  showCaret(caretElement)
 }
 
 // ----------------------------------------------------------------------------
@@ -576,7 +577,7 @@ function generateTest() {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
-  hardHide(resultElement)
+  hideResultPanel()
   prepareTest(newWordsSet)
   hardShow(testElement)
   focusWords()
@@ -586,7 +587,7 @@ function resetTest() {
   stopTestTimer()
   disableFocus()
   showTestConfigPanel()
-  hardHide(resultElement)
+  hideResultPanel()
   prepareTest(sameWordsSet)
   hardShow(testElement)
   focusWords()

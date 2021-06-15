@@ -7,6 +7,7 @@ import { pipe } from './lib/misc'
 const bottomPanelsElement = document.getElementById('bottom-panels')
 const durationButtonElement = document.getElementById('duration-mode-button')
 const durationSelectorElement = document.getElementById('duration-selector')
+const resultElement = document.getElementById('result')
 const wordsButtonElement = document.getElementById('words-mode-button')
 const wordsSelectorElement = document.getElementById('words-selector')
 
@@ -127,7 +128,7 @@ export function hideCaret(caretElement) {
   hardHide(caretElement)
 }
 
-export function showCaret({caretElement, resultElement}) {
+export function showCaret(caretElement) {
   if (isVisible(resultElement)) return
   hardShow(caretElement)
   resetFlashing(caretElement)
@@ -181,4 +182,12 @@ export function showWordsSelector() {
 
 export function hideWordsSelector() {
   hardHide(wordsSelectorElement)
+}
+
+export function hideResultPanel() {
+  hardHide(resultElement)
+}
+
+export function showResultPanel() {
+  hardShow(resultElement)
 }
