@@ -21,12 +21,12 @@ const refresh = element => {
   return element
 }
 
-export const addClass = className => element => {
+const addClass = className => element => {
   element.classList.add(className)
   return element
 }
 
-export const removeClass = className => element => {
+const removeClass = className => element => {
   element.classList.remove(className)
   return element
 }
@@ -35,9 +35,9 @@ export const isHidden = element => element.classList.contains('hidden')
 
 const isVisible = element => false === element.classList.contains('hidden')
 
-export const hardHide = addClass('hidden')
+const hardHide = addClass('hidden')
 
-export const hardShow = removeClass('hidden')
+const hardShow = removeClass('hidden')
 
 export const activate = addClass('active')
 

@@ -1,8 +1,8 @@
 import { pipe, roundTo2, zipByIndexWith } from './js/lib/misc'
 import { loadCookie, saveContentToCookie } from './js/lib/cookie'
 import { words } from './js/dictionaries/english'
-import { activate,
-  addClass,
+import {
+  activate,
   close,
   closed,
   deactivate,
@@ -14,8 +14,6 @@ import { activate,
   enableWordsButton,
   generateWordTags,
   gotExtraCharacters,
-  hardHide,
-  hardShow,
   hideCaret,
   hideDurationSelector,
   hideResultPanel,
@@ -26,7 +24,6 @@ import { activate,
   lostExtraCharacters,
   open,
   opened,
-  removeClass,
   resetFlashing,
   showCaret,
   showDurationSelector,
