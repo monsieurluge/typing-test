@@ -19,6 +19,7 @@ import { activate,
   hideCaret,
   hideDurationSelector,
   hideResultPanel,
+  hideTestPanel,
   hideWordsSelector,
   incorrect,
   isHidden,
@@ -31,6 +32,7 @@ import { activate,
   showDurationSelector,
   showResultPanel,
   showTestConfigPanel,
+  showTestPanel,
   showWordsSelector,
   showResultButtonsPanel,
   showTestRunningPanel,
@@ -107,7 +109,6 @@ const modeSelectorElements    = document.querySelectorAll('#test-config button.m
 const newTestButtonElement    = document.getElementById('new-test-button')
 const resetTestButtonElement  = document.getElementById('reset-test-button')
 const stopTestButtonElement   = document.getElementById('stop-test-button')
-const testElement             = document.getElementById('typing-test')
 const wordsElement            = document.getElementById('words')
 const wordsInputElement       = document.getElementById('wordsInput')
 const wordsWrapperElement     = document.getElementById('wordsWrapper')
@@ -254,7 +255,7 @@ function showResult() {
       (stats.correctChars + stats.correctSpaces + stats.incorrectChars)) *
       100
   )
-  hardHide(testElement)
+  hideTestPanel()
   document.querySelector('#result .main .wpm').textContent = ''.concat(Math.round(stats.wpm))
   document.querySelector('#result .main .wpm').setAttribute('aria-label', `${stats.wpm} (${roundTo2(stats.wpm * 5)}cpm)`)
   document.querySelector('#result .main .acc').textContent = `${Math.floor(stats.acc)}%`
@@ -579,7 +580,7 @@ function generateTest() {
   showTestConfigPanel()
   hideResultPanel()
   prepareTest(newWordsSet)
-  hardShow(testElement)
+  showTestPanel()
   focusWords()
 }
 
@@ -589,7 +590,7 @@ function resetTest() {
   showTestConfigPanel()
   hideResultPanel()
   prepareTest(sameWordsSet)
-  hardShow(testElement)
+  showTestPanel()
   focusWords()
 }
 

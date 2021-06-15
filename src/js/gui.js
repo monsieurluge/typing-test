@@ -8,6 +8,7 @@ const bottomPanelsElement = document.getElementById('bottom-panels')
 const durationButtonElement = document.getElementById('duration-mode-button')
 const durationSelectorElement = document.getElementById('duration-selector')
 const resultElement = document.getElementById('result')
+const testElement = document.getElementById('typing-test')
 const wordsButtonElement = document.getElementById('words-mode-button')
 const wordsSelectorElement = document.getElementById('words-selector')
 
@@ -190,4 +191,12 @@ export function hideResultPanel() {
 
 export function showResultPanel() {
   hardShow(resultElement)
+}
+
+export function hideTestPanel() {
+  hardHide(testElement)
+}
+
+export function showTestPanel() {
+  hardShow(testElement)
 }
