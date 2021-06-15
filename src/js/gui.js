@@ -5,7 +5,9 @@ import { pipe } from './lib/misc'
 // ----------------------------------------------------------------------------
 
 const durationButtonElement = document.getElementById('duration-mode-button')
+const durationSelectorElement = document.getElementById('duration-selector')
 const wordsButtonElement = document.getElementById('words-mode-button')
+const wordsSelectorElement = document.getElementById('words-selector')
 
 // ----------------------------------------------------------------------------
 // FUNCTIONS
@@ -162,4 +164,20 @@ export function disableWordsButton() {
 
 export function updateWordsButtonTitle(config) {
   wordsButtonElement.title = `${config.words} words`
+}
+
+export function showDurationSelector() {
+  hardShow(durationSelectorElement)
+}
+
+export function hideDurationSelector() {
+  hardHide(durationSelectorElement)
+}
+
+export function showWordsSelector() {
+  hardShow(wordsSelectorElement)
+}
+
+export function hideWordsSelector() {
+  hardHide(wordsSelectorElement)
 }

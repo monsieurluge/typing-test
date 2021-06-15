@@ -17,6 +17,8 @@ import { activate,
   hardHide,
   hardShow,
   hideCaret,
+  hideDurationSelector,
+  hideWordsSelector,
   incorrect,
   isHidden,
   lostExtraCharacters,
@@ -25,6 +27,8 @@ import { activate,
   removeClass,
   resetFlashing,
   showCaret,
+  showDurationSelector,
+  showWordsSelector,
   showTestConfigPanel,
   showResultButtonsPanel,
   showTestRunningPanel,
@@ -93,12 +97,8 @@ const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 // GUI
 // ----------------------------------------------------------------------------
 
-const wordsSelectorElement = document.getElementById('words-selector')
-const wordsCountInputElement = document.querySelector('#words-selector input')
-
-const durationInputElement = document.querySelector('#duration-selector input')
-const durationSelectorElement = document.getElementById('duration-selector')
-
+const wordsCountInputElement  = document.querySelector('#words-selector input')
+const durationInputElement    = document.querySelector('#duration-selector input')
 const blindModeButtonElement  = document.getElementById('blind-mode-button')
 const bottomPanelsElement     = document.getElementById('bottom-panels')
 const caretElement            = document.getElementById('caret')
@@ -160,8 +160,8 @@ function changeMode(target) {
 function enableWordsMode() {
   disableDurationButton()
   enableWordsButton()
-  hardHide(durationSelectorElement)
-  hardShow(wordsSelectorElement)
+  hideDurationSelector()
+  showWordsSelector()
   testActive
     ? generateTest()
     : prepareTest(newWordsSet)
@@ -190,8 +190,8 @@ wordsCountInputElement.addEventListener('change', event => {
 function enableDurationMode() {
   disableWordsButton()
   enableDurationButton()
-  hardHide(wordsSelectorElement)
-  hardShow(durationSelectorElement)
+  hideWordsSelector()
+  showDurationSelector()
   testActive
     ? resetTest()
     : prepareTest(newWordsSet)
