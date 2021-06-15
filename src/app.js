@@ -1,7 +1,36 @@
 import { pipe, roundTo2, zipByIndexWith } from './js/lib/misc'
 import { loadCookie, saveContentToCookie } from './js/lib/cookie'
 import { words } from './js/dictionaries/english'
-import { activate, addClass, close, closed, deactivate, disableFocus, enableFocus, generateWordTags, gotExtraCharacters, hardHide, hardShow, hideCaret, incorrect, isHidden, lostExtraCharacters, open, opened, removeClass, resetFlashing, showCaret, showTestConfigPanel, showResultButtonsPanel, showTestRunningPanel } from './js/gui'
+import { activate,
+  addClass,
+  close,
+  closed,
+  deactivate,
+  disableDurationButton,
+  disableFocus,
+  disableWordsButton,
+  enableDurationButton,
+  enableFocus,
+  enableWordsButton,
+  generateWordTags,
+  gotExtraCharacters,
+  hardHide,
+  hardShow,
+  hideCaret,
+  incorrect,
+  isHidden,
+  lostExtraCharacters,
+  open,
+  opened,
+  removeClass,
+  resetFlashing,
+  showCaret,
+  showTestConfigPanel,
+  showResultButtonsPanel,
+  showTestRunningPanel,
+  updateDurationButtonTitle,
+  updateWordsButtonTitle,
+} from './js/gui'
 
 // ----------------------------------------------------------------------------
 // GLOBAL VARIABLES
@@ -64,11 +93,9 @@ const saveAppConfig = () => saveContentToCookie(cookieName)(config)
 // GUI
 // ----------------------------------------------------------------------------
 
-const wordsButtonElement = document.getElementById('words-mode-button')
 const wordsSelectorElement = document.getElementById('words-selector')
 const wordsCountInputElement = document.querySelector('#words-selector input')
 
-const durationButtonElement = document.getElementById('duration-mode-button')
 const durationInputElement = document.querySelector('#duration-selector input')
 const durationSelectorElement = document.getElementById('duration-selector')
 
@@ -131,8 +158,8 @@ function changeMode(target) {
 // ----------------------------------------------------------------------------
 
 function enableWordsMode() {
-  deactivate(durationButtonElement)
-  activate(wordsButtonElement)
+  disableDurationButton()
+  enableWordsButton()
   hardHide(durationSelectorElement)
   hardShow(wordsSelectorElement)
   testActive
@@ -144,7 +171,7 @@ function changeWordCount(wordCountString) {
   const wordCount = parseInt(wordCountString)
   config.words = wordCount
   wordsCountInputElement.value = config.words
-  wordsButtonElement.title = `${config.words} words`
+  updateWordsButtonTitle(config)
 }
 
 wordsCountInputElement.addEventListener('change', event => {
@@ -161,8 +188,8 @@ wordsCountInputElement.addEventListener('change', event => {
 // ----------------------------------------------------------------------------
 
 function enableDurationMode() {
-  deactivate(wordsButtonElement)
-  activate(durationButtonElement)
+  disableWordsButton()
+  enableDurationButton()
   hardHide(wordsSelectorElement)
   hardShow(durationSelectorElement)
   testActive
@@ -174,7 +201,7 @@ function changeDurationConfig(durationString) {
   const duration = parseInt(durationString)
   config.time = duration
   durationInputElement.value = duration
-  durationButtonElement.title = `${duration}s long`
+  updateDurationButtonTitle(duration)
 }
 
 durationInputElement.addEventListener('change', event => {

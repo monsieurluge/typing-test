@@ -1,5 +1,16 @@
 import { pipe } from './lib/misc'
 
+// ----------------------------------------------------------------------------
+// ELEMENTS
+// ----------------------------------------------------------------------------
+
+const durationButtonElement = document.getElementById('duration-mode-button')
+const wordsButtonElement = document.getElementById('words-mode-button')
+
+// ----------------------------------------------------------------------------
+// FUNCTIONS
+// ----------------------------------------------------------------------------
+
 const refresh = element => {
   element.offsetWidth
   return element
@@ -127,4 +138,28 @@ export function enableFocus(bottomPanelsElement) {
 export function disableFocus(bottomPanelsElement) {
   removeClass('focus')(bottomPanelsElement)
   removeClass('no-cursor')(document.querySelector('body'))
+}
+
+export function enableDurationButton() {
+  activate(durationButtonElement)
+}
+
+export function disableDurationButton() {
+  deactivate(durationButtonElement)
+}
+
+export function updateDurationButtonTitle(duration) {
+  durationButtonElement.title = `${duration}s long`
+}
+
+export function enableWordsButton() {
+  activate(wordsButtonElement)
+}
+
+export function disableWordsButton() {
+  deactivate(wordsButtonElement)
+}
+
+export function updateWordsButtonTitle(config) {
+  wordsButtonElement.title = `${config.words} words`
 }
