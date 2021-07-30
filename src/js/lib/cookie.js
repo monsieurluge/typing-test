@@ -1,4 +1,4 @@
-export const loadCookie = name => fallback => {
+const loadCookie = name => fallback => {
   return document.cookie.split('; ')     // split all the cookies
     .filter(row => row.startsWith(name)) // keep only the app configs
     .map(cookie => cookie.split('=')[1]) // take the cookie data
@@ -7,6 +7,6 @@ export const loadCookie = name => fallback => {
     [0]                                  // then return the first content
 }
 
-export const saveContentToCookie = name => content => {
+const saveContentToCookie = name => content => {
   document.cookie = `${name}=${JSON.stringify(content)}; max-age=31536000; SameSite=Lax`
 }

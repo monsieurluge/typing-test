@@ -1,5 +1,3 @@
-import { pipe } from './lib/misc'
-
 // ----------------------------------------------------------------------------
 // ELEMENTS
 // ----------------------------------------------------------------------------
@@ -31,7 +29,7 @@ const removeClass = className => element => {
   return element
 }
 
-export const isHidden = element => element.classList.contains('hidden')
+const isHidden = element => element.classList.contains('hidden')
 
 const isVisible = element => false === element.classList.contains('hidden')
 
@@ -39,15 +37,15 @@ const hardHide = addClass('hidden')
 
 const hardShow = removeClass('hidden')
 
-export const activate = addClass('active')
+const activate = addClass('active')
 
-export const deactivate = removeClass('active')
+const deactivate = removeClass('active')
 
-export const incorrect = addClass('error')
+const incorrect = addClass('error')
 
-export const gotExtraCharacters = addClass('extra-characters')
+const gotExtraCharacters = addClass('extra-characters')
 
-export const lostExtraCharacters = removeClass('extra-characters')
+const lostExtraCharacters = removeClass('extra-characters')
 
 const resetAnimation = className => pipe(
   removeClass(className),
@@ -55,15 +53,15 @@ const resetAnimation = className => pipe(
   addClass(className)
 )
 
-export const resetFlashing = resetAnimation('flashing')
+const resetFlashing = resetAnimation('flashing')
 
-export const open = pipe(
+const open = pipe(
   removeClass('closing'),
   removeClass('closed'),
   hardShow
 )
 
-export const close = pipe(
+const close = pipe(
   removeClass('opening'),
   removeClass('opened')
 )
@@ -74,7 +72,7 @@ const openBottomPanel = pipe(
   refresh
 )
 
-export const opened = pipe(
+const opened = pipe(
   addClass('opened'),
   removeClass('opening')
 )
@@ -99,13 +97,13 @@ function enableBottomPanel(name) {
   })
 }
 
-export const closed = pipe(
+const closed = pipe(
   addClass('closed'),
   removeClass('closing'),
   hardHide
 )
 
-export function generateWordTags(content, word) {
+function generateWordTags(content, word) {
   return content.concat(
     `<div class="word" data-value="${word}">`,
     generateLettersTags(word.split('')),
@@ -113,90 +111,90 @@ export function generateWordTags(content, word) {
   )
 }
 
-export function showTestConfigPanel() {
+function showTestConfigPanel() {
   enableBottomPanel('test-config')
 }
 
-export function showResultButtonsPanel() {
+function showResultButtonsPanel() {
   enableBottomPanel('result-buttons')
 }
 
-export function showTestRunningPanel() {
+function showTestRunningPanel() {
   enableBottomPanel('test-running')
 }
 
-export function hideCaret(caretElement) {
+function hideCaret(caretElement) {
   hardHide(caretElement)
 }
 
-export function showCaret(caretElement) {
+function showCaret(caretElement) {
   if (isVisible(resultElement)) return
   hardShow(caretElement)
   resetFlashing(caretElement)
 }
 
-export function enableFocus() {
+function enableFocus() {
   addClass('focus')(bottomPanelsElement)
   addClass('no-cursor')(document.querySelector('body'))
 }
 
-export function disableFocus() {
+function disableFocus() {
   removeClass('focus')(bottomPanelsElement)
   removeClass('no-cursor')(document.querySelector('body'))
 }
 
-export function enableDurationButton() {
+function enableDurationButton() {
   activate(durationButtonElement)
 }
 
-export function disableDurationButton() {
+function disableDurationButton() {
   deactivate(durationButtonElement)
 }
 
-export function updateDurationButtonTitle(duration) {
+function updateDurationButtonTitle(duration) {
   durationButtonElement.title = `${duration}s long`
 }
 
-export function enableWordsButton() {
+function enableWordsButton() {
   activate(wordsButtonElement)
 }
 
-export function disableWordsButton() {
+function disableWordsButton() {
   deactivate(wordsButtonElement)
 }
 
-export function updateWordsButtonTitle(config) {
+function updateWordsButtonTitle(config) {
   wordsButtonElement.title = `${config.words} words`
 }
 
-export function showDurationSelector() {
+function showDurationSelector() {
   hardShow(durationSelectorElement)
 }
 
-export function hideDurationSelector() {
+function hideDurationSelector() {
   hardHide(durationSelectorElement)
 }
 
-export function showWordsSelector() {
+function showWordsSelector() {
   hardShow(wordsSelectorElement)
 }
 
-export function hideWordsSelector() {
+function hideWordsSelector() {
   hardHide(wordsSelectorElement)
 }
 
-export function hideResultPanel() {
+function hideResultPanel() {
   hardHide(resultElement)
 }
 
-export function showResultPanel() {
+function showResultPanel() {
   hardShow(resultElement)
 }
 
-export function hideTestPanel() {
+function hideTestPanel() {
   hardHide(testElement)
 }
 
-export function showTestPanel() {
+function showTestPanel() {
   hardShow(testElement)
 }
