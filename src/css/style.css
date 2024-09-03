@@ -341,12 +341,14 @@ button:hover key {
 }
 
 .bottom-panel button:hover,
+.bottom-panel button:focus,
 .bottom-panel button.active {
   color: var(--accent-color);
 }
 
-.bottom-panel button:focus {
-  color: var(--accent-color);
+#test-config button:hover,
+#test-config button:focus {
+  color: var(--text-color);
 }
 
 .button {
