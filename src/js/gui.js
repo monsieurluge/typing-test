@@ -41,6 +41,8 @@ const activate = addClass('active')
 
 const deactivate = removeClass('active')
 
+const correct = addClass('correct')
+
 const incorrect = addClass('error')
 
 const gotExtraCharacters = addClass('extra-characters')
