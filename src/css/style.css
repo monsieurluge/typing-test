@@ -141,12 +141,14 @@ html {
 }
 
 .bottom-panel.closed {
+  display: none;
   top: 5em;
 }
 
 .bottom-panel .items-wrapper {
   display: flex;
   flex-direction: row;
+  gap: 4px;
 }
 
 .bottom-panel .item {
@@ -169,6 +171,7 @@ key {
   transition: 0.3s;
 }
 
+button:focus key,
 button:hover key {
   background-color: var(--text-color);
 }
@@ -213,13 +216,10 @@ button:hover key {
   outline: none;
 }
 
-.selector-input::selection {
-  color: var(--bg-color);
-  background-color: var(--accent-color);
-}
-
+.selector-input::selection,
 .selector-input:focus {
-  color: var(--accent-color);
+  color: var(--text-color);
+  border-bottom-color: var(--accent-color);
 }
 
 /* ------------------------------------------------------------------ RESULTS */
@@ -336,6 +336,7 @@ button:hover key {
   background-color: var(--bg-color);
   border: none;
   cursor: pointer;
+  outline: none;
   transition: 0.3s;
 }
 
@@ -345,7 +346,7 @@ button:hover key {
 }
 
 .bottom-panel button:focus {
-  outline-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 .button {
