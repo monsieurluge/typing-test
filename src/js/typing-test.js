@@ -219,6 +219,7 @@ function showResult() {
   document.querySelector('#result .main .acc').textContent = `${Math.floor(stats.acc)}%`
   document.querySelector('#result .main .acc').setAttribute('aria-label', `${stats.acc}%`)
   document.querySelector('#result .details .time').textContent = `${Math.round(testtime)}s`
+  document.querySelector('#result .details .time').setAttribute('aria-label', `${roundTo2(testtime)}s`)
   document.querySelector('#result .details .char').textContent = `${testtime}s`
   document.querySelector('#result .details .char').setAttribute('aria-label', `${correctcharpercent}%`)
   document.querySelector('#result .details .char').textContent = `${stats.correctChars + stats.correctSpaces}/${stats.incorrectChars}`
