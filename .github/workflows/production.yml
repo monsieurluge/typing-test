@@ -1,0 +1,29 @@
+name: Build and deploy the web app to FTP host.
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  web-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout the repository using git
+        uses: actions/checkout@v4
+      - name: install, build, and upload the site output
+        uses: withastro/action@v2
+      - name: FTP deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: monsieurluge.dev
+          username: ${{ secrets.MONSIEURLUGE_FTP_USER }}
+          password: ${{ secrets.MONSIEURLUGE_FTP_PASSWORD }}
+          port: 21
+          local-dir: ./dist/
+          server-dir: subdomains/typingtest/
