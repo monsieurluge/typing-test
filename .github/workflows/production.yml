@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: checkout the repository using git
         uses: actions/checkout@v4
-      - name: install, build, and upload the site output
-        uses: withastro/action@v2
       - name: FTP deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -25,5 +23,9 @@ jobs:
           username: ${{ secrets.MONSIEURLUGE_FTP_USER }}
           password: ${{ secrets.MONSIEURLUGE_FTP_PASSWORD }}
           port: 21
-          local-dir: ./dist/
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
           server-dir: subdomains/typingtest/
