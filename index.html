@@ -68,9 +68,34 @@
     </div>
   </body>
 
-  <script src="src/js/lib/cookie.js"></script>
   <script src="src/js/lib/misc.js"></script>
+  <script src="src/js/lib/cookie.js"></script>
   <script src="src/js/dictionaries/english.js"></script>
+  <!-- <script src="src/js/dictionaries/french.js"></script> -->
+  <script src="src/js/cookie-config.js"></script>
+  <script src="src/js/globals.js"></script>
   <script src="src/js/gui.js"></script>
-  <script src="src/js/typing-test.js"></script>
+  <script src="src/js/test.js"></script>
+  <script src="src/js/app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const app = App({
+        configuration: CookieConfig({
+            cookie: Cookie('typing-test-config'),
+            defaultConfig: {
+              blind: false,
+              mode: 'time',
+              duration: 30,
+              words: 50,
+            },
+        }),
+        dictionaries: {
+          english: englishDictionary,
+          // french: frenchDictionary,
+        },
+      })
+      app.run()
+    })
+  </script>
 </html>

@@ -14,24 +14,24 @@ const wordsSelectorElement = document.getElementById('words-selector')
 // FUNCTIONS
 // ----------------------------------------------------------------------------
 
-const refresh = element => {
-  element.offsetWidth
-  return element
+const refresh = (element) => {
+    element.offsetWidth
+    return element
 }
 
-const addClass = className => element => {
-  element.classList.add(className)
-  return element
+const addClass = (className) => (element) => {
+    element.classList.add(className)
+    return element
 }
 
-const removeClass = className => element => {
-  element.classList.remove(className)
-  return element
+const removeClass = (className) => (element) => {
+    element.classList.remove(className)
+    return element
 }
 
-const isHidden = element => element.classList.contains('hidden')
+const isHidden = (element) => element.classList.contains('hidden')
 
-const isVisible = element => false === element.classList.contains('hidden')
+const isVisible = (element) => false === element.classList.contains('hidden')
 
 const hardHide = addClass('hidden')
 
@@ -49,154 +49,120 @@ const gotExtraCharacters = addClass('extra-characters')
 
 const lostExtraCharacters = removeClass('extra-characters')
 
-const resetAnimation = className => pipe(
-  removeClass(className),
-  refresh,
-  addClass(className)
-)
+const resetAnimation = (className) => pipe(removeClass(className), refresh, addClass(className))
 
 const resetFlashing = resetAnimation('flashing')
 
-const open = pipe(
-  removeClass('closing'),
-  removeClass('closed'),
-  hardShow
-)
+const open = pipe(removeClass('closing'), removeClass('closed'), hardShow)
 
-const close = pipe(
-  removeClass('opening'),
-  removeClass('opened')
-)
+const close = pipe(removeClass('opening'), removeClass('opened'))
 
-const openBottomPanel = pipe(
-  open,
-  addClass('opening'),
-  refresh
-)
+const openBottomPanel = pipe(open, addClass('opening'), refresh)
 
-const opened = pipe(
-  addClass('opened'),
-  removeClass('opening')
-)
+const opened = pipe(addClass('opened'), removeClass('opening'))
 
-const closeBottomPanel = pipe(
-  close,
-  addClass('closing'),
-  refresh
-)
+const closeBottomPanel = pipe(close, addClass('closing'), refresh)
 
 function generateLettersTags(letters) {
-  return letters
-    .map(letter => `<letter>${letter}</letter>`)
-    .join('')
+    return letters.map((letter) => `<letter>${letter}</letter>`).join('')
 }
 
 function enableBottomPanel(name) {
-  document.querySelectorAll('.bottom-panel').forEach(panel => {
-    panel.id === name
-      ? openBottomPanel(panel)
-      : closeBottomPanel(panel)
-  })
+    document.querySelectorAll('.bottom-panel').forEach((panel) => {
+        panel.id === name ? openBottomPanel(panel) : closeBottomPanel(panel)
+    })
 }
 
-const closed = pipe(
-  addClass('closed'),
-  removeClass('closing'),
-  hardHide
-)
+const closed = pipe(addClass('closed'), removeClass('closing'), hardHide)
 
 function generateWordTags(content, word) {
-  return content.concat(
-    `<div class="word" data-value="${word}">`,
-    generateLettersTags(word.split('')),
-    '</div>'
-  )
+    return content.concat(`<div class="word" data-value="${word}">`, generateLettersTags(word.split('')), '</div>')
 }
 
 function showTestConfigPanel() {
-  enableBottomPanel('test-config')
+    enableBottomPanel('test-config')
 }
 
 function showResultButtonsPanel() {
-  enableBottomPanel('result-buttons')
+    enableBottomPanel('result-buttons')
 }
 
 function showTestRunningPanel() {
-  enableBottomPanel('test-running')
+    enableBottomPanel('test-running')
 }
 
 function hideCaret(caretElement) {
-  hardHide(caretElement)
+    hardHide(caretElement)
 }
 
 function showCaret(caretElement) {
-  if (isVisible(resultElement)) return
-  hardShow(caretElement)
-  resetFlashing(caretElement)
+    if (isVisible(resultElement)) return
+    hardShow(caretElement)
+    resetFlashing(caretElement)
 }
 
 function enableFocus() {
-  addClass('focus')(bottomPanelsElement)
-  addClass('no-cursor')(document.querySelector('body'))
+    addClass('focus')(bottomPanelsElement)
+    addClass('no-cursor')(document.querySelector('body'))
 }
 
 function disableFocus() {
-  removeClass('focus')(bottomPanelsElement)
-  removeClass('no-cursor')(document.querySelector('body'))
+    removeClass('focus')(bottomPanelsElement)
+    removeClass('no-cursor')(document.querySelector('body'))
 }
 
 function enableDurationButton() {
-  activate(durationButtonElement)
+    activate(durationButtonElement)
 }
 
 function disableDurationButton() {
-  deactivate(durationButtonElement)
+    deactivate(durationButtonElement)
 }
 
 function updateDurationButtonTitle(duration) {
-  durationButtonElement.title = `${duration}s long`
+    durationButtonElement.title = `${duration}s long`
 }
 
 function enableWordsButton() {
-  activate(wordsButtonElement)
+    activate(wordsButtonElement)
 }
 
 function disableWordsButton() {
-  deactivate(wordsButtonElement)
+    deactivate(wordsButtonElement)
 }
 
-function updateWordsButtonTitle(config) {
-  wordsButtonElement.title = `${config.words} words`
+function updateWordsButtonTitle(words) {
+    wordsButtonElement.title = `${words} words`
 }
 
 function showDurationSelector() {
-  hardShow(durationSelectorElement)
+    hardShow(durationSelectorElement)
 }
 
 function hideDurationSelector() {
-  hardHide(durationSelectorElement)
+    hardHide(durationSelectorElement)
 }
 
 function showWordsSelector() {
-  hardShow(wordsSelectorElement)
+    hardShow(wordsSelectorElement)
 }
 
 function hideWordsSelector() {
-  hardHide(wordsSelectorElement)
+    hardHide(wordsSelectorElement)
 }
 
 function hideResultPanel() {
-  hardHide(resultElement)
+    hardHide(resultElement)
 }
 
 function showResultPanel() {
-  hardShow(resultElement)
+    hardShow(resultElement)
 }
 
 function hideTestPanel() {
-  hardHide(testElement)
+    hardHide(testElement)
 }
 
 function showTestPanel() {
-  hardShow(testElement)
+    hardShow(testElement)
 }

@@ -1,0 +1,28 @@
+{
+  "name": "typing-test",
+  "version": "1.0.0",
+  "description": "minimalistic typing test application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monsieurluge/typing-test.git"
+  },
+  "keywords": [
+    "minimalist",
+    "typing",
+    "test",
+    "keyboard"
+  ],
+  "author": "monsieurluge",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/monsieurluge/typing-test/issues"
+  },
+  "homepage": "https://github.com/monsieurluge/typing-test#readme",
+  "dependencies": {
+    "prettier": "^3.3.3"
+  }
+}
